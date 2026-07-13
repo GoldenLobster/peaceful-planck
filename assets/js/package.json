@@ -1,0 +1,23 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "custom-event": "^1.0.1",
+    "event-target-shim": "^6.0.2",
+    "fast-text-encoding": "^1.0.6",
+    "url-polyfill": "^1.1.14",
+    "youtubei.js": "^17.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1"
+  }
+}
