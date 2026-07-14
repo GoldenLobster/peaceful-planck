@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/song.dart';
 import '../../data/models/playback_state.dart';
 import '../../services/native_bridge/audio_bridge.dart';
-
+import '../../services/native_bridge/youtube_bridge.dart';
 class PlayerState {
   final Song? currentSong;
   final PlaybackState playbackState;
@@ -89,10 +89,18 @@ class PlayerNotifier extends Notifier<PlayerState> {
     });
   }
 
-  void play(Song song) {
+  Future<void> play(Song song) async {
     state = state.copyWith(currentSong: song);
+    
+    // Fetch real stream URL from youtubei.js
+    final url = await YouTubeBridge.getStream(song.id);
+    if (url == null || url.isEmpty) {
+      print("Failed to get stream URL for ${song.id}");
+      return;
+    }
+    
     AudioBridge.play(
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Mock valid audio stream
+      url: url,
       title: song.title,
       artist: song.artistName,
       artworkUrl: song.thumbnailUrl,
