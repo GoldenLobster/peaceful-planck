@@ -43,6 +43,7 @@ class JSContextManager {
                     let lowerKey = key.lowercased()
                     if lowerKey == "content-length" { continue }
                     if lowerKey == "accept-encoding" { continue }
+                    if lowerKey == "host" { continue }
                     request.setValue(value, forHTTPHeaderField: key)
                 }
             }
