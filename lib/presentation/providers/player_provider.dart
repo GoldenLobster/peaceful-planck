@@ -32,11 +32,16 @@ class PlayerState {
   }
 }
 
-class PlayerNotifier extends StateNotifier<PlayerState> {
+class PlayerNotifier extends Notifier<PlayerState> {
   StreamSubscription? _audioSub;
 
-  PlayerNotifier() : super(PlayerState()) {
+  @override
+  PlayerState build() {
     _init();
+    ref.onDispose(() {
+      _audioSub?.cancel();
+    });
+    return PlayerState();
   }
 
   void _init() {
@@ -121,14 +126,8 @@ class PlayerNotifier extends StateNotifier<PlayerState> {
   void seek(Duration position) {
     AudioBridge.seek(position.inSeconds.toDouble());
   }
-
-  @override
-  void dispose() {
-    _audioSub?.cancel();
-    super.dispose();
-  }
 }
 
-final playerProvider = StateNotifierProvider<PlayerNotifier, PlayerState>((ref) {
+final playerProvider = NotifierProvider<PlayerNotifier, PlayerState>(() {
   return PlayerNotifier();
 });
