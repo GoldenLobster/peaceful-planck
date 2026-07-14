@@ -109,35 +109,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           } else if (i < section.contents.songs.length + section.contents.albums.length) {
                              final albumIndex = i - section.contents.songs.length;
                              final album = section.contents.albums[albumIndex];
-                             return Container(
-                               width: 140,
-                               margin: const EdgeInsets.symmetric(horizontal: 8),
-                               child: Column(
-                                 children: [
-                                   album.thumbnailUrl != null 
-                                      ? Image.network(album.thumbnailUrl!, width: 140, height: 140, fit: BoxFit.cover)
-                                      : Container(width: 140, height: 140, color: Colors.grey),
-                                   const SizedBox(height: 8),
-                                   Text(album.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white)),
-                                   Text("Album", maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white54, fontSize: 12)),
-                                 ],
+                             return GestureDetector(
+                               onTap: () => context.push('/album', extra: album),
+                               child: Container(
+                                 width: 140,
+                                 margin: const EdgeInsets.symmetric(horizontal: 8),
+                                 child: Column(
+                                   children: [
+                                     album.thumbnailUrl != null 
+                                        ? Image.network(album.thumbnailUrl!, width: 140, height: 140, fit: BoxFit.cover)
+                                        : Container(width: 140, height: 140, color: Colors.grey),
+                                     const SizedBox(height: 8),
+                                     Text(album.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white)),
+                                     Text("Album", maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                                   ],
+                                 ),
                                ),
                              );
                           } else {
                              final playlistIndex = i - section.contents.songs.length - section.contents.albums.length;
                              final playlist = section.contents.playlists[playlistIndex];
-                             return Container(
-                               width: 140,
-                               margin: const EdgeInsets.symmetric(horizontal: 8),
-                               child: Column(
-                                 children: [
-                                   playlist.thumbnailUrl != null 
-                                      ? Image.network(playlist.thumbnailUrl!, width: 140, height: 140, fit: BoxFit.cover)
-                                      : Container(width: 140, height: 140, color: Colors.grey),
-                                   const SizedBox(height: 8),
-                                   Text(playlist.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white)),
-                                   Text("Playlist", maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white54, fontSize: 12)),
-                                 ],
+                             return GestureDetector(
+                               onTap: () => context.push('/playlist', extra: playlist),
+                               child: Container(
+                                 width: 140,
+                                 margin: const EdgeInsets.symmetric(horizontal: 8),
+                                 child: Column(
+                                   children: [
+                                     playlist.thumbnailUrl != null 
+                                        ? Image.network(playlist.thumbnailUrl!, width: 140, height: 140, fit: BoxFit.cover)
+                                        : Container(width: 140, height: 140, color: Colors.grey),
+                                     const SizedBox(height: 8),
+                                     Text(playlist.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white)),
+                                     Text("Playlist", maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                                   ],
+                                 ),
                                ),
                              );
                           }

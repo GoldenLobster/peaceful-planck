@@ -1,5 +1,10 @@
 import './polyfills.js';
-import { Innertube, UniversalCache } from 'youtubei.js';
+import { Innertube, UniversalCache, Platform } from 'youtubei.js';
+
+Platform.shim.eval = (script) => {
+    const code = typeof script === 'string' ? script : script.output;
+    return new Function(code)();
+};
 
 let yt = null;
 
@@ -35,15 +40,17 @@ function mapItem(item, overrideType) {
     
     let id = item.id || item.endpoint?.payload?.videoId || item.endpoint?.payload?.browseId || '';
     let title = typeof item.title === 'string' ? item.title : (item.title?.text || item.name || '');
-    let authorRaw = item.author || item.subtitle?.text || item.subtitle || item.artists || 'Unknown';
+    let authorRaw = item.authors || item.author || item.subtitle?.text || item.subtitle || item.artists || 'Unknown';
     let authorName = 'Unknown';
     if (typeof authorRaw === 'string') authorName = authorRaw;
     else if (Array.isArray(authorRaw)) authorName = authorRaw[0]?.name || 'Unknown';
     else if (authorRaw?.name) authorName = authorRaw.name;
     
     let thumbnails = [];
-    if (item.thumbnails) thumbnails = item.thumbnails;
+    if (Array.isArray(item.thumbnails)) thumbnails = item.thumbnails;
+    else if (Array.isArray(item.thumbnail)) thumbnails = item.thumbnail;
     else if (item.thumbnail?.contents) thumbnails = item.thumbnail.contents;
+    else if (item.thumbnails?.contents) thumbnails = item.thumbnails.contents;
     
     let seconds = 0;
     if (typeof item.duration?.seconds === 'number') seconds = item.duration.seconds;

@@ -94,8 +94,8 @@ class PlayerNotifier extends Notifier<PlayerState> {
     
     // Fetch real stream URL from youtubei.js
     final url = await YouTubeBridge.getStream(song.id);
-    if (url == null || url.isEmpty) {
-      print("Failed to get stream URL for ${song.id}");
+    if (url == null || url.isEmpty || url.startsWith("ERROR:")) {
+      print("Failed to get stream URL for ${song.id}: $url");
       return;
     }
     
