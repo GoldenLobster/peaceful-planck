@@ -46567,7 +46567,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
   globalThis.getStream = async (songId) => {
     if (!yt) await globalThis.initYouTube();
     const info2 = await yt.music.getInfo(songId);
-    const format2 = info2.chooseFormat({ type: "audio", quality: "best" });
+    const format2 = info2.chooseFormat({ type: "audio", format: "mp4", quality: "best" });
     return format2.decipher(yt.session.player);
   };
   function mapItem(item, overrideType) {
@@ -46581,11 +46581,14 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
     let id = item.id || item.endpoint?.payload?.videoId || item.endpoint?.payload?.browseId || "";
     let title = typeof item.title === "string" ? item.title : item.title?.text || item.name || "";
-    let authorRaw = item.authors || item.author || item.subtitle?.text || item.subtitle || item.artists || "Unknown";
+    let authorRaw = item.authors || item.author || item.artists || item.subtitle || "Unknown";
     let authorName = "Unknown";
     if (typeof authorRaw === "string") authorName = authorRaw;
-    else if (Array.isArray(authorRaw)) authorName = authorRaw[0]?.name || "Unknown";
-    else if (authorRaw?.name) authorName = authorRaw.name;
+    else if (Array.isArray(authorRaw)) {
+      authorName = authorRaw[0]?.name || authorRaw[0]?.text || (typeof authorRaw[0] === "string" ? authorRaw[0] : "Unknown");
+    } else if (authorRaw?.name) authorName = authorRaw.name;
+    else if (authorRaw?.text) authorName = authorRaw.text;
+    else if (authorRaw?.runs) authorName = authorRaw.runs[0]?.text || "Unknown";
     let thumbnails = [];
     if (Array.isArray(item.thumbnails)) thumbnails = item.thumbnails;
     else if (Array.isArray(item.thumbnail)) thumbnails = item.thumbnail;
@@ -46653,12 +46656,14 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
   globalThis.getAlbum = async (albumId) => {
     if (!yt) await globalThis.initYouTube();
     const album = await yt.music.getAlbum(albumId);
-    return JSON.stringify(album);
+    const tracks = (album.contents || []).map((i2) => mapItem(i2, "Song"));
+    return JSON.stringify(tracks);
   };
   globalThis.getPlaylist = async (playlistId) => {
     if (!yt) await globalThis.initYouTube();
     const playlist = await yt.music.getPlaylist(playlistId);
-    return JSON.stringify(playlist);
+    const items = (playlist.items || playlist.contents || []).map((i2) => mapItem(i2, "Song"));
+    return JSON.stringify(items);
   };
   globalThis.getArtist = async (artistId) => {
     if (!yt) await globalThis.initYouTube();

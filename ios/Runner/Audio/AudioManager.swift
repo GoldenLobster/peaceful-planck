@@ -85,7 +85,9 @@ class AudioManager: NSObject {
             kvoPlaybackLikelyToKeepUpToken?.invalidate()
         }
         
-        playerItem = AVPlayerItem(url: url)
+        let options = ["AVURLAssetHTTPHeaderFieldsKey": ["User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"]]
+        let asset = AVURLAsset(url: url, options: options)
+        playerItem = AVPlayerItem(asset: asset)
         
         kvoStatusToken = playerItem?.observe(\.status, options: [.new]) { [weak self] item, _ in
             if item.status == .failed {
@@ -123,6 +125,7 @@ class AudioManager: NSObject {
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
         
+        player?.volume = 1.0
         player?.play()
         updateNowPlayingInfo(title: title, artist: artist, artworkUrl: artworkUrl)
         sendStateUpdate(state: "playing")
