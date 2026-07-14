@@ -11,10 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "buffer": "^6.0.3",
+    "core-js": "^3.49.0",
     "custom-event": "^1.0.1",
     "event-target-shim": "^6.0.2",
     "fast-text-encoding": "^1.0.6",
-    "url-polyfill": "^1.1.14",
     "youtubei.js": "^17.2.0"
   },
   "devDependencies": {

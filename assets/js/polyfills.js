@@ -1,6 +1,7 @@
 import { Buffer } from 'buffer';
 import 'fast-text-encoding';
-import 'url-polyfill';
+import 'core-js/web/url';
+import 'core-js/web/url-search-params';
 import { EventTarget } from 'event-target-shim';
 import CustomEvent from 'custom-event';
 
@@ -9,6 +10,7 @@ globalThis.CustomEvent = CustomEvent;
 globalThis.Buffer = Buffer;
 globalThis.btoa = function(str) { return Buffer.from(str, 'binary').toString('base64'); };
 globalThis.atob = function(b64Encoded) { return Buffer.from(b64Encoded, 'base64').toString('binary'); };
+globalThis.document = {};
 
 globalThis.console = {
     log: function() {},
@@ -68,4 +70,109 @@ globalThis.fireInterval = (id) => {
 globalThis.clearInterval = (id) => {
     intervals.delete(id);
     globalThis.nativeClearInterval(id);
+};
+
+class Headers {
+    constructor(init) {
+        this.map = new Map();
+        if (init) {
+            for (let [k, v] of Object.entries(init)) {
+                this.map.set(k.toLowerCase(), v);
+            }
+        }
+    }
+    get(name) { return this.map.get(name.toLowerCase()); }
+    set(name, value) { this.map.set(name.toLowerCase(), value); }
+    forEach(cb) {
+        for (let [k, v] of this.map.entries()) {
+            cb(v, k);
+        }
+    }
+}
+
+class Response {
+    constructor(body, init) {
+        this.bodyText = body;
+        this.status = init.status || 200;
+        this.statusText = init.statusText || 'OK';
+        this.headers = new Headers(init.headers);
+    }
+    async text() { return this.bodyText; }
+    async json() { return JSON.parse(this.bodyText); }
+    async arrayBuffer() {
+        const buf = new ArrayBuffer(this.bodyText.length);
+        const view = new Uint8Array(buf);
+        for (let i = 0; i < this.bodyText.length; i++) {
+            view[i] = this.bodyText.charCodeAt(i);
+        }
+        return buf;
+    }
+    get ok() {
+        return this.status >= 200 && this.status < 300;
+    }
+}
+
+globalThis.Headers = Headers;
+globalThis.Response = Response;
+
+globalThis.Request = class Request {
+    constructor(input, init = {}) {
+        if (input && input instanceof globalThis.Request) {
+            this.url = input.url;
+            this.method = init.method || input.method;
+            this.headers = new Headers(init.headers || input.headers);
+            this.body = init.body || input.body;
+        } else {
+            this.url = input ? input.toString() : '';
+            this.method = init.method || 'GET';
+            this.headers = new Headers(init.headers);
+            this.body = init.body;
+        }
+    }
+};
+
+globalThis.fetch = async (input, options = {}) => {
+    let req;
+    if (input && input instanceof globalThis.Request) {
+        // if options are provided, they override the Request
+        req = new globalThis.Request(input, options);
+    } else {
+        req = new globalThis.Request(input, options);
+    }
+    
+    return new Promise((resolve, reject) => {
+        const callbackId = Math.random().toString(36).substring(7);
+        
+        globalThis[`fetch_resolve_${callbackId}`] = (status, statusText, headersStr, bodyBase64) => {
+            const headers = JSON.parse(headersStr);
+            const binaryString = globalThis.atob(bodyBase64);
+            const res = new Response(binaryString, { status, statusText, headers });
+            delete globalThis[`fetch_resolve_${callbackId}`];
+            delete globalThis[`fetch_reject_${callbackId}`];
+            resolve(res);
+        };
+        
+        globalThis[`fetch_reject_${callbackId}`] = (errorStr) => {
+            delete globalThis[`fetch_resolve_${callbackId}`];
+            delete globalThis[`fetch_reject_${callbackId}`];
+            reject(new Error(errorStr));
+        };
+        
+        let body = req.body;
+        if (body instanceof Uint8Array || body instanceof ArrayBuffer) {
+             body = new TextDecoder().decode(body);
+        }
+        
+        const headersObj = {};
+        req.headers.forEach((v, k) => { headersObj[k] = v; });
+        
+        const reqStr = JSON.stringify({
+            url: req.url,
+            method: req.method,
+            headers: headersObj,
+            body: body ? body.toString() : null
+        });
+        
+        globalThis.nativeFetch(reqStr, callbackId);
+    });
 };
