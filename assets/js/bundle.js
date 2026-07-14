@@ -1,4 +1,4 @@
-(() => {
+var ytmBridge = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -33,9 +33,9 @@
     mod
   ));
 
-  // node_modules/base64-js/index.js
+  // assets/js/node_modules/base64-js/index.js
   var require_base64_js = __commonJS({
-    "node_modules/base64-js/index.js"(exports) {
+    "assets/js/node_modules/base64-js/index.js"(exports) {
       "use strict";
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
@@ -134,9 +134,9 @@
     }
   });
 
-  // node_modules/ieee754/index.js
+  // assets/js/node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
-    "node_modules/ieee754/index.js"(exports) {
+    "assets/js/node_modules/ieee754/index.js"(exports) {
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e, m;
         var eLen = nBytes * 8 - mLen - 1;
@@ -217,20 +217,20 @@
     }
   });
 
-  // node_modules/buffer/index.js
+  // assets/js/node_modules/buffer/index.js
   var require_buffer = __commonJS({
-    "node_modules/buffer/index.js"(exports) {
+    "assets/js/node_modules/buffer/index.js"(exports) {
       "use strict";
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
-      exports.Buffer = Buffer3;
+      exports.Buffer = Buffer4;
       exports.SlowBuffer = SlowBuffer;
       exports.INSPECT_MAX_BYTES = 50;
       var K_MAX_LENGTH = 2147483647;
       exports.kMaxLength = K_MAX_LENGTH;
-      Buffer3.TYPED_ARRAY_SUPPORT = typedArraySupport();
-      if (!Buffer3.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
+      Buffer4.TYPED_ARRAY_SUPPORT = typedArraySupport();
+      if (!Buffer4.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
         console.error(
           "This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."
         );
@@ -248,17 +248,17 @@
           return false;
         }
       }
-      Object.defineProperty(Buffer3.prototype, "parent", {
+      Object.defineProperty(Buffer4.prototype, "parent", {
         enumerable: true,
         get: function() {
-          if (!Buffer3.isBuffer(this)) return void 0;
+          if (!Buffer4.isBuffer(this)) return void 0;
           return this.buffer;
         }
       });
-      Object.defineProperty(Buffer3.prototype, "offset", {
+      Object.defineProperty(Buffer4.prototype, "offset", {
         enumerable: true,
         get: function() {
-          if (!Buffer3.isBuffer(this)) return void 0;
+          if (!Buffer4.isBuffer(this)) return void 0;
           return this.byteOffset;
         }
       });
@@ -267,10 +267,10 @@
           throw new RangeError('The value "' + length + '" is invalid for option "size"');
         }
         const buf = new Uint8Array(length);
-        Object.setPrototypeOf(buf, Buffer3.prototype);
+        Object.setPrototypeOf(buf, Buffer4.prototype);
         return buf;
       }
-      function Buffer3(arg, encodingOrOffset, length) {
+      function Buffer4(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           if (typeof encodingOrOffset === "string") {
             throw new TypeError(
@@ -281,7 +281,7 @@
         }
         return from(arg, encodingOrOffset, length);
       }
-      Buffer3.poolSize = 8192;
+      Buffer4.poolSize = 8192;
       function from(value, encodingOrOffset, length) {
         if (typeof value === "string") {
           return fromString(value, encodingOrOffset);
@@ -307,22 +307,22 @@
         }
         const valueOf = value.valueOf && value.valueOf();
         if (valueOf != null && valueOf !== value) {
-          return Buffer3.from(valueOf, encodingOrOffset, length);
+          return Buffer4.from(valueOf, encodingOrOffset, length);
         }
         const b = fromObject(value);
         if (b) return b;
         if (typeof Symbol !== "undefined" && Symbol.toPrimitive != null && typeof value[Symbol.toPrimitive] === "function") {
-          return Buffer3.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
+          return Buffer4.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
         }
         throw new TypeError(
           "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value
         );
       }
-      Buffer3.from = function(value, encodingOrOffset, length) {
+      Buffer4.from = function(value, encodingOrOffset, length) {
         return from(value, encodingOrOffset, length);
       };
-      Object.setPrototypeOf(Buffer3.prototype, Uint8Array.prototype);
-      Object.setPrototypeOf(Buffer3, Uint8Array);
+      Object.setPrototypeOf(Buffer4.prototype, Uint8Array.prototype);
+      Object.setPrototypeOf(Buffer4, Uint8Array);
       function assertSize(size) {
         if (typeof size !== "number") {
           throw new TypeError('"size" argument must be of type number');
@@ -340,24 +340,24 @@
         }
         return createBuffer(size);
       }
-      Buffer3.alloc = function(size, fill, encoding) {
+      Buffer4.alloc = function(size, fill, encoding) {
         return alloc(size, fill, encoding);
       };
       function allocUnsafe(size) {
         assertSize(size);
         return createBuffer(size < 0 ? 0 : checked(size) | 0);
       }
-      Buffer3.allocUnsafe = function(size) {
+      Buffer4.allocUnsafe = function(size) {
         return allocUnsafe(size);
       };
-      Buffer3.allocUnsafeSlow = function(size) {
+      Buffer4.allocUnsafeSlow = function(size) {
         return allocUnsafe(size);
       };
       function fromString(string, encoding) {
         if (typeof encoding !== "string" || encoding === "") {
           encoding = "utf8";
         }
-        if (!Buffer3.isEncoding(encoding)) {
+        if (!Buffer4.isEncoding(encoding)) {
           throw new TypeError("Unknown encoding: " + encoding);
         }
         const length = byteLength(string, encoding) | 0;
@@ -398,11 +398,11 @@
         } else {
           buf = new Uint8Array(array, byteOffset, length);
         }
-        Object.setPrototypeOf(buf, Buffer3.prototype);
+        Object.setPrototypeOf(buf, Buffer4.prototype);
         return buf;
       }
       function fromObject(obj) {
-        if (Buffer3.isBuffer(obj)) {
+        if (Buffer4.isBuffer(obj)) {
           const len = checked(obj.length) | 0;
           const buf = createBuffer(len);
           if (buf.length === 0) {
@@ -431,15 +431,15 @@
         if (+length != length) {
           length = 0;
         }
-        return Buffer3.alloc(+length);
+        return Buffer4.alloc(+length);
       }
-      Buffer3.isBuffer = function isBuffer(b) {
-        return b != null && b._isBuffer === true && b !== Buffer3.prototype;
+      Buffer4.isBuffer = function isBuffer(b) {
+        return b != null && b._isBuffer === true && b !== Buffer4.prototype;
       };
-      Buffer3.compare = function compare(a, b) {
-        if (isInstance(a, Uint8Array)) a = Buffer3.from(a, a.offset, a.byteLength);
-        if (isInstance(b, Uint8Array)) b = Buffer3.from(b, b.offset, b.byteLength);
-        if (!Buffer3.isBuffer(a) || !Buffer3.isBuffer(b)) {
+      Buffer4.compare = function compare(a, b) {
+        if (isInstance(a, Uint8Array)) a = Buffer4.from(a, a.offset, a.byteLength);
+        if (isInstance(b, Uint8Array)) b = Buffer4.from(b, b.offset, b.byteLength);
+        if (!Buffer4.isBuffer(a) || !Buffer4.isBuffer(b)) {
           throw new TypeError(
             'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
           );
@@ -458,7 +458,7 @@
         if (y < x2) return 1;
         return 0;
       };
-      Buffer3.isEncoding = function isEncoding(encoding) {
+      Buffer4.isEncoding = function isEncoding(encoding) {
         switch (String(encoding).toLowerCase()) {
           case "hex":
           case "utf8":
@@ -476,12 +476,12 @@
             return false;
         }
       };
-      Buffer3.concat = function concat(list, length) {
+      Buffer4.concat = function concat(list, length) {
         if (!Array.isArray(list)) {
           throw new TypeError('"list" argument must be an Array of Buffers');
         }
         if (list.length === 0) {
-          return Buffer3.alloc(0);
+          return Buffer4.alloc(0);
         }
         let i2;
         if (length === void 0) {
@@ -490,13 +490,13 @@
             length += list[i2].length;
           }
         }
-        const buffer = Buffer3.allocUnsafe(length);
+        const buffer = Buffer4.allocUnsafe(length);
         let pos = 0;
         for (i2 = 0; i2 < list.length; ++i2) {
           let buf = list[i2];
           if (isInstance(buf, Uint8Array)) {
             if (pos + buf.length > buffer.length) {
-              if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
+              if (!Buffer4.isBuffer(buf)) buf = Buffer4.from(buf);
               buf.copy(buffer, pos);
             } else {
               Uint8Array.prototype.set.call(
@@ -505,7 +505,7 @@
                 pos
               );
             }
-          } else if (!Buffer3.isBuffer(buf)) {
+          } else if (!Buffer4.isBuffer(buf)) {
             throw new TypeError('"list" argument must be an Array of Buffers');
           } else {
             buf.copy(buffer, pos);
@@ -515,7 +515,7 @@
         return buffer;
       };
       function byteLength(string, encoding) {
-        if (Buffer3.isBuffer(string)) {
+        if (Buffer4.isBuffer(string)) {
           return string.length;
         }
         if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
@@ -557,7 +557,7 @@
           }
         }
       }
-      Buffer3.byteLength = byteLength;
+      Buffer4.byteLength = byteLength;
       function slowToString(encoding, start, end) {
         let loweredCase = false;
         if (start === void 0 || start < 0) {
@@ -604,13 +604,13 @@
           }
         }
       }
-      Buffer3.prototype._isBuffer = true;
+      Buffer4.prototype._isBuffer = true;
       function swap(b, n, m) {
         const i2 = b[n];
         b[n] = b[m];
         b[m] = i2;
       }
-      Buffer3.prototype.swap16 = function swap16() {
+      Buffer4.prototype.swap16 = function swap16() {
         const len = this.length;
         if (len % 2 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 16-bits");
@@ -620,7 +620,7 @@
         }
         return this;
       };
-      Buffer3.prototype.swap32 = function swap32() {
+      Buffer4.prototype.swap32 = function swap32() {
         const len = this.length;
         if (len % 4 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 32-bits");
@@ -631,7 +631,7 @@
         }
         return this;
       };
-      Buffer3.prototype.swap64 = function swap64() {
+      Buffer4.prototype.swap64 = function swap64() {
         const len = this.length;
         if (len % 8 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 64-bits");
@@ -644,19 +644,19 @@
         }
         return this;
       };
-      Buffer3.prototype.toString = function toString() {
+      Buffer4.prototype.toString = function toString() {
         const length = this.length;
         if (length === 0) return "";
         if (arguments.length === 0) return utf8Slice(this, 0, length);
         return slowToString.apply(this, arguments);
       };
-      Buffer3.prototype.toLocaleString = Buffer3.prototype.toString;
-      Buffer3.prototype.equals = function equals(b) {
-        if (!Buffer3.isBuffer(b)) throw new TypeError("Argument must be a Buffer");
+      Buffer4.prototype.toLocaleString = Buffer4.prototype.toString;
+      Buffer4.prototype.equals = function equals(b) {
+        if (!Buffer4.isBuffer(b)) throw new TypeError("Argument must be a Buffer");
         if (this === b) return true;
-        return Buffer3.compare(this, b) === 0;
+        return Buffer4.compare(this, b) === 0;
       };
-      Buffer3.prototype.inspect = function inspect() {
+      Buffer4.prototype.inspect = function inspect() {
         let str = "";
         const max2 = exports.INSPECT_MAX_BYTES;
         str = this.toString("hex", 0, max2).replace(/(.{2})/g, "$1 ").trim();
@@ -664,13 +664,13 @@
         return "<Buffer " + str + ">";
       };
       if (customInspectSymbol) {
-        Buffer3.prototype[customInspectSymbol] = Buffer3.prototype.inspect;
+        Buffer4.prototype[customInspectSymbol] = Buffer4.prototype.inspect;
       }
-      Buffer3.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
+      Buffer4.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
         if (isInstance(target, Uint8Array)) {
-          target = Buffer3.from(target, target.offset, target.byteLength);
+          target = Buffer4.from(target, target.offset, target.byteLength);
         }
-        if (!Buffer3.isBuffer(target)) {
+        if (!Buffer4.isBuffer(target)) {
           throw new TypeError(
             'The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof target
           );
@@ -743,9 +743,9 @@
           else return -1;
         }
         if (typeof val === "string") {
-          val = Buffer3.from(val, encoding);
+          val = Buffer4.from(val, encoding);
         }
-        if (Buffer3.isBuffer(val)) {
+        if (Buffer4.isBuffer(val)) {
           if (val.length === 0) {
             return -1;
           }
@@ -813,13 +813,13 @@
         }
         return -1;
       }
-      Buffer3.prototype.includes = function includes(val, byteOffset, encoding) {
+      Buffer4.prototype.includes = function includes(val, byteOffset, encoding) {
         return this.indexOf(val, byteOffset, encoding) !== -1;
       };
-      Buffer3.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
+      Buffer4.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
       };
-      Buffer3.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
+      Buffer4.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
       };
       function hexWrite(buf, string, offset, length) {
@@ -857,7 +857,7 @@
       function ucs2Write(buf, string, offset, length) {
         return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
       }
-      Buffer3.prototype.write = function write(string, offset, length, encoding) {
+      Buffer4.prototype.write = function write(string, offset, length, encoding) {
         if (offset === void 0) {
           encoding = "utf8";
           length = this.length;
@@ -912,7 +912,7 @@
           }
         }
       };
-      Buffer3.prototype.toJSON = function toJSON() {
+      Buffer4.prototype.toJSON = function toJSON() {
         return {
           type: "Buffer",
           data: Array.prototype.slice.call(this._arr || this, 0)
@@ -1035,7 +1035,7 @@
         }
         return res;
       }
-      Buffer3.prototype.slice = function slice(start, end) {
+      Buffer4.prototype.slice = function slice(start, end) {
         const len = this.length;
         start = ~~start;
         end = end === void 0 ? len : ~~end;
@@ -1053,14 +1053,14 @@
         }
         if (end < start) end = start;
         const newBuf = this.subarray(start, end);
-        Object.setPrototypeOf(newBuf, Buffer3.prototype);
+        Object.setPrototypeOf(newBuf, Buffer4.prototype);
         return newBuf;
       };
       function checkOffset(offset, ext, length) {
         if (offset % 1 !== 0 || offset < 0) throw new RangeError("offset is not uint");
         if (offset + ext > length) throw new RangeError("Trying to access beyond buffer length");
       }
-      Buffer3.prototype.readUintLE = Buffer3.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readUintLE = Buffer4.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1072,7 +1072,7 @@
         }
         return val;
       };
-      Buffer3.prototype.readUintBE = Buffer3.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readUintBE = Buffer4.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) {
@@ -1085,32 +1085,32 @@
         }
         return val;
       };
-      Buffer3.prototype.readUint8 = Buffer3.prototype.readUInt8 = function readUInt8(offset, noAssert) {
+      Buffer4.prototype.readUint8 = Buffer4.prototype.readUInt8 = function readUInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         return this[offset];
       };
-      Buffer3.prototype.readUint16LE = Buffer3.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
+      Buffer4.prototype.readUint16LE = Buffer4.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] | this[offset + 1] << 8;
       };
-      Buffer3.prototype.readUint16BE = Buffer3.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
+      Buffer4.prototype.readUint16BE = Buffer4.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] << 8 | this[offset + 1];
       };
-      Buffer3.prototype.readUint32LE = Buffer3.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
+      Buffer4.prototype.readUint32LE = Buffer4.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return (this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16) + this[offset + 3] * 16777216;
       };
-      Buffer3.prototype.readUint32BE = Buffer3.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
+      Buffer4.prototype.readUint32BE = Buffer4.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] * 16777216 + (this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3]);
       };
-      Buffer3.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
+      Buffer4.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1122,7 +1122,7 @@
         const hi = this[++offset] + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + last * 2 ** 24;
         return BigInt(lo) + (BigInt(hi) << BigInt(32));
       });
-      Buffer3.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
+      Buffer4.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1134,7 +1134,7 @@
         const lo = this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last;
         return (BigInt(hi) << BigInt(32)) + BigInt(lo);
       });
-      Buffer3.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1148,7 +1148,7 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer3.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1162,35 +1162,35 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer3.prototype.readInt8 = function readInt8(offset, noAssert) {
+      Buffer4.prototype.readInt8 = function readInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         if (!(this[offset] & 128)) return this[offset];
         return (255 - this[offset] + 1) * -1;
       };
-      Buffer3.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
+      Buffer4.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset] | this[offset + 1] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer3.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
+      Buffer4.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset + 1] | this[offset] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer3.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
+      Buffer4.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16 | this[offset + 3] << 24;
       };
-      Buffer3.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
+      Buffer4.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] << 24 | this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3];
       };
-      Buffer3.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
+      Buffer4.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1201,7 +1201,7 @@
         const val = this[offset + 4] + this[offset + 5] * 2 ** 8 + this[offset + 6] * 2 ** 16 + (last << 24);
         return (BigInt(val) << BigInt(32)) + BigInt(first + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 24);
       });
-      Buffer3.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
+      Buffer4.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1213,32 +1213,32 @@
         this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
         return (BigInt(val) << BigInt(32)) + BigInt(this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last);
       });
-      Buffer3.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
+      Buffer4.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, true, 23, 4);
       };
-      Buffer3.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
+      Buffer4.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, false, 23, 4);
       };
-      Buffer3.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
+      Buffer4.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, true, 52, 8);
       };
-      Buffer3.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
+      Buffer4.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, false, 52, 8);
       };
       function checkInt(buf, value, offset, ext, max2, min) {
-        if (!Buffer3.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
+        if (!Buffer4.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
         if (value > max2 || value < min) throw new RangeError('"value" argument is out of bounds');
         if (offset + ext > buf.length) throw new RangeError("Index out of range");
       }
-      Buffer3.prototype.writeUintLE = Buffer3.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeUintLE = Buffer4.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1254,7 +1254,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeUintBE = Buffer3.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeUintBE = Buffer4.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1270,14 +1270,14 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeUint8 = Buffer3.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
+      Buffer4.prototype.writeUint8 = Buffer4.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 255, 0);
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer3.prototype.writeUint16LE = Buffer3.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint16LE = Buffer4.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1285,7 +1285,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer3.prototype.writeUint16BE = Buffer3.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint16BE = Buffer4.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1293,7 +1293,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer3.prototype.writeUint32LE = Buffer3.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint32LE = Buffer4.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1303,7 +1303,7 @@
         this[offset] = value & 255;
         return offset + 4;
       };
-      Buffer3.prototype.writeUint32BE = Buffer3.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint32BE = Buffer4.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1353,13 +1353,13 @@
         buf[offset] = hi;
         return offset + 8;
       }
-      Buffer3.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
+      Buffer4.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer3.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
+      Buffer4.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer3.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1378,7 +1378,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1397,7 +1397,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
+      Buffer4.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 127, -128);
@@ -1405,7 +1405,7 @@
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer3.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1413,7 +1413,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer3.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1421,7 +1421,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer3.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1431,7 +1431,7 @@
         this[offset + 3] = value >>> 24;
         return offset + 4;
       };
-      Buffer3.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1442,10 +1442,10 @@
         this[offset + 3] = value & 255;
         return offset + 4;
       };
-      Buffer3.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
+      Buffer4.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
-      Buffer3.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
+      Buffer4.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
       function checkIEEE754(buf, value, offset, ext, max2, min) {
@@ -1461,10 +1461,10 @@
         ieee754.write(buf, value, offset, littleEndian, 23, 4);
         return offset + 4;
       }
-      Buffer3.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
+      Buffer4.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
         return writeFloat(this, value, offset, true, noAssert);
       };
-      Buffer3.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
+      Buffer4.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
         return writeFloat(this, value, offset, false, noAssert);
       };
       function writeDouble(buf, value, offset, littleEndian, noAssert) {
@@ -1476,14 +1476,14 @@
         ieee754.write(buf, value, offset, littleEndian, 52, 8);
         return offset + 8;
       }
-      Buffer3.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
+      Buffer4.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
         return writeDouble(this, value, offset, true, noAssert);
       };
-      Buffer3.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
+      Buffer4.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
         return writeDouble(this, value, offset, false, noAssert);
       };
-      Buffer3.prototype.copy = function copy(target, targetStart, start, end) {
-        if (!Buffer3.isBuffer(target)) throw new TypeError("argument should be a Buffer");
+      Buffer4.prototype.copy = function copy(target, targetStart, start, end) {
+        if (!Buffer4.isBuffer(target)) throw new TypeError("argument should be a Buffer");
         if (!start) start = 0;
         if (!end && end !== 0) end = this.length;
         if (targetStart >= target.length) targetStart = target.length;
@@ -1512,7 +1512,7 @@
         }
         return len;
       };
-      Buffer3.prototype.fill = function fill(val, start, end, encoding) {
+      Buffer4.prototype.fill = function fill(val, start, end, encoding) {
         if (typeof val === "string") {
           if (typeof start === "string") {
             encoding = start;
@@ -1525,7 +1525,7 @@
           if (encoding !== void 0 && typeof encoding !== "string") {
             throw new TypeError("encoding must be a string");
           }
-          if (typeof encoding === "string" && !Buffer3.isEncoding(encoding)) {
+          if (typeof encoding === "string" && !Buffer4.isEncoding(encoding)) {
             throw new TypeError("Unknown encoding: " + encoding);
           }
           if (val.length === 1) {
@@ -1554,7 +1554,7 @@
             this[i2] = val;
           }
         } else {
-          const bytes = Buffer3.isBuffer(val) ? val : Buffer3.from(val, encoding);
+          const bytes = Buffer4.isBuffer(val) ? val : Buffer4.from(val, encoding);
           const len = bytes.length;
           if (len === 0) {
             throw new TypeError('The value "' + val + '" is invalid for argument "value"');
@@ -1809,9 +1809,9 @@
     }
   });
 
-  // node_modules/fast-text-encoding/text.min.js
+  // assets/js/node_modules/fast-text-encoding/text.min.js
   var require_text_min = __commonJS({
-    "node_modules/fast-text-encoding/text.min.js"(exports) {
+    "assets/js/node_modules/fast-text-encoding/text.min.js"(exports) {
       (function(scope) {
         "use strict";
         function B(r, e) {
@@ -1917,9 +1917,9 @@
     }
   });
 
-  // node_modules/core-js/internals/fails.js
+  // assets/js/node_modules/core-js/internals/fails.js
   var require_fails = __commonJS({
-    "node_modules/core-js/internals/fails.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/fails.js"(exports, module) {
       "use strict";
       module.exports = function(exec) {
         try {
@@ -1931,9 +1931,9 @@
     }
   });
 
-  // node_modules/core-js/internals/function-bind-native.js
+  // assets/js/node_modules/core-js/internals/function-bind-native.js
   var require_function_bind_native = __commonJS({
-    "node_modules/core-js/internals/function-bind-native.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/function-bind-native.js"(exports, module) {
       "use strict";
       var fails = require_fails();
       module.exports = !fails(function() {
@@ -1944,9 +1944,9 @@
     }
   });
 
-  // node_modules/core-js/internals/function-uncurry-this.js
+  // assets/js/node_modules/core-js/internals/function-uncurry-this.js
   var require_function_uncurry_this = __commonJS({
-    "node_modules/core-js/internals/function-uncurry-this.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/function-uncurry-this.js"(exports, module) {
       "use strict";
       var NATIVE_BIND = require_function_bind_native();
       var FunctionPrototype = Function.prototype;
@@ -1960,9 +1960,9 @@
     }
   });
 
-  // node_modules/core-js/internals/classof-raw.js
+  // assets/js/node_modules/core-js/internals/classof-raw.js
   var require_classof_raw = __commonJS({
-    "node_modules/core-js/internals/classof-raw.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/classof-raw.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var toString = uncurryThis({}.toString);
@@ -1973,9 +1973,9 @@
     }
   });
 
-  // node_modules/core-js/internals/indexed-object.js
+  // assets/js/node_modules/core-js/internals/indexed-object.js
   var require_indexed_object = __commonJS({
-    "node_modules/core-js/internals/indexed-object.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/indexed-object.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var fails = require_fails();
@@ -1990,9 +1990,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-null-or-undefined.js
+  // assets/js/node_modules/core-js/internals/is-null-or-undefined.js
   var require_is_null_or_undefined = __commonJS({
-    "node_modules/core-js/internals/is-null-or-undefined.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-null-or-undefined.js"(exports, module) {
       "use strict";
       module.exports = function(it) {
         return it === null || it === void 0;
@@ -2000,9 +2000,9 @@
     }
   });
 
-  // node_modules/core-js/internals/require-object-coercible.js
+  // assets/js/node_modules/core-js/internals/require-object-coercible.js
   var require_require_object_coercible = __commonJS({
-    "node_modules/core-js/internals/require-object-coercible.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/require-object-coercible.js"(exports, module) {
       "use strict";
       var isNullOrUndefined = require_is_null_or_undefined();
       var $TypeError = TypeError;
@@ -2013,9 +2013,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-indexed-object.js
+  // assets/js/node_modules/core-js/internals/to-indexed-object.js
   var require_to_indexed_object = __commonJS({
-    "node_modules/core-js/internals/to-indexed-object.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-indexed-object.js"(exports, module) {
       "use strict";
       var IndexedObject = require_indexed_object();
       var requireObjectCoercible = require_require_object_coercible();
@@ -2025,9 +2025,9 @@
     }
   });
 
-  // node_modules/core-js/internals/global-this.js
+  // assets/js/node_modules/core-js/internals/global-this.js
   var require_global_this = __commonJS({
-    "node_modules/core-js/internals/global-this.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/global-this.js"(exports, module) {
       "use strict";
       var check = function(it) {
         return it && it.Math === Math && it;
@@ -2041,17 +2041,17 @@
     }
   });
 
-  // node_modules/core-js/internals/is-pure.js
+  // assets/js/node_modules/core-js/internals/is-pure.js
   var require_is_pure = __commonJS({
-    "node_modules/core-js/internals/is-pure.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-pure.js"(exports, module) {
       "use strict";
       module.exports = false;
     }
   });
 
-  // node_modules/core-js/internals/define-global-property.js
+  // assets/js/node_modules/core-js/internals/define-global-property.js
   var require_define_global_property = __commonJS({
-    "node_modules/core-js/internals/define-global-property.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/define-global-property.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var defineProperty = Object.defineProperty;
@@ -2066,9 +2066,9 @@
     }
   });
 
-  // node_modules/core-js/internals/shared-store.js
+  // assets/js/node_modules/core-js/internals/shared-store.js
   var require_shared_store = __commonJS({
-    "node_modules/core-js/internals/shared-store.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/shared-store.js"(exports, module) {
       "use strict";
       var IS_PURE = require_is_pure();
       var globalThis2 = require_global_this();
@@ -2085,9 +2085,9 @@
     }
   });
 
-  // node_modules/core-js/internals/shared.js
+  // assets/js/node_modules/core-js/internals/shared.js
   var require_shared = __commonJS({
-    "node_modules/core-js/internals/shared.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/shared.js"(exports, module) {
       "use strict";
       var store = require_shared_store();
       module.exports = function(key, value) {
@@ -2096,9 +2096,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-object.js
+  // assets/js/node_modules/core-js/internals/to-object.js
   var require_to_object = __commonJS({
-    "node_modules/core-js/internals/to-object.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-object.js"(exports, module) {
       "use strict";
       var requireObjectCoercible = require_require_object_coercible();
       var $Object = Object;
@@ -2108,9 +2108,9 @@
     }
   });
 
-  // node_modules/core-js/internals/has-own-property.js
+  // assets/js/node_modules/core-js/internals/has-own-property.js
   var require_has_own_property = __commonJS({
-    "node_modules/core-js/internals/has-own-property.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/has-own-property.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var toObject = require_to_object();
@@ -2121,9 +2121,9 @@
     }
   });
 
-  // node_modules/core-js/internals/uid.js
+  // assets/js/node_modules/core-js/internals/uid.js
   var require_uid = __commonJS({
-    "node_modules/core-js/internals/uid.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/uid.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var id = 0;
@@ -2135,9 +2135,9 @@
     }
   });
 
-  // node_modules/core-js/internals/environment-user-agent.js
+  // assets/js/node_modules/core-js/internals/environment-user-agent.js
   var require_environment_user_agent = __commonJS({
-    "node_modules/core-js/internals/environment-user-agent.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/environment-user-agent.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var navigator = globalThis2.navigator;
@@ -2146,9 +2146,9 @@
     }
   });
 
-  // node_modules/core-js/internals/environment-v8-version.js
+  // assets/js/node_modules/core-js/internals/environment-v8-version.js
   var require_environment_v8_version = __commonJS({
-    "node_modules/core-js/internals/environment-v8-version.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/environment-v8-version.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var userAgent = require_environment_user_agent();
@@ -2173,9 +2173,9 @@
     }
   });
 
-  // node_modules/core-js/internals/symbol-constructor-detection.js
+  // assets/js/node_modules/core-js/internals/symbol-constructor-detection.js
   var require_symbol_constructor_detection = __commonJS({
-    "node_modules/core-js/internals/symbol-constructor-detection.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/symbol-constructor-detection.js"(exports, module) {
       "use strict";
       var V8_VERSION = require_environment_v8_version();
       var fails = require_fails();
@@ -2189,18 +2189,18 @@
     }
   });
 
-  // node_modules/core-js/internals/use-symbol-as-uid.js
+  // assets/js/node_modules/core-js/internals/use-symbol-as-uid.js
   var require_use_symbol_as_uid = __commonJS({
-    "node_modules/core-js/internals/use-symbol-as-uid.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/use-symbol-as-uid.js"(exports, module) {
       "use strict";
       var NATIVE_SYMBOL = require_symbol_constructor_detection();
       module.exports = NATIVE_SYMBOL && !Symbol.sham && typeof Symbol.iterator == "symbol";
     }
   });
 
-  // node_modules/core-js/internals/well-known-symbol.js
+  // assets/js/node_modules/core-js/internals/well-known-symbol.js
   var require_well_known_symbol = __commonJS({
-    "node_modules/core-js/internals/well-known-symbol.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/well-known-symbol.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var shared = require_shared();
@@ -2220,9 +2220,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-callable.js
+  // assets/js/node_modules/core-js/internals/is-callable.js
   var require_is_callable = __commonJS({
-    "node_modules/core-js/internals/is-callable.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-callable.js"(exports, module) {
       "use strict";
       var documentAll = typeof document == "object" && document.all;
       module.exports = typeof documentAll == "undefined" && documentAll !== void 0 ? function(argument) {
@@ -2233,9 +2233,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-object.js
+  // assets/js/node_modules/core-js/internals/is-object.js
   var require_is_object = __commonJS({
-    "node_modules/core-js/internals/is-object.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-object.js"(exports, module) {
       "use strict";
       var isCallable = require_is_callable();
       module.exports = function(it) {
@@ -2244,9 +2244,9 @@
     }
   });
 
-  // node_modules/core-js/internals/an-object.js
+  // assets/js/node_modules/core-js/internals/an-object.js
   var require_an_object = __commonJS({
-    "node_modules/core-js/internals/an-object.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/an-object.js"(exports, module) {
       "use strict";
       var isObject = require_is_object();
       var $String = String;
@@ -2258,9 +2258,9 @@
     }
   });
 
-  // node_modules/core-js/internals/descriptors.js
+  // assets/js/node_modules/core-js/internals/descriptors.js
   var require_descriptors = __commonJS({
-    "node_modules/core-js/internals/descriptors.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/descriptors.js"(exports, module) {
       "use strict";
       var fails = require_fails();
       module.exports = !fails(function() {
@@ -2271,9 +2271,9 @@
     }
   });
 
-  // node_modules/core-js/internals/v8-prototype-define-bug.js
+  // assets/js/node_modules/core-js/internals/v8-prototype-define-bug.js
   var require_v8_prototype_define_bug = __commonJS({
-    "node_modules/core-js/internals/v8-prototype-define-bug.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/v8-prototype-define-bug.js"(exports, module) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var fails = require_fails();
@@ -2287,9 +2287,9 @@
     }
   });
 
-  // node_modules/core-js/internals/document-create-element.js
+  // assets/js/node_modules/core-js/internals/document-create-element.js
   var require_document_create_element = __commonJS({
-    "node_modules/core-js/internals/document-create-element.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/document-create-element.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var isObject = require_is_object();
@@ -2301,9 +2301,9 @@
     }
   });
 
-  // node_modules/core-js/internals/ie8-dom-define.js
+  // assets/js/node_modules/core-js/internals/ie8-dom-define.js
   var require_ie8_dom_define = __commonJS({
-    "node_modules/core-js/internals/ie8-dom-define.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/ie8-dom-define.js"(exports, module) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var fails = require_fails();
@@ -2318,9 +2318,9 @@
     }
   });
 
-  // node_modules/core-js/internals/function-call.js
+  // assets/js/node_modules/core-js/internals/function-call.js
   var require_function_call = __commonJS({
-    "node_modules/core-js/internals/function-call.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/function-call.js"(exports, module) {
       "use strict";
       var NATIVE_BIND = require_function_bind_native();
       var call = Function.prototype.call;
@@ -2330,9 +2330,9 @@
     }
   });
 
-  // node_modules/core-js/internals/get-built-in.js
+  // assets/js/node_modules/core-js/internals/get-built-in.js
   var require_get_built_in = __commonJS({
-    "node_modules/core-js/internals/get-built-in.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/get-built-in.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var isCallable = require_is_callable();
@@ -2345,18 +2345,18 @@
     }
   });
 
-  // node_modules/core-js/internals/object-is-prototype-of.js
+  // assets/js/node_modules/core-js/internals/object-is-prototype-of.js
   var require_object_is_prototype_of = __commonJS({
-    "node_modules/core-js/internals/object-is-prototype-of.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/object-is-prototype-of.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       module.exports = uncurryThis({}.isPrototypeOf);
     }
   });
 
-  // node_modules/core-js/internals/is-symbol.js
+  // assets/js/node_modules/core-js/internals/is-symbol.js
   var require_is_symbol = __commonJS({
-    "node_modules/core-js/internals/is-symbol.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-symbol.js"(exports, module) {
       "use strict";
       var getBuiltIn = require_get_built_in();
       var isCallable = require_is_callable();
@@ -2372,9 +2372,9 @@
     }
   });
 
-  // node_modules/core-js/internals/try-to-string.js
+  // assets/js/node_modules/core-js/internals/try-to-string.js
   var require_try_to_string = __commonJS({
-    "node_modules/core-js/internals/try-to-string.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/try-to-string.js"(exports, module) {
       "use strict";
       var $String = String;
       module.exports = function(argument) {
@@ -2387,9 +2387,9 @@
     }
   });
 
-  // node_modules/core-js/internals/a-callable.js
+  // assets/js/node_modules/core-js/internals/a-callable.js
   var require_a_callable = __commonJS({
-    "node_modules/core-js/internals/a-callable.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/a-callable.js"(exports, module) {
       "use strict";
       var isCallable = require_is_callable();
       var tryToString = require_try_to_string();
@@ -2401,9 +2401,9 @@
     }
   });
 
-  // node_modules/core-js/internals/get-method.js
+  // assets/js/node_modules/core-js/internals/get-method.js
   var require_get_method = __commonJS({
-    "node_modules/core-js/internals/get-method.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/get-method.js"(exports, module) {
       "use strict";
       var aCallable = require_a_callable();
       var isNullOrUndefined = require_is_null_or_undefined();
@@ -2414,9 +2414,9 @@
     }
   });
 
-  // node_modules/core-js/internals/ordinary-to-primitive.js
+  // assets/js/node_modules/core-js/internals/ordinary-to-primitive.js
   var require_ordinary_to_primitive = __commonJS({
-    "node_modules/core-js/internals/ordinary-to-primitive.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/ordinary-to-primitive.js"(exports, module) {
       "use strict";
       var call = require_function_call();
       var isCallable = require_is_callable();
@@ -2432,9 +2432,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-primitive.js
+  // assets/js/node_modules/core-js/internals/to-primitive.js
   var require_to_primitive = __commonJS({
-    "node_modules/core-js/internals/to-primitive.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-primitive.js"(exports, module) {
       "use strict";
       var call = require_function_call();
       var isObject = require_is_object();
@@ -2460,9 +2460,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-property-key.js
+  // assets/js/node_modules/core-js/internals/to-property-key.js
   var require_to_property_key = __commonJS({
-    "node_modules/core-js/internals/to-property-key.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-property-key.js"(exports, module) {
       "use strict";
       var toPrimitive = require_to_primitive();
       var isSymbol = require_is_symbol();
@@ -2473,9 +2473,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-define-property.js
+  // assets/js/node_modules/core-js/internals/object-define-property.js
   var require_object_define_property = __commonJS({
-    "node_modules/core-js/internals/object-define-property.js"(exports) {
+    "assets/js/node_modules/core-js/internals/object-define-property.js"(exports) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var IE8_DOM_DEFINE = require_ie8_dom_define();
@@ -2519,9 +2519,9 @@
     }
   });
 
-  // node_modules/core-js/internals/math-trunc.js
+  // assets/js/node_modules/core-js/internals/math-trunc.js
   var require_math_trunc = __commonJS({
-    "node_modules/core-js/internals/math-trunc.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/math-trunc.js"(exports, module) {
       "use strict";
       var ceil = Math.ceil;
       var floor = Math.floor;
@@ -2532,9 +2532,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-integer-or-infinity.js
+  // assets/js/node_modules/core-js/internals/to-integer-or-infinity.js
   var require_to_integer_or_infinity = __commonJS({
-    "node_modules/core-js/internals/to-integer-or-infinity.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-integer-or-infinity.js"(exports, module) {
       "use strict";
       var trunc = require_math_trunc();
       module.exports = function(argument) {
@@ -2544,9 +2544,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-absolute-index.js
+  // assets/js/node_modules/core-js/internals/to-absolute-index.js
   var require_to_absolute_index = __commonJS({
-    "node_modules/core-js/internals/to-absolute-index.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-absolute-index.js"(exports, module) {
       "use strict";
       var toIntegerOrInfinity = require_to_integer_or_infinity();
       var max2 = Math.max;
@@ -2558,9 +2558,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-length.js
+  // assets/js/node_modules/core-js/internals/to-length.js
   var require_to_length = __commonJS({
-    "node_modules/core-js/internals/to-length.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-length.js"(exports, module) {
       "use strict";
       var toIntegerOrInfinity = require_to_integer_or_infinity();
       var min = Math.min;
@@ -2571,9 +2571,9 @@
     }
   });
 
-  // node_modules/core-js/internals/length-of-array-like.js
+  // assets/js/node_modules/core-js/internals/length-of-array-like.js
   var require_length_of_array_like = __commonJS({
-    "node_modules/core-js/internals/length-of-array-like.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/length-of-array-like.js"(exports, module) {
       "use strict";
       var toLength = require_to_length();
       module.exports = function(obj) {
@@ -2582,9 +2582,9 @@
     }
   });
 
-  // node_modules/core-js/internals/array-includes.js
+  // assets/js/node_modules/core-js/internals/array-includes.js
   var require_array_includes = __commonJS({
-    "node_modules/core-js/internals/array-includes.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/array-includes.js"(exports, module) {
       "use strict";
       var toIndexedObject = require_to_indexed_object();
       var toAbsoluteIndex = require_to_absolute_index();
@@ -2617,17 +2617,17 @@
     }
   });
 
-  // node_modules/core-js/internals/hidden-keys.js
+  // assets/js/node_modules/core-js/internals/hidden-keys.js
   var require_hidden_keys = __commonJS({
-    "node_modules/core-js/internals/hidden-keys.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/hidden-keys.js"(exports, module) {
       "use strict";
       module.exports = {};
     }
   });
 
-  // node_modules/core-js/internals/object-keys-internal.js
+  // assets/js/node_modules/core-js/internals/object-keys-internal.js
   var require_object_keys_internal = __commonJS({
-    "node_modules/core-js/internals/object-keys-internal.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/object-keys-internal.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var hasOwn = require_has_own_property();
@@ -2649,9 +2649,9 @@
     }
   });
 
-  // node_modules/core-js/internals/enum-bug-keys.js
+  // assets/js/node_modules/core-js/internals/enum-bug-keys.js
   var require_enum_bug_keys = __commonJS({
-    "node_modules/core-js/internals/enum-bug-keys.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/enum-bug-keys.js"(exports, module) {
       "use strict";
       module.exports = [
         "constructor",
@@ -2665,9 +2665,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-keys.js
+  // assets/js/node_modules/core-js/internals/object-keys.js
   var require_object_keys = __commonJS({
-    "node_modules/core-js/internals/object-keys.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/object-keys.js"(exports, module) {
       "use strict";
       var internalObjectKeys = require_object_keys_internal();
       var enumBugKeys = require_enum_bug_keys();
@@ -2677,9 +2677,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-define-properties.js
+  // assets/js/node_modules/core-js/internals/object-define-properties.js
   var require_object_define_properties = __commonJS({
-    "node_modules/core-js/internals/object-define-properties.js"(exports) {
+    "assets/js/node_modules/core-js/internals/object-define-properties.js"(exports) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var V8_PROTOTYPE_DEFINE_BUG = require_v8_prototype_define_bug();
@@ -2700,18 +2700,18 @@
     }
   });
 
-  // node_modules/core-js/internals/html.js
+  // assets/js/node_modules/core-js/internals/html.js
   var require_html = __commonJS({
-    "node_modules/core-js/internals/html.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/html.js"(exports, module) {
       "use strict";
       var getBuiltIn = require_get_built_in();
       module.exports = getBuiltIn("document", "documentElement");
     }
   });
 
-  // node_modules/core-js/internals/shared-key.js
+  // assets/js/node_modules/core-js/internals/shared-key.js
   var require_shared_key = __commonJS({
-    "node_modules/core-js/internals/shared-key.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/shared-key.js"(exports, module) {
       "use strict";
       var shared = require_shared();
       var uid = require_uid();
@@ -2722,9 +2722,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-create.js
+  // assets/js/node_modules/core-js/internals/object-create.js
   var require_object_create = __commonJS({
-    "node_modules/core-js/internals/object-create.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/object-create.js"(exports, module) {
       "use strict";
       var anObject = require_an_object();
       var definePropertiesModule = require_object_define_properties();
@@ -2788,9 +2788,9 @@
     }
   });
 
-  // node_modules/core-js/internals/add-to-unscopables.js
+  // assets/js/node_modules/core-js/internals/add-to-unscopables.js
   var require_add_to_unscopables = __commonJS({
-    "node_modules/core-js/internals/add-to-unscopables.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/add-to-unscopables.js"(exports, module) {
       "use strict";
       var wellKnownSymbol = require_well_known_symbol();
       var create = require_object_create();
@@ -2809,17 +2809,17 @@
     }
   });
 
-  // node_modules/core-js/internals/iterators.js
+  // assets/js/node_modules/core-js/internals/iterators.js
   var require_iterators = __commonJS({
-    "node_modules/core-js/internals/iterators.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/iterators.js"(exports, module) {
       "use strict";
       module.exports = {};
     }
   });
 
-  // node_modules/core-js/internals/weak-map-basic-detection.js
+  // assets/js/node_modules/core-js/internals/weak-map-basic-detection.js
   var require_weak_map_basic_detection = __commonJS({
-    "node_modules/core-js/internals/weak-map-basic-detection.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/weak-map-basic-detection.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var isCallable = require_is_callable();
@@ -2828,9 +2828,9 @@
     }
   });
 
-  // node_modules/core-js/internals/create-property-descriptor.js
+  // assets/js/node_modules/core-js/internals/create-property-descriptor.js
   var require_create_property_descriptor = __commonJS({
-    "node_modules/core-js/internals/create-property-descriptor.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/create-property-descriptor.js"(exports, module) {
       "use strict";
       module.exports = function(bitmap, value) {
         return {
@@ -2843,9 +2843,9 @@
     }
   });
 
-  // node_modules/core-js/internals/create-non-enumerable-property.js
+  // assets/js/node_modules/core-js/internals/create-non-enumerable-property.js
   var require_create_non_enumerable_property = __commonJS({
-    "node_modules/core-js/internals/create-non-enumerable-property.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/create-non-enumerable-property.js"(exports, module) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var definePropertyModule = require_object_define_property();
@@ -2859,9 +2859,9 @@
     }
   });
 
-  // node_modules/core-js/internals/internal-state.js
+  // assets/js/node_modules/core-js/internals/internal-state.js
   var require_internal_state = __commonJS({
-    "node_modules/core-js/internals/internal-state.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/internal-state.js"(exports, module) {
       "use strict";
       var NATIVE_WEAK_MAP = require_weak_map_basic_detection();
       var globalThis2 = require_global_this();
@@ -2934,9 +2934,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-property-is-enumerable.js
+  // assets/js/node_modules/core-js/internals/object-property-is-enumerable.js
   var require_object_property_is_enumerable = __commonJS({
-    "node_modules/core-js/internals/object-property-is-enumerable.js"(exports) {
+    "assets/js/node_modules/core-js/internals/object-property-is-enumerable.js"(exports) {
       "use strict";
       var $propertyIsEnumerable = {}.propertyIsEnumerable;
       var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -2948,9 +2948,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-get-own-property-descriptor.js
+  // assets/js/node_modules/core-js/internals/object-get-own-property-descriptor.js
   var require_object_get_own_property_descriptor = __commonJS({
-    "node_modules/core-js/internals/object-get-own-property-descriptor.js"(exports) {
+    "assets/js/node_modules/core-js/internals/object-get-own-property-descriptor.js"(exports) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var call = require_function_call();
@@ -2973,9 +2973,9 @@
     }
   });
 
-  // node_modules/core-js/internals/function-name.js
+  // assets/js/node_modules/core-js/internals/function-name.js
   var require_function_name = __commonJS({
-    "node_modules/core-js/internals/function-name.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/function-name.js"(exports, module) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var hasOwn = require_has_own_property();
@@ -2993,9 +2993,9 @@
     }
   });
 
-  // node_modules/core-js/internals/inspect-source.js
+  // assets/js/node_modules/core-js/internals/inspect-source.js
   var require_inspect_source = __commonJS({
-    "node_modules/core-js/internals/inspect-source.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/inspect-source.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var isCallable = require_is_callable();
@@ -3010,9 +3010,9 @@
     }
   });
 
-  // node_modules/core-js/internals/make-built-in.js
+  // assets/js/node_modules/core-js/internals/make-built-in.js
   var require_make_built_in = __commonJS({
-    "node_modules/core-js/internals/make-built-in.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/make-built-in.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var fails = require_fails();
@@ -3065,9 +3065,9 @@
     }
   });
 
-  // node_modules/core-js/internals/define-built-in.js
+  // assets/js/node_modules/core-js/internals/define-built-in.js
   var require_define_built_in = __commonJS({
-    "node_modules/core-js/internals/define-built-in.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/define-built-in.js"(exports, module) {
       "use strict";
       var isCallable = require_is_callable();
       var definePropertyModule = require_object_define_property();
@@ -3100,9 +3100,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-get-own-property-names.js
+  // assets/js/node_modules/core-js/internals/object-get-own-property-names.js
   var require_object_get_own_property_names = __commonJS({
-    "node_modules/core-js/internals/object-get-own-property-names.js"(exports) {
+    "assets/js/node_modules/core-js/internals/object-get-own-property-names.js"(exports) {
       "use strict";
       var internalObjectKeys = require_object_keys_internal();
       var enumBugKeys = require_enum_bug_keys();
@@ -3113,17 +3113,17 @@
     }
   });
 
-  // node_modules/core-js/internals/object-get-own-property-symbols.js
+  // assets/js/node_modules/core-js/internals/object-get-own-property-symbols.js
   var require_object_get_own_property_symbols = __commonJS({
-    "node_modules/core-js/internals/object-get-own-property-symbols.js"(exports) {
+    "assets/js/node_modules/core-js/internals/object-get-own-property-symbols.js"(exports) {
       "use strict";
       exports.f = Object.getOwnPropertySymbols;
     }
   });
 
-  // node_modules/core-js/internals/own-keys.js
+  // assets/js/node_modules/core-js/internals/own-keys.js
   var require_own_keys = __commonJS({
-    "node_modules/core-js/internals/own-keys.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/own-keys.js"(exports, module) {
       "use strict";
       var getBuiltIn = require_get_built_in();
       var uncurryThis = require_function_uncurry_this();
@@ -3139,9 +3139,9 @@
     }
   });
 
-  // node_modules/core-js/internals/copy-constructor-properties.js
+  // assets/js/node_modules/core-js/internals/copy-constructor-properties.js
   var require_copy_constructor_properties = __commonJS({
-    "node_modules/core-js/internals/copy-constructor-properties.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/copy-constructor-properties.js"(exports, module) {
       "use strict";
       var hasOwn = require_has_own_property();
       var ownKeys = require_own_keys();
@@ -3161,9 +3161,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-forced.js
+  // assets/js/node_modules/core-js/internals/is-forced.js
   var require_is_forced = __commonJS({
-    "node_modules/core-js/internals/is-forced.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-forced.js"(exports, module) {
       "use strict";
       var fails = require_fails();
       var isCallable = require_is_callable();
@@ -3182,9 +3182,9 @@
     }
   });
 
-  // node_modules/core-js/internals/export.js
+  // assets/js/node_modules/core-js/internals/export.js
   var require_export = __commonJS({
-    "node_modules/core-js/internals/export.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/export.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var getOwnPropertyDescriptor = require_object_get_own_property_descriptor().f;
@@ -3225,9 +3225,9 @@
     }
   });
 
-  // node_modules/core-js/internals/correct-prototype-getter.js
+  // assets/js/node_modules/core-js/internals/correct-prototype-getter.js
   var require_correct_prototype_getter = __commonJS({
-    "node_modules/core-js/internals/correct-prototype-getter.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/correct-prototype-getter.js"(exports, module) {
       "use strict";
       var fails = require_fails();
       module.exports = !fails(function() {
@@ -3239,9 +3239,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-get-prototype-of.js
+  // assets/js/node_modules/core-js/internals/object-get-prototype-of.js
   var require_object_get_prototype_of = __commonJS({
-    "node_modules/core-js/internals/object-get-prototype-of.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/object-get-prototype-of.js"(exports, module) {
       "use strict";
       var hasOwn = require_has_own_property();
       var isCallable = require_is_callable();
@@ -3263,9 +3263,9 @@
     }
   });
 
-  // node_modules/core-js/internals/iterators-core.js
+  // assets/js/node_modules/core-js/internals/iterators-core.js
   var require_iterators_core = __commonJS({
-    "node_modules/core-js/internals/iterators-core.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/iterators-core.js"(exports, module) {
       "use strict";
       var fails = require_fails();
       var isCallable = require_is_callable();
@@ -3306,9 +3306,9 @@
     }
   });
 
-  // node_modules/core-js/internals/set-to-string-tag.js
+  // assets/js/node_modules/core-js/internals/set-to-string-tag.js
   var require_set_to_string_tag = __commonJS({
-    "node_modules/core-js/internals/set-to-string-tag.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/set-to-string-tag.js"(exports, module) {
       "use strict";
       var defineProperty = require_object_define_property().f;
       var hasOwn = require_has_own_property();
@@ -3323,9 +3323,9 @@
     }
   });
 
-  // node_modules/core-js/internals/iterator-create-constructor.js
+  // assets/js/node_modules/core-js/internals/iterator-create-constructor.js
   var require_iterator_create_constructor = __commonJS({
-    "node_modules/core-js/internals/iterator-create-constructor.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/iterator-create-constructor.js"(exports, module) {
       "use strict";
       var IteratorPrototype = require_iterators_core().IteratorPrototype;
       var create = require_object_create();
@@ -3345,9 +3345,9 @@
     }
   });
 
-  // node_modules/core-js/internals/function-uncurry-this-accessor.js
+  // assets/js/node_modules/core-js/internals/function-uncurry-this-accessor.js
   var require_function_uncurry_this_accessor = __commonJS({
-    "node_modules/core-js/internals/function-uncurry-this-accessor.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/function-uncurry-this-accessor.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var aCallable = require_a_callable();
@@ -3360,9 +3360,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-possible-prototype.js
+  // assets/js/node_modules/core-js/internals/is-possible-prototype.js
   var require_is_possible_prototype = __commonJS({
-    "node_modules/core-js/internals/is-possible-prototype.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-possible-prototype.js"(exports, module) {
       "use strict";
       var isObject = require_is_object();
       module.exports = function(argument) {
@@ -3371,9 +3371,9 @@
     }
   });
 
-  // node_modules/core-js/internals/a-possible-prototype.js
+  // assets/js/node_modules/core-js/internals/a-possible-prototype.js
   var require_a_possible_prototype = __commonJS({
-    "node_modules/core-js/internals/a-possible-prototype.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/a-possible-prototype.js"(exports, module) {
       "use strict";
       var isPossiblePrototype = require_is_possible_prototype();
       var $String = String;
@@ -3385,9 +3385,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-set-prototype-of.js
+  // assets/js/node_modules/core-js/internals/object-set-prototype-of.js
   var require_object_set_prototype_of = __commonJS({
-    "node_modules/core-js/internals/object-set-prototype-of.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/object-set-prototype-of.js"(exports, module) {
       "use strict";
       var uncurryThisAccessor = require_function_uncurry_this_accessor();
       var isObject = require_is_object();
@@ -3415,9 +3415,9 @@
     }
   });
 
-  // node_modules/core-js/internals/iterator-define.js
+  // assets/js/node_modules/core-js/internals/iterator-define.js
   var require_iterator_define = __commonJS({
-    "node_modules/core-js/internals/iterator-define.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/iterator-define.js"(exports, module) {
       "use strict";
       var $2 = require_export();
       var call = require_function_call();
@@ -3520,9 +3520,9 @@
     }
   });
 
-  // node_modules/core-js/internals/create-iter-result-object.js
+  // assets/js/node_modules/core-js/internals/create-iter-result-object.js
   var require_create_iter_result_object = __commonJS({
-    "node_modules/core-js/internals/create-iter-result-object.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/create-iter-result-object.js"(exports, module) {
       "use strict";
       module.exports = function(value, done) {
         return { value, done };
@@ -3530,9 +3530,9 @@
     }
   });
 
-  // node_modules/core-js/modules/es.array.iterator.js
+  // assets/js/node_modules/core-js/modules/es.array.iterator.js
   var require_es_array_iterator = __commonJS({
-    "node_modules/core-js/modules/es.array.iterator.js"(exports, module) {
+    "assets/js/node_modules/core-js/modules/es.array.iterator.js"(exports, module) {
       "use strict";
       var toIndexedObject = require_to_indexed_object();
       var addToUnscopables = require_add_to_unscopables();
@@ -3583,9 +3583,9 @@
     }
   });
 
-  // node_modules/core-js/modules/es.string.from-code-point.js
+  // assets/js/node_modules/core-js/modules/es.string.from-code-point.js
   var require_es_string_from_code_point = __commonJS({
-    "node_modules/core-js/modules/es.string.from-code-point.js"() {
+    "assets/js/node_modules/core-js/modules/es.string.from-code-point.js"() {
       "use strict";
       var $2 = require_export();
       var uncurryThis = require_function_uncurry_this();
@@ -3613,9 +3613,9 @@
     }
   });
 
-  // node_modules/core-js/internals/safe-get-built-in.js
+  // assets/js/node_modules/core-js/internals/safe-get-built-in.js
   var require_safe_get_built_in = __commonJS({
-    "node_modules/core-js/internals/safe-get-built-in.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/safe-get-built-in.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       var DESCRIPTORS = require_descriptors();
@@ -3628,9 +3628,9 @@
     }
   });
 
-  // node_modules/core-js/internals/url-constructor-detection.js
+  // assets/js/node_modules/core-js/internals/url-constructor-detection.js
   var require_url_constructor_detection = __commonJS({
-    "node_modules/core-js/internals/url-constructor-detection.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/url-constructor-detection.js"(exports, module) {
       "use strict";
       var fails = require_fails();
       var wellKnownSymbol = require_well_known_symbol();
@@ -3654,9 +3654,9 @@
     }
   });
 
-  // node_modules/core-js/internals/define-built-in-accessor.js
+  // assets/js/node_modules/core-js/internals/define-built-in-accessor.js
   var require_define_built_in_accessor = __commonJS({
-    "node_modules/core-js/internals/define-built-in-accessor.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/define-built-in-accessor.js"(exports, module) {
       "use strict";
       var makeBuiltIn = require_make_built_in();
       var defineProperty = require_object_define_property();
@@ -3668,9 +3668,9 @@
     }
   });
 
-  // node_modules/core-js/internals/define-built-ins.js
+  // assets/js/node_modules/core-js/internals/define-built-ins.js
   var require_define_built_ins = __commonJS({
-    "node_modules/core-js/internals/define-built-ins.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/define-built-ins.js"(exports, module) {
       "use strict";
       var defineBuiltIn = require_define_built_in();
       module.exports = function(target, src, options) {
@@ -3680,9 +3680,9 @@
     }
   });
 
-  // node_modules/core-js/internals/an-instance.js
+  // assets/js/node_modules/core-js/internals/an-instance.js
   var require_an_instance = __commonJS({
-    "node_modules/core-js/internals/an-instance.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/an-instance.js"(exports, module) {
       "use strict";
       var isPrototypeOf = require_object_is_prototype_of();
       var $TypeError = TypeError;
@@ -3693,9 +3693,9 @@
     }
   });
 
-  // node_modules/core-js/internals/function-uncurry-this-clause.js
+  // assets/js/node_modules/core-js/internals/function-uncurry-this-clause.js
   var require_function_uncurry_this_clause = __commonJS({
-    "node_modules/core-js/internals/function-uncurry-this-clause.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/function-uncurry-this-clause.js"(exports, module) {
       "use strict";
       var classofRaw = require_classof_raw();
       var uncurryThis = require_function_uncurry_this();
@@ -3705,9 +3705,9 @@
     }
   });
 
-  // node_modules/core-js/internals/function-bind-context.js
+  // assets/js/node_modules/core-js/internals/function-bind-context.js
   var require_function_bind_context = __commonJS({
-    "node_modules/core-js/internals/function-bind-context.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/function-bind-context.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this_clause();
       var aCallable = require_a_callable();
@@ -3722,9 +3722,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-string-tag-support.js
+  // assets/js/node_modules/core-js/internals/to-string-tag-support.js
   var require_to_string_tag_support = __commonJS({
-    "node_modules/core-js/internals/to-string-tag-support.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-string-tag-support.js"(exports, module) {
       "use strict";
       var wellKnownSymbol = require_well_known_symbol();
       var TO_STRING_TAG = wellKnownSymbol("toStringTag");
@@ -3734,9 +3734,9 @@
     }
   });
 
-  // node_modules/core-js/internals/classof.js
+  // assets/js/node_modules/core-js/internals/classof.js
   var require_classof = __commonJS({
-    "node_modules/core-js/internals/classof.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/classof.js"(exports, module) {
       "use strict";
       var TO_STRING_TAG_SUPPORT = require_to_string_tag_support();
       var isCallable = require_is_callable();
@@ -3760,9 +3760,9 @@
     }
   });
 
-  // node_modules/core-js/internals/to-string.js
+  // assets/js/node_modules/core-js/internals/to-string.js
   var require_to_string = __commonJS({
-    "node_modules/core-js/internals/to-string.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/to-string.js"(exports, module) {
       "use strict";
       var classof = require_classof();
       var $String = String;
@@ -3773,9 +3773,9 @@
     }
   });
 
-  // node_modules/core-js/internals/get-iterator-method.js
+  // assets/js/node_modules/core-js/internals/get-iterator-method.js
   var require_get_iterator_method = __commonJS({
-    "node_modules/core-js/internals/get-iterator-method.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/get-iterator-method.js"(exports, module) {
       "use strict";
       var classof = require_classof();
       var getMethod = require_get_method();
@@ -3789,9 +3789,9 @@
     }
   });
 
-  // node_modules/core-js/internals/get-iterator.js
+  // assets/js/node_modules/core-js/internals/get-iterator.js
   var require_get_iterator = __commonJS({
-    "node_modules/core-js/internals/get-iterator.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/get-iterator.js"(exports, module) {
       "use strict";
       var call = require_function_call();
       var aCallable = require_a_callable();
@@ -3807,9 +3807,9 @@
     }
   });
 
-  // node_modules/core-js/internals/validate-arguments-length.js
+  // assets/js/node_modules/core-js/internals/validate-arguments-length.js
   var require_validate_arguments_length = __commonJS({
-    "node_modules/core-js/internals/validate-arguments-length.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/validate-arguments-length.js"(exports, module) {
       "use strict";
       var $TypeError = TypeError;
       module.exports = function(passed, required) {
@@ -3819,18 +3819,18 @@
     }
   });
 
-  // node_modules/core-js/internals/array-slice.js
+  // assets/js/node_modules/core-js/internals/array-slice.js
   var require_array_slice = __commonJS({
-    "node_modules/core-js/internals/array-slice.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/array-slice.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       module.exports = uncurryThis([].slice);
     }
   });
 
-  // node_modules/core-js/internals/array-sort.js
+  // assets/js/node_modules/core-js/internals/array-sort.js
   var require_array_sort = __commonJS({
-    "node_modules/core-js/internals/array-sort.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/array-sort.js"(exports, module) {
       "use strict";
       var arraySlice = require_array_slice();
       var floor = Math.floor;
@@ -3865,9 +3865,9 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url-search-params.constructor.js
+  // assets/js/node_modules/core-js/modules/web.url-search-params.constructor.js
   var require_web_url_search_params_constructor = __commonJS({
-    "node_modules/core-js/modules/web.url-search-params.constructor.js"(exports, module) {
+    "assets/js/node_modules/core-js/modules/web.url-search-params.constructor.js"(exports, module) {
       "use strict";
       require_es_array_iterator();
       require_es_string_from_code_point();
@@ -3909,9 +3909,9 @@
       var getInternalIteratorState = InternalStateModule.getterFor(URL_SEARCH_PARAMS_ITERATOR);
       var nativeFetch = safeGetBuiltIn("fetch");
       var NativeRequest = safeGetBuiltIn("Request");
-      var Headers3 = safeGetBuiltIn("Headers");
+      var Headers4 = safeGetBuiltIn("Headers");
       var RequestPrototype = NativeRequest && NativeRequest.prototype;
-      var HeadersPrototype = Headers3 && Headers3.prototype;
+      var HeadersPrototype = Headers4 && Headers4.prototype;
       var TypeError2 = globalThis2.TypeError;
       var encodeURIComponent2 = globalThis2.encodeURIComponent;
       var fromCharCode = String.fromCharCode;
@@ -4282,7 +4282,7 @@
       $2({ global: true, constructor: true, forced: !USE_NATIVE_URL }, {
         URLSearchParams: URLSearchParamsConstructor
       });
-      if (!USE_NATIVE_URL && isCallable(Headers3)) {
+      if (!USE_NATIVE_URL && isCallable(Headers4)) {
         headersHas = uncurryThis(HeadersPrototype.has);
         headersSet = uncurryThis(HeadersPrototype.set);
         wrapRequestOptions = function(init) {
@@ -4290,7 +4290,7 @@
             var body = init.body;
             var headers;
             if (classof(body) === URL_SEARCH_PARAMS) {
-              headers = init.headers ? new Headers3(init.headers) : new Headers3();
+              headers = init.headers ? new Headers4(init.headers) : new Headers4();
               if (!headersHas(headers, "content-type")) {
                 headersSet(headers, "content-type", "application/x-www-form-urlencoded;charset=UTF-8");
               }
@@ -4310,7 +4310,7 @@
           });
         }
         if (isCallable(NativeRequest)) {
-          RequestConstructor = function Request3(input) {
+          RequestConstructor = function Request4(input) {
             anInstance(this, RequestPrototype);
             return new NativeRequest(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
           };
@@ -4332,17 +4332,17 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url-search-params.js
+  // assets/js/node_modules/core-js/modules/web.url-search-params.js
   var require_web_url_search_params = __commonJS({
-    "node_modules/core-js/modules/web.url-search-params.js"() {
+    "assets/js/node_modules/core-js/modules/web.url-search-params.js"() {
       "use strict";
       require_web_url_search_params_constructor();
     }
   });
 
-  // node_modules/core-js/modules/web.url-search-params.delete.js
+  // assets/js/node_modules/core-js/modules/web.url-search-params.delete.js
   var require_web_url_search_params_delete = __commonJS({
-    "node_modules/core-js/modules/web.url-search-params.delete.js"() {
+    "assets/js/node_modules/core-js/modules/web.url-search-params.delete.js"() {
       "use strict";
       var defineBuiltIn = require_define_built_in();
       var uncurryThis = require_function_uncurry_this();
@@ -4387,9 +4387,9 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url-search-params.has.js
+  // assets/js/node_modules/core-js/modules/web.url-search-params.has.js
   var require_web_url_search_params_has = __commonJS({
-    "node_modules/core-js/modules/web.url-search-params.has.js"() {
+    "assets/js/node_modules/core-js/modules/web.url-search-params.has.js"() {
       "use strict";
       var defineBuiltIn = require_define_built_in();
       var uncurryThis = require_function_uncurry_this();
@@ -4418,9 +4418,9 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url-search-params.size.js
+  // assets/js/node_modules/core-js/modules/web.url-search-params.size.js
   var require_web_url_search_params_size = __commonJS({
-    "node_modules/core-js/modules/web.url-search-params.size.js"() {
+    "assets/js/node_modules/core-js/modules/web.url-search-params.size.js"() {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var uncurryThis = require_function_uncurry_this();
@@ -4443,18 +4443,18 @@
     }
   });
 
-  // node_modules/core-js/internals/path.js
+  // assets/js/node_modules/core-js/internals/path.js
   var require_path = __commonJS({
-    "node_modules/core-js/internals/path.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/path.js"(exports, module) {
       "use strict";
       var globalThis2 = require_global_this();
       module.exports = globalThis2;
     }
   });
 
-  // node_modules/core-js/web/url-search-params.js
+  // assets/js/node_modules/core-js/web/url-search-params.js
   var require_url_search_params = __commonJS({
-    "node_modules/core-js/web/url-search-params.js"(exports, module) {
+    "assets/js/node_modules/core-js/web/url-search-params.js"(exports, module) {
       "use strict";
       require_web_url_search_params();
       require_web_url_search_params_delete();
@@ -4465,9 +4465,9 @@
     }
   });
 
-  // node_modules/core-js/internals/string-multibyte.js
+  // assets/js/node_modules/core-js/internals/string-multibyte.js
   var require_string_multibyte = __commonJS({
-    "node_modules/core-js/internals/string-multibyte.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/string-multibyte.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var toIntegerOrInfinity = require_to_integer_or_infinity();
@@ -4498,9 +4498,9 @@
     }
   });
 
-  // node_modules/core-js/modules/es.string.iterator.js
+  // assets/js/node_modules/core-js/modules/es.string.iterator.js
   var require_es_string_iterator = __commonJS({
-    "node_modules/core-js/modules/es.string.iterator.js"() {
+    "assets/js/node_modules/core-js/modules/es.string.iterator.js"() {
       "use strict";
       var charAt = require_string_multibyte().charAt;
       var toString = require_to_string();
@@ -4529,9 +4529,9 @@
     }
   });
 
-  // node_modules/core-js/internals/object-assign.js
+  // assets/js/node_modules/core-js/internals/object-assign.js
   var require_object_assign = __commonJS({
-    "node_modules/core-js/internals/object-assign.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/object-assign.js"(exports, module) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var uncurryThis = require_function_uncurry_this();
@@ -4586,9 +4586,9 @@
     }
   });
 
-  // node_modules/core-js/internals/iterator-close.js
+  // assets/js/node_modules/core-js/internals/iterator-close.js
   var require_iterator_close = __commonJS({
-    "node_modules/core-js/internals/iterator-close.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/iterator-close.js"(exports, module) {
       "use strict";
       var call = require_function_call();
       var anObject = require_an_object();
@@ -4615,9 +4615,9 @@
     }
   });
 
-  // node_modules/core-js/internals/call-with-safe-iteration-closing.js
+  // assets/js/node_modules/core-js/internals/call-with-safe-iteration-closing.js
   var require_call_with_safe_iteration_closing = __commonJS({
-    "node_modules/core-js/internals/call-with-safe-iteration-closing.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/call-with-safe-iteration-closing.js"(exports, module) {
       "use strict";
       var anObject = require_an_object();
       var iteratorClose = require_iterator_close();
@@ -4631,9 +4631,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-array-iterator-method.js
+  // assets/js/node_modules/core-js/internals/is-array-iterator-method.js
   var require_is_array_iterator_method = __commonJS({
-    "node_modules/core-js/internals/is-array-iterator-method.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-array-iterator-method.js"(exports, module) {
       "use strict";
       var wellKnownSymbol = require_well_known_symbol();
       var Iterators = require_iterators();
@@ -4645,9 +4645,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-constructor.js
+  // assets/js/node_modules/core-js/internals/is-constructor.js
   var require_is_constructor = __commonJS({
-    "node_modules/core-js/internals/is-constructor.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-constructor.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var fails = require_fails();
@@ -4694,9 +4694,9 @@
     }
   });
 
-  // node_modules/core-js/internals/create-property.js
+  // assets/js/node_modules/core-js/internals/create-property.js
   var require_create_property = __commonJS({
-    "node_modules/core-js/internals/create-property.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/create-property.js"(exports, module) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var definePropertyModule = require_object_define_property();
@@ -4708,9 +4708,9 @@
     }
   });
 
-  // node_modules/core-js/internals/is-array.js
+  // assets/js/node_modules/core-js/internals/is-array.js
   var require_is_array = __commonJS({
-    "node_modules/core-js/internals/is-array.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/is-array.js"(exports, module) {
       "use strict";
       var classof = require_classof_raw();
       module.exports = Array.isArray || function isArray(argument) {
@@ -4719,9 +4719,9 @@
     }
   });
 
-  // node_modules/core-js/internals/array-set-length.js
+  // assets/js/node_modules/core-js/internals/array-set-length.js
   var require_array_set_length = __commonJS({
-    "node_modules/core-js/internals/array-set-length.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/array-set-length.js"(exports, module) {
       "use strict";
       var DESCRIPTORS = require_descriptors();
       var isArray = require_is_array();
@@ -4746,9 +4746,9 @@
     }
   });
 
-  // node_modules/core-js/internals/array-from.js
+  // assets/js/node_modules/core-js/internals/array-from.js
   var require_array_from = __commonJS({
-    "node_modules/core-js/internals/array-from.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/array-from.js"(exports, module) {
       "use strict";
       var bind = require_function_bind_context();
       var call = require_function_call();
@@ -4799,9 +4799,9 @@
     }
   });
 
-  // node_modules/core-js/internals/string-punycode-to-ascii.js
+  // assets/js/node_modules/core-js/internals/string-punycode-to-ascii.js
   var require_string_punycode_to_ascii = __commonJS({
-    "node_modules/core-js/internals/string-punycode-to-ascii.js"(exports, module) {
+    "assets/js/node_modules/core-js/internals/string-punycode-to-ascii.js"(exports, module) {
       "use strict";
       var uncurryThis = require_function_uncurry_this();
       var maxInt = 2147483647;
@@ -4934,9 +4934,9 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url.constructor.js
+  // assets/js/node_modules/core-js/modules/web.url.constructor.js
   var require_web_url_constructor = __commonJS({
-    "node_modules/core-js/modules/web.url.constructor.js"() {
+    "assets/js/node_modules/core-js/modules/web.url.constructor.js"() {
       "use strict";
       require_es_string_iterator();
       var $2 = require_export();
@@ -5918,17 +5918,17 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url.js
+  // assets/js/node_modules/core-js/modules/web.url.js
   var require_web_url = __commonJS({
-    "node_modules/core-js/modules/web.url.js"() {
+    "assets/js/node_modules/core-js/modules/web.url.js"() {
       "use strict";
       require_web_url_constructor();
     }
   });
 
-  // node_modules/core-js/modules/web.url.can-parse.js
+  // assets/js/node_modules/core-js/modules/web.url.can-parse.js
   var require_web_url_can_parse = __commonJS({
-    "node_modules/core-js/modules/web.url.can-parse.js"() {
+    "assets/js/node_modules/core-js/modules/web.url.can-parse.js"() {
       "use strict";
       var $2 = require_export();
       var getBuiltIn = require_get_built_in();
@@ -5958,9 +5958,9 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url.parse.js
+  // assets/js/node_modules/core-js/modules/web.url.parse.js
   var require_web_url_parse = __commonJS({
-    "node_modules/core-js/modules/web.url.parse.js"() {
+    "assets/js/node_modules/core-js/modules/web.url.parse.js"() {
       "use strict";
       var $2 = require_export();
       var getBuiltIn = require_get_built_in();
@@ -5983,9 +5983,9 @@
     }
   });
 
-  // node_modules/core-js/modules/web.url.to-json.js
+  // assets/js/node_modules/core-js/modules/web.url.to-json.js
   var require_web_url_to_json = __commonJS({
-    "node_modules/core-js/modules/web.url.to-json.js"() {
+    "assets/js/node_modules/core-js/modules/web.url.to-json.js"() {
       "use strict";
       var $2 = require_export();
       var call = require_function_call();
@@ -5997,9 +5997,9 @@
     }
   });
 
-  // node_modules/core-js/web/url.js
+  // assets/js/node_modules/core-js/web/url.js
   var require_url = __commonJS({
-    "node_modules/core-js/web/url.js"(exports, module) {
+    "assets/js/node_modules/core-js/web/url.js"(exports, module) {
       "use strict";
       require_url_search_params();
       require_web_url();
@@ -6011,9 +6011,9 @@
     }
   });
 
-  // node_modules/custom-event/index.js
+  // assets/js/node_modules/custom-event/index.js
   var require_custom_event = __commonJS({
-    "node_modules/custom-event/index.js"(exports, module) {
+    "assets/js/node_modules/custom-event/index.js"(exports, module) {
       var NativeCustomEvent = globalThis.CustomEvent;
       function useNative() {
         try {
@@ -6025,7 +6025,7 @@
       }
       module.exports = useNative() ? NativeCustomEvent : (
         // IE >= 9
-        "undefined" !== typeof document && "function" === typeof document.createEvent ? function CustomEvent2(type, params) {
+        "undefined" !== typeof document && "function" === typeof document.createEvent ? function CustomEvent3(type, params) {
           var e = document.createEvent("CustomEvent");
           if (params) {
             e.initCustomEvent(type, params.bubbles, params.cancelable, params.detail);
@@ -6035,7 +6035,7 @@
           return e;
         } : (
           // IE <= 8
-          function CustomEvent2(type, params) {
+          function CustomEvent3(type, params) {
             var e = document.createEventObject();
             e.type = type;
             if (params) {
@@ -6054,13 +6054,13 @@
     }
   });
 
-  // polyfills.js
-  var import_buffer = __toESM(require_buffer());
-  var import_fast_text_encoding = __toESM(require_text_min());
-  var import_url = __toESM(require_url());
-  var import_url_search_params = __toESM(require_url_search_params());
+  // assets/js/temp_entry.js
+  var import_buffer2 = __toESM(require_buffer());
+  var import_fast_text_encoding2 = __toESM(require_text_min());
+  var import_url2 = __toESM(require_url());
+  var import_url_search_params2 = __toESM(require_url_search_params());
 
-  // node_modules/event-target-shim/index.mjs
+  // assets/js/node_modules/event-target-shim/index.mjs
   function assertType(condition, message, ...args) {
     if (!condition) {
       throw new TypeError(format(message, args));
@@ -6852,7 +6852,14 @@
     Object.setPrototypeOf(EventTarget2.prototype, Global.EventTarget.prototype);
   }
 
-  // polyfills.js
+  // assets/js/temp_entry.js
+  var import_custom_event2 = __toESM(require_custom_event());
+
+  // assets/js/polyfills.js
+  var import_buffer = __toESM(require_buffer());
+  var import_fast_text_encoding = __toESM(require_text_min());
+  var import_url = __toESM(require_url());
+  var import_url_search_params = __toESM(require_url_search_params());
   var import_custom_event = __toESM(require_custom_event());
   globalThis.EventTarget = EventTarget2;
   globalThis.CustomEvent = import_custom_event.default;
@@ -6925,12 +6932,22 @@
     intervals.delete(id);
     globalThis.nativeClearInterval(id);
   };
-  var Headers2 = class {
+  var Headers2 = class _Headers {
     constructor(init) {
       this.map = /* @__PURE__ */ new Map();
       if (init) {
-        for (let [k, v] of Object.entries(init)) {
-          this.map.set(k.toLowerCase(), v);
+        if (init instanceof _Headers) {
+          init.forEach((v, k) => this.map.set(k, v));
+        } else if (typeof init.forEach === "function") {
+          init.forEach((v, k) => this.map.set(k, v));
+        } else if (Array.isArray(init)) {
+          for (let [k, v] of init) {
+            this.map.set(k.toLowerCase(), v);
+          }
+        } else {
+          for (let [k, v] of Object.entries(init)) {
+            this.map.set(k.toLowerCase(), v);
+          }
         }
       }
     }
@@ -7032,7 +7049,7 @@
     });
   };
 
-  // node_modules/youtubei.js/dist/src/utils/Log.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/Log.js
   var Log_exports = {};
   __export(Log_exports, {
     Level: () => Level,
@@ -7081,7 +7098,7 @@
     log_level = args;
   }
 
-  // node_modules/youtubei.js/dist/src/parser/helpers.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/helpers.js
   var isObserved = /* @__PURE__ */ Symbol("ObservedArray.isObserved");
   var YTNode = class {
     static type = "YTNode";
@@ -7432,7 +7449,7 @@
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/AccessibilityContext.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/AccessibilityContext.js
   var AccessibilityContext = class {
     label;
     constructor(data) {
@@ -7440,7 +7457,7 @@
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/AccessibilityData.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/AccessibilityData.js
   var AccessibilityData = class {
     accessibility_identifier;
     identifier;
@@ -7460,7 +7477,7 @@
     }
   };
 
-  // node_modules/youtubei.js/dist/src/utils/Constants.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/Constants.js
   var Constants_exports = {};
   __export(Constants_exports, {
     CLIENTS: () => CLIENTS,
@@ -7603,7 +7620,7 @@
   };
   var SUPPORTED_CLIENTS = ["IOS", "WEB", "MWEB", "YTKIDS", "YTMUSIC", "ANDROID", "ANDROID_VR", "YTSTUDIO_ANDROID", "YTMUSIC_ANDROID", "TV", "TV_SIMPLY", "TV_EMBEDDED", "WEB_EMBEDDED", "WEB_CREATOR"];
 
-  // node_modules/youtubei.js/dist/src/parser/parser.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/parser.js
   var parser_exports = {};
   __export(parser_exports, {
     addRuntimeParser: () => addRuntimeParser,
@@ -7628,7 +7645,7 @@
     shouldIgnore: () => shouldIgnore
   });
 
-  // node_modules/youtubei.js/dist/src/parser/nodes.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/nodes.js
   var nodes_exports = {};
   __export(nodes_exports, {
     AboutChannel: () => AboutChannel,
@@ -8185,7 +8202,7 @@
     YpcTrailer: () => YpcTrailer
   });
 
-  // node_modules/youtubei.js/dist/src/utils/Cache.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/Cache.js
   var UniversalCache = class {
     #cache;
     constructor(persistent, persistent_directory) {
@@ -8205,7 +8222,7 @@
     }
   };
 
-  // node_modules/youtubei.js/dist/src/utils/EventEmitterLike.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/EventEmitterLike.js
   var EventEmitterLike = class extends EventTarget {
     #legacy_listeners = /* @__PURE__ */ new Map();
     constructor() {
@@ -8247,7 +8264,7 @@
     }
   };
 
-  // node_modules/youtubei.js/dist/src/utils/FormatUtils.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/FormatUtils.js
   var FormatUtils_exports = {};
   __export(FormatUtils_exports, {
     chooseFormat: () => chooseFormat,
@@ -8255,7 +8272,7 @@
     toDash: () => toDash
   });
 
-  // node_modules/youtubei.js/dist/src/utils/DashUtils.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/DashUtils.js
   var XML_CHARACTER_MAP = {
     "&": "&amp;",
     '"': "&quot;",
@@ -8312,7 +8329,7 @@
     return props.children;
   }
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerStoryboardSpec.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerStoryboardSpec.js
   var PlayerStoryboardSpec = class extends YTNode {
     static type = "PlayerStoryboardSpec";
     boards;
@@ -8339,7 +8356,7 @@
     }
   };
 
-  // node_modules/youtubei.js/dist/package.json
+  // assets/js/node_modules/youtubei.js/dist/package.json
   var package_default = {
     name: "youtubei.js",
     version: "17.2.0",
@@ -8485,7 +8502,7 @@
     ]
   };
 
-  // node_modules/youtubei.js/dist/src/utils/StreamingInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/StreamingInfo.js
   var TAG_ = "StreamingInfo";
   function getFormatGroupings(formats, is_post_live_dvr) {
     const group_info = /* @__PURE__ */ new Map();
@@ -8998,7 +9015,7 @@ format:`, anonymisedFormat);
     return info2;
   }
 
-  // node_modules/youtubei.js/dist/src/utils/DashManifest.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/DashManifest.js
   async function OTFPostLiveDvrSegmentInfo({ info: info2 }) {
     if (!info2.is_oft && !info2.is_post_live_dvr)
       return null;
@@ -9099,7 +9116,7 @@ format:`, anonymisedFormat);
     return renderToString(createElement(DashManifest, { streamingData: streaming_data, isPostLiveDvr: is_post_live_dvr, transformURL: url_transformer, options, rejectFormat: format_filter, cpn, player, actions, storyboards, captionTracks: caption_tracks }));
   }
 
-  // node_modules/youtubei.js/dist/src/utils/FormatUtils.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/FormatUtils.js
   async function download(options, actions, playability_status, streaming_data, player, cpn) {
     if (playability_status?.status === "UNPLAYABLE")
       throw new InnertubeError("Video is unplayable", { error_type: "UNPLAYABLE" });
@@ -9248,7 +9265,7 @@ format:`, anonymisedFormat);
     return candidates[0];
   }
 
-  // node_modules/youtubei.js/dist/src/utils/HTTPClient.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/HTTPClient.js
   var HTTPClient = class {
     #session;
     #cookie;
@@ -9499,7 +9516,7 @@ format:`, anonymisedFormat);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/utils/BinarySerializer.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/BinarySerializer.js
   var BinarySerializer_exports = {};
   __export(BinarySerializer_exports, {
     MAGIC_HEADER: () => MAGIC_HEADER,
@@ -9508,7 +9525,7 @@ format:`, anonymisedFormat);
     serialize: () => serialize
   });
 
-  // node_modules/fflate/esm/browser.js
+  // assets/js/node_modules/fflate/esm/browser.js
   var u8 = Uint8Array;
   var u16 = Uint16Array;
   var i32 = Int32Array;
@@ -10258,7 +10275,7 @@ format:`, anonymisedFormat);
   } catch (e) {
   }
 
-  // node_modules/youtubei.js/dist/src/utils/BinarySerializer.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/BinarySerializer.js
   var MAGIC_HEADER = 5849684;
   var VERSION = 2;
   function serialize(data) {
@@ -10296,7 +10313,7 @@ format:`, anonymisedFormat);
     return JSON.parse(json);
   }
 
-  // node_modules/youtubei.js/dist/src/utils/ProtoUtils.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/ProtoUtils.js
   var ProtoUtils_exports = {};
   __export(ProtoUtils_exports, {
     decodeVisitorData: () => decodeVisitorData,
@@ -10305,7 +10322,7 @@ format:`, anonymisedFormat);
     encodeVisitorData: () => encodeVisitorData
   });
 
-  // node_modules/@bufbuild/protobuf/dist/esm/wire/varint.js
+  // assets/js/node_modules/@bufbuild/protobuf/dist/esm/wire/varint.js
   function varint64read() {
     let lowBits = 0;
     let highBits = 0;
@@ -10485,7 +10502,7 @@ format:`, anonymisedFormat);
     return result >>> 0;
   }
 
-  // node_modules/@bufbuild/protobuf/dist/esm/proto-int64.js
+  // assets/js/node_modules/@bufbuild/protobuf/dist/esm/proto-int64.js
   var protoInt64 = /* @__PURE__ */ makeInt64Support();
   function makeInt64Support() {
     const dv = new DataView(new ArrayBuffer(8));
@@ -10588,7 +10605,7 @@ format:`, anonymisedFormat);
     }
   }
 
-  // node_modules/@bufbuild/protobuf/dist/esm/wire/text-encoding.js
+  // assets/js/node_modules/@bufbuild/protobuf/dist/esm/wire/text-encoding.js
   var symbol = /* @__PURE__ */ Symbol.for("@bufbuild/protobuf/text-encoding");
   function getTextEncoding() {
     if (globalThis[symbol] == void 0) {
@@ -10621,7 +10638,7 @@ format:`, anonymisedFormat);
     return globalThis[symbol];
   }
 
-  // node_modules/@bufbuild/protobuf/dist/esm/wire/binary-encoding.js
+  // assets/js/node_modules/@bufbuild/protobuf/dist/esm/wire/binary-encoding.js
   var WireType;
   (function(WireType2) {
     WireType2[WireType2["Varint"] = 0] = "Varint";
@@ -11047,7 +11064,7 @@ format:`, anonymisedFormat);
       throw new Error("invalid float32: " + arg);
   }
 
-  // node_modules/youtubei.js/dist/protos/generated/misc/params.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/misc/params.js
   var SearchFilter_Prioritize = {
     RELEVANCE: 0,
     0: "RELEVANCE",
@@ -12851,7 +12868,7 @@ format:`, anonymisedFormat);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/utils/ProtoUtils.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/ProtoUtils.js
   function encodeVisitorData(id, timestamp) {
     const writer = VisitorData.encode({ id, timestamp });
     return encodeURIComponent(u8ToBase64(writer.finish()).replace(/\+/g, "-").replace(/\//g, "_"));
@@ -12890,7 +12907,7 @@ format:`, anonymisedFormat);
     return encodeURIComponent(u8ToBase64(writer.finish()).replace(/\+/g, "-").replace(/\//g, "_"));
   }
 
-  // node_modules/youtubei.js/dist/src/utils/javascript/helpers.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/javascript/helpers.js
   var WALK_STOP = /* @__PURE__ */ Symbol("WALK_STOP");
   var jsBuiltIns = /* @__PURE__ */ new Set([
     "AbortController",
@@ -13178,7 +13195,7 @@ format:`, anonymisedFormat);
     return params;
   }
 
-  // node_modules/youtubei.js/dist/src/utils/javascript/matchers.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/javascript/matchers.js
   function nsigMatcher(node) {
     if (node.type !== "VariableDeclarator")
       return false;
@@ -13236,7 +13253,7 @@ format:`, anonymisedFormat);
     return foundObject || false;
   }
 
-  // node_modules/meriyah/dist/meriyah.mjs
+  // assets/js/node_modules/meriyah/dist/meriyah.mjs
   var unicodeLookup = ((compressed, lookup) => {
     const result = new Uint32Array(69632);
     let index = 0;
@@ -21991,7 +22008,7 @@ format:`, anonymisedFormat);
     return parseSource(source, options);
   }
 
-  // node_modules/youtubei.js/dist/src/utils/javascript/JsAnalyzer.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/javascript/JsAnalyzer.js
   var JsAnalyzer = class {
     source;
     programAst;
@@ -22485,7 +22502,7 @@ format:`, anonymisedFormat);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/utils/javascript/JsExtractor.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/javascript/JsExtractor.js
   var JsExtractor = class {
     analyzer;
     constructor(analyzer) {
@@ -22839,7 +22856,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/OpenPopupAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/OpenPopupAction.js
   var OpenPopupAction = class extends YTNode {
     static type = "OpenPopupAction";
     popup;
@@ -22851,7 +22868,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Button.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Button.js
   var Button = class extends YTNode {
     static type = "Button";
     text;
@@ -22892,7 +22909,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DropdownItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DropdownItem.js
   var DropdownItem = class extends YTNode {
     static type = "DropdownItem";
     label;
@@ -22922,7 +22939,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Dropdown.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Dropdown.js
   var Dropdown = class extends YTNode {
     static type = "Dropdown";
     label;
@@ -22934,7 +22951,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CreatePlaylistDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CreatePlaylistDialog.js
   var CreatePlaylistDialog = class extends YTNode {
     static type = "CreatePlaylistDialog";
     title;
@@ -22952,7 +22969,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/CommandExecutorCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/CommandExecutorCommand.js
   var CommandExecutorCommand = class extends YTNode {
     static type = "CommandExecutorCommand";
     commands;
@@ -22962,7 +22979,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/NavigationEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/NavigationEndpoint.js
   var NavigationEndpoint = class _NavigationEndpoint extends YTNode {
     static type = "NavigationEndpoint";
     name;
@@ -23065,7 +23082,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/Thumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/Thumbnail.js
   var Thumbnail = class _Thumbnail {
     url;
     width;
@@ -23094,7 +23111,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/EmojiRun.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/EmojiRun.js
   var EmojiRun = class {
     text;
     emoji;
@@ -23117,7 +23134,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/TextRun.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/TextRun.js
   var TextRun = class {
     text;
     text_color;
@@ -23200,7 +23217,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/Text.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/Text.js
   function escape(text) {
     return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
@@ -23421,7 +23438,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     runs.splice(replace_index, 1, ...replacement_runs);
   }
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelExternalLinkView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelExternalLinkView.js
   var ChannelExternalLinkView = class extends YTNode {
     static type = "ChannelExternalLinkView";
     title;
@@ -23435,7 +23452,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AboutChannelView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AboutChannelView.js
   var AboutChannelView = class extends YTNode {
     static type = "AboutChannelView";
     description;
@@ -23501,7 +23518,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AboutChannel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AboutChannel.js
   var AboutChannel = class extends YTNode {
     static type = "AboutChannel";
     metadata;
@@ -23513,7 +23530,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AccountChannel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AccountChannel.js
   var AccountChannel = class extends YTNode {
     static type = "AccountChannel";
     title;
@@ -23525,7 +23542,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AccountItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AccountItem.js
   var AccountItem = class extends YTNode {
     static type = "AccountItem";
     account_name;
@@ -23549,7 +23566,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AccountItemSectionHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AccountItemSectionHeader.js
   var AccountItemSectionHeader = class extends YTNode {
     static type = "AccountItemSectionHeader";
     title;
@@ -23559,7 +23576,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompactLink.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompactLink.js
   var CompactLink = class extends YTNode {
     static type = "CompactLink";
     title;
@@ -23582,7 +23599,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AccountItemSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AccountItemSection.js
   var AccountItemSection = class extends YTNode {
     static type = "AccountItemSection";
     contents;
@@ -23594,7 +23611,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AccountSectionList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AccountSectionList.js
   var AccountSectionList = class extends YTNode {
     static type = "AccountSectionList";
     contents;
@@ -23606,7 +23623,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/AppendContinuationItemsAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/AppendContinuationItemsAction.js
   var AppendContinuationItemsAction = class extends YTNode {
     static type = "AppendContinuationItemsAction";
     contents;
@@ -23618,7 +23635,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/ChangeEngagementPanelVisibilityAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/ChangeEngagementPanelVisibilityAction.js
   var ChangeEngagementPanelVisibilityAction = class extends YTNode {
     static type = "ChangeEngagementPanelVisibilityAction";
     target_id;
@@ -23630,7 +23647,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MultiPageMenu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MultiPageMenu.js
   var MultiPageMenu = class extends YTNode {
     static type = "MultiPageMenu";
     header;
@@ -23644,7 +23661,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/GetMultiPageMenuAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/GetMultiPageMenuAction.js
   var GetMultiPageMenuAction = class extends YTNode {
     static type = "GetMultiPageMenuAction";
     menu;
@@ -23654,7 +23671,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/SendFeedbackAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/SendFeedbackAction.js
   var SendFeedbackAction = class extends YTNode {
     static type = "SendFeedbackAction";
     bucket;
@@ -23664,7 +23681,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/SignalAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/SignalAction.js
   var SignalAction = class extends YTNode {
     static type = "SignalAction";
     signal;
@@ -23674,7 +23691,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelSwitcherPage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelSwitcherPage.js
   var ChannelSwitcherPage = class extends YTNode {
     static type = "ChannelSwitcherPage";
     header;
@@ -23686,7 +23703,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/UpdateChannelSwitcherPageAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/UpdateChannelSwitcherPageAction.js
   var UpdateChannelSwitcherPageAction = class extends YTNode {
     static type = "UpdateChannelSwitcherPageAction";
     header;
@@ -23701,7 +23718,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SortFilterSubMenu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SortFilterSubMenu.js
   var SortFilterSubMenu = class extends YTNode {
     static type = "SortFilterSubMenu";
     title;
@@ -23740,7 +23757,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TranscriptFooter.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TranscriptFooter.js
   var TranscriptFooter = class extends YTNode {
     static type = "TranscriptFooter";
     language_menu;
@@ -23750,7 +23767,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TranscriptSearchBox.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TranscriptSearchBox.js
   var TranscriptSearchBox = class extends YTNode {
     static type = "TranscriptSearchBox";
     formatted_placeholder;
@@ -23766,7 +23783,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TranscriptSectionHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TranscriptSectionHeader.js
   var TranscriptSectionHeader = class extends YTNode {
     static type = "TranscriptSectionHeader";
     start_ms;
@@ -23780,7 +23797,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TranscriptSegment.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TranscriptSegment.js
   var TranscriptSegment = class extends YTNode {
     static type = "TranscriptSegment";
     start_ms;
@@ -23798,7 +23815,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TranscriptSegmentList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TranscriptSegmentList.js
   var TranscriptSegmentList = class extends YTNode {
     static type = "TranscriptSegmentList";
     initial_segments;
@@ -23814,7 +23831,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TranscriptSearchPanel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TranscriptSearchPanel.js
   var TranscriptSearchPanel = class extends YTNode {
     static type = "TranscriptSearchPanel";
     header;
@@ -23830,7 +23847,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Transcript.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Transcript.js
   var Transcript = class extends YTNode {
     static type = "Transcript";
     content;
@@ -23840,7 +23857,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/UpdateEngagementPanelAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/UpdateEngagementPanelAction.js
   var UpdateEngagementPanelAction = class extends YTNode {
     static type = "UpdateEngagementPanelAction";
     target_id;
@@ -23852,7 +23869,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/actions/UpdateSubscribeButtonAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/actions/UpdateSubscribeButtonAction.js
   var UpdateSubscribeButtonAction = class extends YTNode {
     static type = "UpdateSubscribeButtonAction";
     channel_id;
@@ -23864,7 +23881,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ActiveAccountHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ActiveAccountHeader.js
   var ActiveAccountHeader = class extends YTNode {
     static type = "ActiveAccountHeader";
     account_name;
@@ -23882,7 +23899,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MenuTitle.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MenuTitle.js
   var MenuTitle = class extends YTNode {
     static type = "MenuTitle";
     title;
@@ -23892,7 +23909,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistAddToOption.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistAddToOption.js
   var PlaylistAddToOption = class extends YTNode {
     static type = "PlaylistAddToOption";
     add_to_playlist_service_endpoint;
@@ -23914,7 +23931,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AddToPlaylist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AddToPlaylist.js
   var AddToPlaylist = class extends YTNode {
     static type = "AddToPlaylist";
     actions;
@@ -23926,7 +23943,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Alert.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Alert.js
   var Alert = class extends YTNode {
     static type = "Alert";
     text;
@@ -23938,7 +23955,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AlertWithButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AlertWithButton.js
   var AlertWithButton = class extends YTNode {
     static type = "AlertWithButton";
     text;
@@ -23952,7 +23969,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AnimatedThumbnailOverlayView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AnimatedThumbnailOverlayView.js
   var AnimatedThumbnailOverlayView = class extends YTNode {
     static type = "AnimatedThumbnailOverlayView";
     thumbnail;
@@ -23962,7 +23979,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AttributionView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AttributionView.js
   var AttributionView = class extends YTNode {
     static type = "AttributionView";
     text;
@@ -23974,7 +23991,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AudioOnlyPlayability.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AudioOnlyPlayability.js
   var AudioOnlyPlayability = class extends YTNode {
     static type = "AudioOnlyPlayability";
     audio_only_availability;
@@ -23984,7 +24001,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AutomixPreviewVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AutomixPreviewVideo.js
   var AutomixPreviewVideo = class extends YTNode {
     static type = "AutomixPreviewVideo";
     playlist_video;
@@ -23998,7 +24015,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AvatarView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AvatarView.js
   var AvatarView = class extends YTNode {
     static type = "AvatarView";
     image;
@@ -24018,7 +24035,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/CommandContext.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/CommandContext.js
   var CommandContext = class {
     on_focus;
     on_hidden;
@@ -24054,7 +24071,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/RendererContext.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/RendererContext.js
   var RendererContext = class {
     command_context;
     accessibility_context;
@@ -24070,7 +24087,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/AvatarStackView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/AvatarStackView.js
   var AvatarStackView = class extends YTNode {
     static type = "AvatarStackView";
     avatars;
@@ -24085,7 +24102,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ButtonView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ButtonView.js
   var ButtonView = class extends YTNode {
     static type = "ButtonView";
     secondary_icon_image;
@@ -24177,7 +24194,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/BackgroundPromo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/BackgroundPromo.js
   var BackgroundPromo = class extends YTNode {
     static type = "BackgroundPromo";
     body_text;
@@ -24194,7 +24211,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/BackstageImage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/BackstageImage.js
   var BackstageImage = class extends YTNode {
     static type = "BackstageImage";
     image;
@@ -24206,7 +24223,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ToggleButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ToggleButton.js
   var ToggleButton = class extends YTNode {
     static type = "ToggleButton";
     text;
@@ -24247,7 +24264,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CreatorHeart.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CreatorHeart.js
   var CreatorHeart = class extends YTNode {
     static type = "CreatorHeart";
     creator_thumbnail;
@@ -24275,7 +24292,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentActionButtons.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentActionButtons.js
   var CommentActionButtons = class extends YTNode {
     static type = "CommentActionButtons";
     like_button;
@@ -24291,7 +24308,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ToggleButtonView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ToggleButtonView.js
   var ToggleButtonView = class extends YTNode {
     static type = "ToggleButtonView";
     default_button;
@@ -24311,7 +24328,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LikeButtonView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LikeButtonView.js
   var LikeButtonView = class extends YTNode {
     static type = "LikeButtonView";
     toggle_button;
@@ -24328,7 +24345,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DislikeButtonView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DislikeButtonView.js
   var DislikeButtonView = class extends YTNode {
     static type = "DislikeButtonView";
     toggle_button;
@@ -24340,7 +24357,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SegmentedLikeDislikeButtonView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SegmentedLikeDislikeButtonView.js
   var SegmentedLikeDislikeButtonView = class extends YTNode {
     static type = "SegmentedLikeDislikeButtonView";
     like_button;
@@ -24379,7 +24396,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MenuServiceItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MenuServiceItem.js
   var MenuServiceItem = class extends Button {
     static type = "MenuServiceItem";
     constructor(data) {
@@ -24387,7 +24404,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DownloadButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DownloadButton.js
   var DownloadButton = class extends YTNode {
     static type = "DownloadButton";
     style;
@@ -24404,7 +24421,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MenuServiceItemDownload.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MenuServiceItemDownload.js
   var MenuServiceItemDownload = class extends YTNode {
     static type = "MenuServiceItemDownload";
     has_separator;
@@ -24416,7 +24433,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SubscribeButtonView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SubscribeButtonView.js
   var SubscribeButtonView = class extends YTNode {
     static type = "SubscribeButtonView";
     subscribe_button_content;
@@ -24469,7 +24486,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ListItemView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ListItemView.js
   var ListItemView = class extends YTNode {
     static type = "ListItemView";
     title;
@@ -24513,7 +24530,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MenuFlexibleItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MenuFlexibleItem.js
   var MenuFlexibleItem = class extends YTNode {
     static type = "MenuFlexibleItem";
     menu_item;
@@ -24525,7 +24542,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LikeButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LikeButton.js
   var LikeButton = class extends YTNode {
     static type = "LikeButton";
     target;
@@ -24545,7 +24562,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/FlexibleActionsView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/FlexibleActionsView.js
   var FlexibleActionsView = class extends YTNode {
     static type = "FlexibleActionsView";
     actions_rows;
@@ -24559,7 +24576,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/Menu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/Menu.js
   var Menu = class extends YTNode {
     static type = "Menu";
     items;
@@ -24586,7 +24603,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/BackstagePost.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/BackstagePost.js
   var BackstagePost = class extends YTNode {
     static type = "BackstagePost";
     id;
@@ -24639,7 +24656,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/BackstagePostThread.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/BackstagePostThread.js
   var BackstagePostThread = class extends YTNode {
     static type = "BackstagePostThread";
     post;
@@ -24649,7 +24666,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/BadgeView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/BadgeView.js
   var BadgeView = class extends YTNode {
     text;
     style;
@@ -24662,7 +24679,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SubFeedOption.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SubFeedOption.js
   var SubFeedOption = class extends YTNode {
     static type = "SubFeedOption";
     name;
@@ -24676,7 +24693,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SubFeedSelector.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SubFeedSelector.js
   var SubFeedSelector = class extends YTNode {
     static type = "SubFeedSelector";
     title;
@@ -24688,7 +24705,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EomSettingsDisclaimer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EomSettingsDisclaimer.js
   var EomSettingsDisclaimer = class extends YTNode {
     static type = "EomSettingsDisclaimer";
     disclaimer;
@@ -24704,7 +24721,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchBox.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchBox.js
   var SearchBox = class extends YTNode {
     static type = "SearchBox";
     endpoint;
@@ -24720,7 +24737,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/BrowseFeedActions.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/BrowseFeedActions.js
   var BrowseFeedActions = class extends YTNode {
     static type = "BrowseFeedActions";
     contents;
@@ -24730,7 +24747,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/BrowserMediaSession.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/BrowserMediaSession.js
   var BrowserMediaSession = class extends YTNode {
     static type = "BrowserMediaSession";
     album;
@@ -24742,7 +24759,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ButtonCardView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ButtonCardView.js
   var ButtonCardView = class extends YTNode {
     static type = "ButtonCardView";
     title;
@@ -24756,7 +24773,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelHeaderLinks.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelHeaderLinks.js
   var HeaderLink = class extends YTNode {
     static type = "HeaderLink";
     endpoint;
@@ -24780,7 +24797,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelHeaderLinksView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelHeaderLinksView.js
   var ChannelHeaderLinksView = class extends YTNode {
     static type = "ChannelHeaderLinksView";
     first_link;
@@ -24796,7 +24813,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ClipCreationTextInput.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ClipCreationTextInput.js
   var ClipCreationTextInput = class extends YTNode {
     static type = "ClipCreationTextInput";
     placeholder_text;
@@ -24808,7 +24825,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ClipCreationScrubber.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ClipCreationScrubber.js
   var ClipCreationScrubber = class extends YTNode {
     static type = "ClipCreationScrubber";
     length_template;
@@ -24832,7 +24849,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ClipAdState.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ClipAdState.js
   var ClipAdState = class extends YTNode {
     static type = "ClipAdState";
     title;
@@ -24844,7 +24861,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ClipCreation.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ClipCreation.js
   var ClipCreation = class extends YTNode {
     static type = "ClipCreation";
     user_avatar;
@@ -24872,7 +24889,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ClipSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ClipSection.js
   var ClipSection = class extends YTNode {
     static type = "ClipSection";
     contents;
@@ -24882,7 +24899,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ContinuationItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ContinuationItem.js
   var ContinuationItem = class extends YTNode {
     static type = "ContinuationItem";
     trigger;
@@ -24898,7 +24915,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EngagementPanelTitleHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EngagementPanelTitleHeader.js
   var EngagementPanelTitleHeader = class extends YTNode {
     static type = "EngagementPanelTitleHeader";
     title;
@@ -24914,7 +24931,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersInfoItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersInfoItem.js
   var MacroMarkersInfoItem = class extends YTNode {
     static type = "MacroMarkersInfoItem";
     info_text;
@@ -24926,7 +24943,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersListItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersListItem.js
   var MacroMarkersListItem = class extends YTNode {
     static type = "MacroMarkersListItem";
     title;
@@ -24946,7 +24963,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersList.js
   var MacroMarkersList = class extends YTNode {
     static type = "MacroMarkersList";
     contents;
@@ -24958,7 +24975,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ProductList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ProductList.js
   var ProductList = class extends YTNode {
     static type = "ProductList";
     contents;
@@ -24968,7 +24985,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SectionList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SectionList.js
   var SectionList = class extends YTNode {
     static type = "SectionList";
     contents;
@@ -24998,7 +25015,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ExpandableVideoDescriptionBody.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ExpandableVideoDescriptionBody.js
   var ExpandableVideoDescriptionBody = class extends YTNode {
     static type = "ExpandableVideoDescriptionBody";
     show_more_text;
@@ -25014,7 +25031,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchRefinementCard.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchRefinementCard.js
   var SearchRefinementCard = class extends YTNode {
     static type = "SearchRefinementCard";
     thumbnails;
@@ -25028,7 +25045,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GameCard.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GameCard.js
   var GameCard = class extends YTNode {
     static type = "GameCard";
     game;
@@ -25038,7 +25055,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HorizontalList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HorizontalList.js
   var HorizontalList = class extends YTNode {
     static type = "HorizontalList";
     visible_item_count;
@@ -25054,7 +25071,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoSummaryParagraphView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoSummaryParagraphView.js
   var VideoSummaryParagraphView = class extends YTNode {
     static type = "VideoSummaryParagraphView";
     text;
@@ -25064,7 +25081,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoSummaryContentView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoSummaryContentView.js
   var VideoSummaryContentView = class extends YTNode {
     static type = "VideoSummaryContentView";
     dislike_button_view;
@@ -25082,7 +25099,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ExpandableMetadata.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ExpandableMetadata.js
   var ExpandableMetadata = class extends YTNode {
     static type = "ExpandableMetadata";
     header;
@@ -25105,7 +25122,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MetadataBadge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MetadataBadge.js
   var MetadataBadge = class extends YTNode {
     static type = "MetadataBadge";
     icon_type;
@@ -25129,7 +25146,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayTimeStatus.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayTimeStatus.js
   var ThumbnailOverlayTimeStatus = class extends YTNode {
     static type = "ThumbnailOverlayTimeStatus";
     text;
@@ -25141,7 +25158,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Video.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Video.js
   var Video = class extends YTNode {
     static type = "Video";
     video_id;
@@ -25261,7 +25278,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoCard.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoCard.js
   var VideoCard = class extends Video {
     static type = "VideoCard";
     metadata_text;
@@ -25280,7 +25297,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ContentPreviewImageView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ContentPreviewImageView.js
   var ContentPreviewImageView = class extends YTNode {
     static type = "ContentPreviewImageView";
     image;
@@ -25292,7 +25309,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoAttributeView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoAttributeView.js
   var VideoAttributeView = class extends YTNode {
     static type = "VideoAttributeView";
     image;
@@ -25326,7 +25343,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HorizontalCardList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HorizontalCardList.js
   var HorizontalCardList = class extends YTNode {
     static type = "HorizontalCardList";
     cards;
@@ -25342,7 +25359,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Factoid.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Factoid.js
   var Factoid = class extends YTNode {
     static type = "Factoid";
     label;
@@ -25356,7 +25373,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/UploadTimeFactoid.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/UploadTimeFactoid.js
   var UploadTimeFactoid = class extends YTNode {
     static type = "UploadTimeFactoid";
     factoid;
@@ -25366,7 +25383,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ViewCountFactoid.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ViewCountFactoid.js
   var ViewCountFactoid = class extends YTNode {
     static type = "ViewCountFactoid";
     view_count_entity_key;
@@ -25380,7 +25397,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HypePointsFactoid.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HypePointsFactoid.js
   var HypePointsFactoid = class extends YTNode {
     static type = "HypePointsFactoid";
     factoid;
@@ -25390,7 +25407,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionHeader.js
   var VideoDescriptionHeader = class extends YTNode {
     static type = "VideoDescriptionHeader";
     channel;
@@ -25412,7 +25429,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionInfocardsSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionInfocardsSection.js
   var VideoDescriptionInfocardsSection = class extends YTNode {
     static type = "VideoDescriptionInfocardsSection";
     section_title;
@@ -25432,7 +25449,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/InfoRow.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/InfoRow.js
   var InfoRow = class extends YTNode {
     static type = "InfoRow";
     title;
@@ -25454,7 +25471,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompactVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompactVideo.js
   var CompactVideo = class extends YTNode {
     static type = "CompactVideo";
     video_id;
@@ -25543,7 +25560,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CarouselLockup.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CarouselLockup.js
   var CarouselLockup = class extends YTNode {
     static type = "CarouselLockup";
     info_rows;
@@ -25555,7 +25572,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionMusicSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionMusicSection.js
   var VideoDescriptionMusicSection = class extends YTNode {
     static type = "VideoDescriptionMusicSection";
     carousel_lockups;
@@ -25567,7 +25584,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionTranscriptSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionTranscriptSection.js
   var VideoDescriptionTranscriptSection = class extends YTNode {
     static type = "VideoDescriptionTranscriptSection";
     section_title;
@@ -25581,7 +25598,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/StructuredDescriptionPlaylistLockup.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/StructuredDescriptionPlaylistLockup.js
   var StructuredDescriptionPlaylistLockup = class extends YTNode {
     static type = "StructuredDescriptionPlaylistLockup";
     thumbnail;
@@ -25609,7 +25626,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionCourseSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoDescriptionCourseSection.js
   var VideoDescriptionCourseSection = class extends YTNode {
     static type = "VideoDescriptionCourseSection";
     section_title;
@@ -25621,7 +25638,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoAttributesSectionView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoAttributesSectionView.js
   var VideoAttributesSectionView = class extends YTNode {
     static type = "VideoAttributesSectionView";
     header_title;
@@ -25639,7 +25656,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HowThisWasMadeSectionView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HowThisWasMadeSectionView.js
   var HowThisWasMadeSectionView = class extends YTNode {
     static type = "HowThisWasMadeSectionView";
     section_title;
@@ -25656,7 +25673,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ReelShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ReelShelf.js
   var ReelShelf = class extends YTNode {
     static type = "ReelShelf";
     title;
@@ -25676,7 +25693,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MerchandiseShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MerchandiseShelf.js
   var MerchandiseShelf = class extends YTNode {
     static type = "MerchandiseShelf";
     title;
@@ -25694,7 +25711,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SectionHeaderView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SectionHeaderView.js
   var SectionHeaderView = class extends YTNode {
     static type = "SectionHeaderView";
     headline;
@@ -25704,7 +25721,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HypeFanCreditsSectionView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HypeFanCreditsSectionView.js
   var HypeFanCreditsSectionView = class extends YTNode {
     static type = "HypeFanCreditsSectionView";
     header;
@@ -25714,7 +25731,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/StructuredDescriptionContent.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/StructuredDescriptionContent.js
   var StructuredDescriptionContent = class extends YTNode {
     static type = "StructuredDescriptionContent";
     items;
@@ -25739,7 +25756,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EngagementPanelSectionList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EngagementPanelSectionList.js
   var EngagementPanelSectionList = class extends YTNode {
     static type = "EngagementPanelSectionList";
     header;
@@ -25762,7 +25779,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelTagline.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelTagline.js
   var ChannelTagline = class extends YTNode {
     static type = "ChannelTagline";
     content;
@@ -25791,7 +25808,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SubscriptionNotificationToggleButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SubscriptionNotificationToggleButton.js
   var SubscriptionNotificationToggleButton = class extends YTNode {
     static type = "SubscriptionNotificationToggleButton";
     states;
@@ -25809,7 +25826,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SubscribeButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SubscribeButton.js
   var SubscribeButton = class extends YTNode {
     static type = "SubscribeButton";
     button_text;
@@ -25861,7 +25878,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/C4TabbedHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/C4TabbedHeader.js
   var C4TabbedHeader = class extends YTNode {
     static type = "C4TabbedHeader";
     author;
@@ -25918,7 +25935,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CallToActionButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CallToActionButton.js
   var CallToActionButton = class extends YTNode {
     static type = "CallToActionButton";
     label;
@@ -25932,7 +25949,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Card.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Card.js
   var Card = class extends YTNode {
     static type = "Card";
     teaser;
@@ -25959,7 +25976,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CardCollection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CardCollection.js
   var CardCollection = class extends YTNode {
     static type = "CardCollection";
     cards;
@@ -25973,7 +25990,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CarouselHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CarouselHeader.js
   var CarouselHeader = class extends YTNode {
     static type = "CarouselHeader";
     contents;
@@ -25983,7 +26000,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CarouselItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CarouselItem.js
   var CarouselItem = class extends YTNode {
     static type = "CarouselItem";
     items;
@@ -26005,7 +26022,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TextCarouselItemView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TextCarouselItemView.js
   var TextCarouselItemView = class extends YTNode {
     static type = "TextCarouselItemView";
     icon_name;
@@ -26021,7 +26038,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CarouselItemView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CarouselItemView.js
   var CarouselItemView = class extends YTNode {
     static type = "CarouselItemView";
     item_type;
@@ -26033,7 +26050,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CarouselTitleView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CarouselTitleView.js
   var CarouselTitleView = class extends YTNode {
     static type = "CarouselTitleView";
     title;
@@ -26047,7 +26064,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Channel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Channel.js
   var Channel = class extends YTNode {
     static type = "Channel";
     id;
@@ -26076,7 +26093,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelAboutFullMetadata.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelAboutFullMetadata.js
   var ChannelAboutFullMetadata = class extends YTNode {
     static type = "ChannelAboutFullMetadata";
     id;
@@ -26112,7 +26129,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelAgeGate.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelAgeGate.js
   var ChannelAgeGate = class extends YTNode {
     static type = "ChannelAgeGate";
     channel_title;
@@ -26132,7 +26149,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelFeaturedContent.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelFeaturedContent.js
   var ChannelFeaturedContent = class extends YTNode {
     static type = "ChannelFeaturedContent";
     title;
@@ -26144,7 +26161,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelMetadata.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelMetadata.js
   var ChannelMetadata = class extends YTNode {
     static type = "ChannelMetadata";
     title;
@@ -26180,7 +26197,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelMobileHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelMobileHeader.js
   var ChannelMobileHeader = class extends YTNode {
     static type = "ChannelMobileHeader";
     title;
@@ -26190,7 +26207,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelOptions.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelOptions.js
   var ChannelOptions = class extends YTNode {
     static type = "ChannelOptions";
     avatar;
@@ -26206,7 +26223,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelOwnerEmptyState.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelOwnerEmptyState.js
   var ChannelOwnerEmptyState = class extends YTNode {
     static type = "ChannelOwnerEmptyState";
     illustration;
@@ -26218,7 +26235,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelSubMenu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelSubMenu.js
   var ChannelSubMenu = class extends YTNode {
     static type = "ChannelSubMenu";
     content_type_sub_menu_items;
@@ -26234,7 +26251,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelSwitcherHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelSwitcherHeader.js
   var ChannelSwitcherHeader = class extends YTNode {
     static type = "ChannelSwitcherHeader";
     title;
@@ -26248,7 +26265,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelThumbnailWithLink.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelThumbnailWithLink.js
   var ChannelThumbnailWithLink = class extends YTNode {
     static type = "ChannelThumbnailWithLink";
     thumbnails;
@@ -26269,7 +26286,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChannelVideoPlayer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChannelVideoPlayer.js
   var ChannelVideoPlayer = class extends YTNode {
     static type = "ChannelVideoPlayer";
     id;
@@ -26287,7 +26304,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Chapter.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Chapter.js
   var Chapter = class extends YTNode {
     static type = "Chapter";
     title;
@@ -26301,7 +26318,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChildVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChildVideo.js
   var ChildVideo = class extends YTNode {
     static type = "ChildVideo";
     id;
@@ -26320,7 +26337,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChipView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChipView.js
   var ChipView = class extends YTNode {
     static type = "ChipView";
     accessibility_hint;
@@ -26377,7 +26394,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChipBarView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChipBarView.js
   var ChipBarView = class extends YTNode {
     static type = "ChipBarView";
     chips;
@@ -26393,7 +26410,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChipCloudChip.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChipCloudChip.js
   var ChipCloudChip = class extends YTNode {
     static type = "ChipCloudChip";
     is_selected;
@@ -26409,7 +26426,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ChipCloud.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ChipCloud.js
   var ChipCloud = class extends YTNode {
     static type = "ChipCloud";
     chips;
@@ -26425,7 +26442,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ClientSideToggleMenuItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ClientSideToggleMenuItem.js
   var ClientSideToggleMenuItem = class extends YTNode {
     static type = "ClientSideToggleMenuItem";
     text;
@@ -26458,7 +26475,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CollaboratorInfoCardContent.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CollaboratorInfoCardContent.js
   var CollaboratorInfoCardContent = class extends YTNode {
     static type = "CollaboratorInfoCardContent";
     channel_avatar;
@@ -26476,7 +26493,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CollageHeroImage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CollageHeroImage.js
   var CollageHeroImage = class extends YTNode {
     static type = "CollageHeroImage";
     left;
@@ -26492,7 +26509,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailHoverOverlayView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailHoverOverlayView.js
   var ThumbnailHoverOverlayView = class extends YTNode {
     static type = "ThumbnailHoverOverlayView";
     icon_name;
@@ -26506,7 +26523,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailBadgeView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailBadgeView.js
   var ThumbnailBadgeView = class extends YTNode {
     static type = "ThumbnailBadgeView";
     icon_name;
@@ -26529,7 +26546,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayBadgeView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayBadgeView.js
   var ThumbnailOverlayBadgeView = class extends YTNode {
     static type = "ThumbnailOverlayBadgeView";
     badges;
@@ -26541,7 +26558,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailHoverOverlayToggleActionsView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailHoverOverlayToggleActionsView.js
   var ThumbnailHoverOverlayToggleActionsView = class extends YTNode {
     static type = "ThumbnailHoverOverlayToggleActionsView";
     buttons;
@@ -26551,7 +26568,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayProgressBarView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayProgressBarView.js
   var ThumbnailOverlayProgressBarView = class extends YTNode {
     static type = "ThumbnailOverlayProgressBarView";
     start_percent;
@@ -26561,7 +26578,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailBottomOverlayView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailBottomOverlayView.js
   var ThumbnailBottomOverlayView = class extends YTNode {
     static type = "ThumbnailBottomOverlayView";
     progress_bar;
@@ -26573,7 +26590,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailView.js
   var ThumbnailView = class extends YTNode {
     static type = "ThumbnailView";
     image;
@@ -26598,7 +26615,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CollectionThumbnailView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CollectionThumbnailView.js
   var CollectionThumbnailView = class extends YTNode {
     static type = "CollectionThumbnailView";
     primary_thumbnail;
@@ -26615,7 +26632,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/AddToPlaylistCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/AddToPlaylistCommand.js
   var AddToPlaylistCommand = class extends YTNode {
     static type = "AddToPlaylistCommand";
     open_miniplayer;
@@ -26633,7 +26650,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/ContinuationCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/ContinuationCommand.js
   var ContinuationCommand = class extends YTNode {
     static type = "ContinuationCommand";
     #data;
@@ -26682,7 +26699,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/GetKidsBlocklistPickerCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/GetKidsBlocklistPickerCommand.js
   var API_PATH = "kids/get_kids_blocklist_picker";
   var GetKidsBlocklistPickerCommand = class extends YTNode {
     static type = "GetKidsBlocklistPickerCommand";
@@ -26702,7 +26719,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/RunAttestationCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/RunAttestationCommand.js
   var RunAttestationCommand = class extends YTNode {
     static type = "RunAttestationCommand";
     engagement_type;
@@ -26725,7 +26742,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/ShowDialogCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/ShowDialogCommand.js
   var ShowDialogCommand = class extends YTNode {
     static type = "ShowDialogCommand";
     inline_content;
@@ -26737,7 +26754,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/ShowSheetCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/ShowSheetCommand.js
   var ShowSheetCommand = class extends YTNode {
     static type = "ShowSheetCommand";
     inline_content;
@@ -26749,7 +26766,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/commands/UpdateEngagementPanelContentCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/commands/UpdateEngagementPanelContentCommand.js
   var UpdateEngagementPanelContentCommand = class extends YTNode {
     static type = "UpdateEngagementPanelContentCommand";
     content_source_panel_identifier;
@@ -26761,7 +26778,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/AuthorCommentBadge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/AuthorCommentBadge.js
   var AuthorCommentBadge = class extends YTNode {
     static type = "AuthorCommentBadge";
     #data;
@@ -26785,7 +26802,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/EmojiPicker.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/EmojiPicker.js
   var EmojiPicker = class extends YTNode {
     static type = "EmojiPicker";
     id;
@@ -26819,7 +26836,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentDialog.js
   var CommentDialog = class extends YTNode {
     static type = "CommentDialog";
     editable_text;
@@ -26841,7 +26858,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentReplies.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentReplies.js
   var CommentReplies = class extends YTNode {
     static type = "CommentReplies";
     contents;
@@ -26859,7 +26876,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentReplyDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentReplyDialog.js
   var CommentReplyDialog = class extends YTNode {
     static type = "CommentReplyDialog";
     reply_button;
@@ -26877,7 +26894,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsSimplebox.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsSimplebox.js
   var CommentsSimplebox = class extends YTNode {
     static type = "CommentsSimplebox";
     simplebox_avatar;
@@ -26889,7 +26906,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsEntryPointTeaser.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsEntryPointTeaser.js
   var CommentsEntryPointTeaser = class extends YTNode {
     static type = "CommentsEntryPointTeaser";
     teaser_avatar;
@@ -26905,7 +26922,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsEntryPointHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsEntryPointHeader.js
   var CommentsEntryPointHeader = class extends YTNode {
     static type = "CommentsEntryPointHeader";
     header;
@@ -26937,7 +26954,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentsHeader.js
   var CommentsHeader = class extends YTNode {
     static type = "CommentsHeader";
     title;
@@ -26965,7 +26982,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentSimplebox.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentSimplebox.js
   var CommentSimplebox = class extends YTNode {
     static type = "CommentSimplebox";
     submit_button;
@@ -26983,7 +27000,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/VoiceReplyContainerView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/VoiceReplyContainerView.js
   var VoiceReplyContainerView = class extends YTNode {
     static type = "VoiceReplyContainerView";
     voice_reply_unavailable_text;
@@ -26995,7 +27012,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentView.js
   var CommentView = class extends YTNode {
     static type = "CommentView";
     #actions;
@@ -27194,7 +27211,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/CommentThread.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/CommentThread.js
   var CommentThread = class extends YTNode {
     static type = "CommentThread";
     comment;
@@ -27265,7 +27282,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/PdgCommentChip.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/PdgCommentChip.js
   var PdgCommentChip = class extends YTNode {
     static type = "PdgCommentChip";
     text;
@@ -27284,7 +27301,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/comments/SponsorCommentBadge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/comments/SponsorCommentBadge.js
   var SponsorCommentBadge = class extends YTNode {
     static type = "SponsorCommentBadge";
     custom_badge;
@@ -27296,7 +27313,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompactChannel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompactChannel.js
   var CompactChannel = class extends YTNode {
     static type = "CompactChannel";
     title;
@@ -27322,7 +27339,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistCustomThumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistCustomThumbnail.js
   var PlaylistCustomThumbnail = class extends YTNode {
     static type = "PlaylistCustomThumbnail";
     thumbnail;
@@ -27332,7 +27349,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistVideoThumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistVideoThumbnail.js
   var PlaylistVideoThumbnail = class extends YTNode {
     static type = "PlaylistVideoThumbnail";
     thumbnail;
@@ -27342,7 +27359,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Playlist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Playlist.js
   var Playlist = class extends YTNode {
     static type = "Playlist";
     id;
@@ -27382,7 +27399,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompactMix.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompactMix.js
   var CompactMix = class extends Playlist {
     static type = "CompactMix";
     constructor(data) {
@@ -27390,7 +27407,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompactMovie.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompactMovie.js
   var CompactMovie = class extends YTNode {
     static type = "CompactMovie";
     id;
@@ -27425,7 +27442,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompactPlaylist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompactPlaylist.js
   var CompactPlaylist = class extends Playlist {
     static type = "CompactPlaylist";
     constructor(data) {
@@ -27434,7 +27451,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
   };
   var CompactPlaylist_default = CompactPlaylist;
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompactStation.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompactStation.js
   var CompactStation = class extends YTNode {
     static type = "CompactStation";
     title;
@@ -27452,7 +27469,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CompositeVideoPrimaryInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CompositeVideoPrimaryInfo.js
   var CompositeVideoPrimaryInfo = class extends YTNode {
     static type = "CompositeVideoPrimaryInfo";
     constructor(_data) {
@@ -27460,7 +27477,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ConfirmDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ConfirmDialog.js
   var ConfirmDialog = class extends YTNode {
     static type = "ConfirmDialog";
     title;
@@ -27476,7 +27493,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ContentMetadataView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ContentMetadataView.js
   var ContentMetadataView = class extends YTNode {
     static type = "ContentMetadataView";
     metadata_rows;
@@ -27495,7 +27512,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ContinuationItemView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ContinuationItemView.js
   var ContinuationItemView = class extends YTNode {
     static type = "ContinuationItemView";
     trigger;
@@ -27507,7 +27524,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Message.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Message.js
   var Message = class extends YTNode {
     static type = "Message";
     text;
@@ -27517,7 +27534,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ConversationBar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ConversationBar.js
   var ConversationBar = class extends YTNode {
     static type = "ConversationBar";
     availability_message;
@@ -27527,7 +27544,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CopyLink.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CopyLink.js
   var CopyLink = class extends YTNode {
     static type = "CopyLink";
     copy_button;
@@ -27541,7 +27558,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DropdownView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DropdownView.js
   var DropdownView = class extends YTNode {
     static type = "DropdownView";
     label;
@@ -27570,7 +27587,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TextFieldView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TextFieldView.js
   var TextFieldView = class extends YTNode {
     static type = "TextFieldView";
     display_properties;
@@ -27606,7 +27623,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/CreatePlaylistDialogFormView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/CreatePlaylistDialogFormView.js
   var CreatePlaylistDialogFormView = class extends YTNode {
     static type = "CreatePlaylistDialogFormView";
     playlist_title;
@@ -27626,7 +27643,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DecoratedAvatarView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DecoratedAvatarView.js
   var DecoratedAvatarView = class extends YTNode {
     static type = "DecoratedAvatarView";
     avatar;
@@ -27640,7 +27657,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HeatMarker.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HeatMarker.js
   var HeatMarker = class extends YTNode {
     static type = "HeatMarker";
     time_range_start_millis;
@@ -27654,7 +27671,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TimedMarkerDecoration.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TimedMarkerDecoration.js
   var TimedMarkerDecoration = class extends YTNode {
     static type = "TimedMarkerDecoration";
     visible_time_range_start_millis;
@@ -27672,7 +27689,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Heatmap.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Heatmap.js
   var Heatmap = class extends YTNode {
     static type = "Heatmap";
     max_height_dp;
@@ -27690,7 +27707,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MultiMarkersPlayerBar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MultiMarkersPlayerBar.js
   var Marker = class extends YTNode {
     static type = "Marker";
     marker_key;
@@ -27718,7 +27735,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DecoratedPlayerBar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DecoratedPlayerBar.js
   var DecoratedPlayerBar = class extends YTNode {
     static type = "DecoratedPlayerBar";
     player_bar;
@@ -27730,7 +27747,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DefaultPromoPanel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DefaultPromoPanel.js
   var DefaultPromoPanel = class extends YTNode {
     static type = "DefaultPromoPanel";
     title;
@@ -27760,7 +27777,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DescriptionPreviewView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DescriptionPreviewView.js
   var DescriptionPreviewView = class extends YTNode {
     static type = "DescriptionPreviewView";
     description;
@@ -27795,7 +27812,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DialogHeaderView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DialogHeaderView.js
   var DialogHeaderView = class extends YTNode {
     static type = "DialogHeaderView";
     headline;
@@ -27805,7 +27822,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PanelFooterView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PanelFooterView.js
   var PanelFooterView = class extends YTNode {
     static type = "PanelFooterView";
     primary_button;
@@ -27819,7 +27836,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/FormFooterView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/FormFooterView.js
   var FormFooterView = class extends YTNode {
     static type = "FormFooterView";
     panel_footer;
@@ -27833,7 +27850,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DownloadListItemView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DownloadListItemView.js
   var DownloadListItemView = class extends YTNode {
     static type = "DownloadListItemView";
     renderer_context;
@@ -27845,7 +27862,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ListView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ListView.js
   var ListView = class extends YTNode {
     static type = "ListView";
     items;
@@ -27859,7 +27876,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DialogView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DialogView.js
   var DialogView = class extends YTNode {
     static type = "DialogView";
     header;
@@ -27873,7 +27890,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DidYouMean.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DidYouMean.js
   var DidYouMean = class extends YTNode {
     static type = "DidYouMean";
     text;
@@ -27887,7 +27904,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DismissableDialogContentSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DismissableDialogContentSection.js
   var DismissableDialogContentSection = class extends YTNode {
     static type = "DismissableDialogContentSection";
     title;
@@ -27899,7 +27916,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DismissableDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DismissableDialog.js
   var DismissableDialog = class extends YTNode {
     static type = "DismissableDialog";
     title;
@@ -27915,7 +27932,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/DynamicTextView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/DynamicTextView.js
   var DynamicTextView = class extends YTNode {
     static type = "DynamicTextView";
     text;
@@ -27927,7 +27944,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/ChildElement.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/ChildElement.js
   var ChildElement = class _ChildElement extends YTNode {
     static type = "ChildElement";
     text;
@@ -27945,7 +27962,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Element.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Element.js
   var Element = class _Element extends YTNode {
     static type = "Element";
     model;
@@ -27963,7 +27980,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EmergencyOnebox.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EmergencyOnebox.js
   var EmergencyOnebox = class extends YTNode {
     static type = "EmergencyOnebox";
     title;
@@ -27977,7 +27994,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EmojiPickerCategory.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EmojiPickerCategory.js
   var EmojiPickerCategory = class extends YTNode {
     static type = "EmojiPickerCategory";
     category_id;
@@ -27995,7 +28012,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EmojiPickerCategoryButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EmojiPickerCategoryButton.js
   var EmojiPickerCategoryButton = class extends YTNode {
     static type = "EmojiPickerCategoryButton";
     category_id;
@@ -28011,7 +28028,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EmojiPickerUpsellCategory.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EmojiPickerUpsellCategory.js
   var EmojiPickerUpsellCategory = class extends YTNode {
     static type = "EmojiPickerUpsellCategory";
     category_id;
@@ -28031,7 +28048,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/AddToPlaylistServiceEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/AddToPlaylistServiceEndpoint.js
   var API_PATH2 = "playlist/get_add_to_playlist";
   var AddToPlaylistServiceEndpoint = class extends YTNode {
     static type = "AddToPlaylistServiceEndpoint";
@@ -28055,7 +28072,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/AddToPlaylistEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/AddToPlaylistEndpoint.js
   var AddToPlaylistEndpoint = class extends AddToPlaylistServiceEndpoint {
     static type = "AddToPlaylistEndpoint";
     constructor(data) {
@@ -28063,7 +28080,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/BrowseEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/BrowseEndpoint.js
   var API_PATH3 = "browse";
   var BrowseEndpoint = class extends YTNode {
     static type = "BrowseEndpoint";
@@ -28106,7 +28123,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/CreateCommentEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/CreateCommentEndpoint.js
   var API_PATH4 = "comment/create_comment";
   var CreateCommentEndpoint = class extends YTNode {
     static type = "CreateCommentEndpoint";
@@ -28142,7 +28159,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/CreatePlaylistServiceEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/CreatePlaylistServiceEndpoint.js
   var API_PATH5 = "playlist/create";
   var CreatePlaylistServiceEndpoint = class extends YTNode {
     static type = "CreatePlaylistServiceEndpoint";
@@ -28172,7 +28189,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/DeletePlaylistEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/DeletePlaylistEndpoint.js
   var API_PATH6 = "playlist/delete";
   var DeletePlaylistEndpoint = class extends YTNode {
     static type = "DeletePlaylistEndpoint";
@@ -28192,7 +28209,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/FeedbackEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/FeedbackEndpoint.js
   var API_PATH7 = "feedback";
   var FeedbackEndpoint = class extends YTNode {
     static type = "FeedbackEndpoint";
@@ -28216,7 +28233,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/GetAccountsListInnertubeEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/GetAccountsListInnertubeEndpoint.js
   var API_PATH8 = "account/accounts_list";
   var GetAccountsListInnertubeEndpoint = class extends YTNode {
     static type = "GetAccountsListInnertubeEndpoint";
@@ -28257,7 +28274,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/HideEngagementPanelEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/HideEngagementPanelEndpoint.js
   var HideEngagementPanelEndpoint = class extends YTNode {
     static type = "HideEngagementPanelEndpoint";
     panel_identifier;
@@ -28267,7 +28284,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/LikeEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/LikeEndpoint.js
   var LIKE_API_PATH = "like/like";
   var DISLIKE_API_PATH = "like/dislike";
   var REMOVE_LIKE_API_PATH = "like/removelike";
@@ -28304,7 +28321,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/LiveChatItemContextMenuEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/LiveChatItemContextMenuEndpoint.js
   var API_PATH9 = "live_chat/get_item_context_menu";
   var LiveChatItemContextMenuEndpoint = class extends YTNode {
     static type = "LiveChatItemContextMenuEndpoint";
@@ -28324,7 +28341,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/ModifyChannelNotificationPreferenceEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/ModifyChannelNotificationPreferenceEndpoint.js
   var API_PATH10 = "notification/modify_channel_preference";
   var ModifyChannelNotificationPreferenceEndpoint = class extends YTNode {
     static type = "ModifyChannelNotificationPreferenceEndpoint";
@@ -28346,7 +28363,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/PerformCommentActionEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/PerformCommentActionEndpoint.js
   var API_PATH11 = "comment/perform_comment_action";
   var PerformCommentActionEndpoint = class extends YTNode {
     static type = "PerformCommentActionEndpoint";
@@ -28368,7 +28385,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/PlaylistEditEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/PlaylistEditEndpoint.js
   var API_PATH12 = "browse/edit_playlist";
   var PlaylistEditEndpoint = class extends YTNode {
     static type = "PlaylistEditEndpoint";
@@ -28392,7 +28409,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/WatchEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/WatchEndpoint.js
   var API_PATH13 = "player";
   var WatchEndpoint = class extends YTNode {
     static type = "WatchEndpoint";
@@ -28424,7 +28441,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/PrefetchWatchCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/PrefetchWatchCommand.js
   var PrefetchWatchCommand = class extends WatchEndpoint {
     static type = "PrefetchWatchCommand";
     constructor(data) {
@@ -28432,7 +28449,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/ReelWatchEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/ReelWatchEndpoint.js
   var API_PATH14 = "reel/reel_item_watch";
   var ReelWatchEndpoint = class extends YTNode {
     static type = "ReelWatchEndpoint";
@@ -28468,7 +28485,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/SearchEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/SearchEndpoint.js
   var API_PATH15 = "search";
   var SearchEndpoint = class extends YTNode {
     static type = "SearchEndpoint";
@@ -28494,7 +28511,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShareEntityServiceEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShareEntityServiceEndpoint.js
   var API_PATH16 = "share/get_share_panel";
   var ShareEntityServiceEndpoint = class extends YTNode {
     static type = "ShareEntityServiceEndpoint";
@@ -28516,7 +28533,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShareEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShareEndpoint.js
   var ShareEndpoint = class extends ShareEntityServiceEndpoint {
     static type = "ShareEndpoint";
     constructor(data) {
@@ -28524,7 +28541,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShareEntityEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShareEntityEndpoint.js
   var ShareEntityEndpoint = class extends ShareEntityServiceEndpoint {
     static type = "ShareEntityEndpoint";
     constructor(data) {
@@ -28532,7 +28549,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShowEngagementPanelEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/ShowEngagementPanelEndpoint.js
   var ShowEngagementPanelEndpoint = class extends YTNode {
     static type = "ShowEngagementPanelEndpoint";
     panel_identifier;
@@ -28544,7 +28561,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/SignalServiceEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/SignalServiceEndpoint.js
   var SignalServiceEndpoint = class extends YTNode {
     static type = "SignalServiceEndpoint";
     actions;
@@ -28561,7 +28578,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/SubscribeEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/SubscribeEndpoint.js
   var API_PATH17 = "subscription/subscribe";
   var SubscribeEndpoint = class extends YTNode {
     static type = "SubscribeEndpoint";
@@ -28589,7 +28606,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/UnsubscribeEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/UnsubscribeEndpoint.js
   var API_PATH18 = "subscription/unsubscribe";
   var UnsubscribeEndpoint = class extends YTNode {
     static type = "UnsubscribeEndpoint";
@@ -28613,7 +28630,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/endpoints/WatchNextEndpoint.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/endpoints/WatchNextEndpoint.js
   var API_PATH19 = "next";
   var WatchNextEndpoint = class extends YTNode {
     static type = "WatchNextEndpoint";
@@ -28641,7 +28658,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Endscreen.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Endscreen.js
   var Endscreen = class extends YTNode {
     static type = "Endscreen";
     elements;
@@ -28653,7 +28670,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EndscreenElement.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EndscreenElement.js
   var EndscreenElement = class extends YTNode {
     static type = "EndscreenElement";
     style;
@@ -28713,7 +28730,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EndScreenPlaylist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EndScreenPlaylist.js
   var EndScreenPlaylist = class extends YTNode {
     static type = "EndScreenPlaylist";
     id;
@@ -28733,7 +28750,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/EndScreenVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/EndScreenVideo.js
   var EndScreenVideo = class extends YTNode {
     static type = "EndScreenVideo";
     id;
@@ -28762,7 +28779,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ExpandableTab.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ExpandableTab.js
   var ExpandableTab = class extends YTNode {
     static type = "ExpandableTab";
     title;
@@ -28778,7 +28795,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ExpandedShelfContents.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ExpandedShelfContents.js
   var ExpandedShelfContents = class extends YTNode {
     static type = "ExpandedShelfContents";
     items;
@@ -28792,7 +28809,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/FancyDismissibleDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/FancyDismissibleDialog.js
   var FancyDismissibleDialog = class extends YTNode {
     static type = "FancyDismissibleDialog";
     dialog_message;
@@ -28804,7 +28821,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/FeedFilterChipBar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/FeedFilterChipBar.js
   var FeedFilterChipBar = class extends YTNode {
     static type = "FeedFilterChipBar";
     contents;
@@ -28814,7 +28831,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/FeedNudge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/FeedNudge.js
   var FeedNudge = class extends YTNode {
     static type = "FeedNudge";
     title;
@@ -28834,7 +28851,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/FeedTabbedHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/FeedTabbedHeader.js
   var FeedTabbedHeader = class extends YTNode {
     static type = "FeedTabbedHeader";
     title;
@@ -28844,7 +28861,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ToggleFormField.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ToggleFormField.js
   var ToggleFormField = class extends YTNode {
     static type = "ToggleFormField";
     label;
@@ -28862,7 +28879,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Form.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Form.js
   var Form = class extends YTNode {
     static type = "Form";
     fields;
@@ -28872,7 +28889,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/FormPopup.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/FormPopup.js
   var FormPopup = class extends YTNode {
     static type = "FormPopup";
     title;
@@ -28886,7 +28903,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GameDetails.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GameDetails.js
   var GameDetails = class extends YTNode {
     static type = "GameDetails";
     title;
@@ -28904,7 +28921,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Grid.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Grid.js
   var Grid = class extends YTNode {
     static type = "Grid";
     items;
@@ -28936,7 +28953,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridChannel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridChannel.js
   var GridChannel = class extends YTNode {
     static type = "GridChannel";
     id;
@@ -28959,7 +28976,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridHeader.js
   var GridHeader = class extends YTNode {
     static type = "GridHeader";
     title;
@@ -28969,7 +28986,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridMix.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridMix.js
   var GridMix = class extends YTNode {
     static type = "GridMix";
     id;
@@ -28995,7 +29012,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridMovie.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridMovie.js
   var GridMovie = class extends YTNode {
     static type = "GridMovie";
     id;
@@ -29020,7 +29037,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridPlaylist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridPlaylist.js
   var GridPlaylist = class extends YTNode {
     static type = "GridPlaylist";
     id;
@@ -29052,7 +29069,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridShelfView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridShelfView.js
   var GridShelfView = class extends YTNode {
     static type = "GridShelfView";
     contents;
@@ -29074,7 +29091,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ShowCustomThumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ShowCustomThumbnail.js
   var ShowCustomThumbnail = class extends YTNode {
     static type = "ShowCustomThumbnail";
     thumbnail;
@@ -29084,7 +29101,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayBottomPanel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayBottomPanel.js
   var ThumbnailOverlayBottomPanel = class extends YTNode {
     static type = "ThumbnailOverlayBottomPanel";
     text;
@@ -29100,7 +29117,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridShow.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridShow.js
   var GridShow = class extends YTNode {
     static type = "GridShow";
     title;
@@ -29120,7 +29137,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GridVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GridVideo.js
   var GridVideo = class extends YTNode {
     static type = "GridVideo";
     video_id;
@@ -29174,7 +29191,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GuideEntry.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GuideEntry.js
   var GuideEntry = class extends YTNode {
     static type = "GuideEntry";
     title;
@@ -29200,7 +29217,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GuideCollapsibleEntry.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GuideCollapsibleEntry.js
   var GuideCollapsibleEntry = class extends YTNode {
     static type = "GuideCollapsibleEntry";
     expander_item;
@@ -29214,7 +29231,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GuideCollapsibleSectionEntry.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GuideCollapsibleSectionEntry.js
   var GuideCollapsibleSectionEntry = class extends YTNode {
     static type = "GuideCollapsibleSectionEntry";
     header_entry;
@@ -29230,7 +29247,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GuideDownloadsEntry.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GuideDownloadsEntry.js
   var GuideDownloadsEntry = class extends GuideEntry {
     static type = "GuideDownloadsEntry";
     always_show;
@@ -29240,7 +29257,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GuideSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GuideSection.js
   var GuideSection = class extends YTNode {
     static type = "GuideSection";
     title;
@@ -29254,12 +29271,12 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/GuideSubscriptionsSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/GuideSubscriptionsSection.js
   var GuideSubscriptionsSection = class extends GuideSection {
     static type = "GuideSubscriptionsSection";
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HashtagHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HashtagHeader.js
   var HashtagHeader = class extends YTNode {
     static type = "HashtagHeader";
     hashtag;
@@ -29271,7 +29288,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HashtagTile.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HashtagTile.js
   var HashtagTile = class extends YTNode {
     static type = "HashtagTile";
     hashtag;
@@ -29293,7 +29310,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HeroPlaylistThumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HeroPlaylistThumbnail.js
   var HeroPlaylistThumbnail = class extends YTNode {
     static type = "HeroPlaylistThumbnail";
     thumbnails;
@@ -29305,7 +29322,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HighlightsCarousel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HighlightsCarousel.js
   var Panel = class extends YTNode {
     static type = "Panel";
     thumbnail;
@@ -29352,7 +29369,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchSuggestion.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchSuggestion.js
   var SearchSuggestion = class extends YTNode {
     static type = "SearchSuggestion";
     suggestion;
@@ -29372,7 +29389,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HistorySuggestion.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HistorySuggestion.js
   var HistorySuggestion = class extends SearchSuggestion {
     static type = "HistorySuggestion";
     constructor(data) {
@@ -29380,7 +29397,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/HorizontalMovieList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/HorizontalMovieList.js
   var HorizontalMovieList = class extends YTNode {
     static type = "HorizontalMovieList";
     items;
@@ -29398,7 +29415,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/IconLink.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/IconLink.js
   var IconLink = class extends YTNode {
     static type = "IconLink";
     icon_type;
@@ -29414,7 +29431,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ImageBannerView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ImageBannerView.js
   var ImageBannerView = class extends YTNode {
     static type = "ImageBannerView";
     image;
@@ -29426,7 +29443,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/IncludingResultsFor.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/IncludingResultsFor.js
   var IncludingResultsFor = class extends YTNode {
     static type = "IncludingResultsFor";
     including_results_for;
@@ -29446,7 +29463,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/InfoPanelContent.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/InfoPanelContent.js
   var InfoPanelContent = class extends YTNode {
     static type = "InfoPanelContent";
     title;
@@ -29476,7 +29493,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/InfoPanelContainer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/InfoPanelContainer.js
   var InfoPanelContainer = class extends YTNode {
     static type = "InfoPanelContainer";
     title;
@@ -29501,7 +29518,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/InteractiveTabbedHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/InteractiveTabbedHeader.js
   var InteractiveTabbedHeader = class extends YTNode {
     static type = "InteractiveTabbedHeader";
     header_type;
@@ -29527,7 +29544,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ItemSectionHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ItemSectionHeader.js
   var ItemSectionHeader = class extends YTNode {
     static type = "ItemSectionHeader";
     title;
@@ -29537,7 +29554,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ItemSectionTab.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ItemSectionTab.js
   var ItemSectionTab = class extends YTNode {
     static type = "Tab";
     title;
@@ -29551,7 +29568,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ItemSectionTabbedHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ItemSectionTabbedHeader.js
   var ItemSectionTabbedHeader = class extends YTNode {
     static type = "ItemSectionTabbedHeader";
     title;
@@ -29567,7 +29584,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SortFilterHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SortFilterHeader.js
   var SortFilterHeader = class extends YTNode {
     static type = "SortFilterHeader";
     filter_menu;
@@ -29577,7 +29594,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ItemSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ItemSection.js
   var ItemSection = class extends YTNode {
     static type = "ItemSection";
     header;
@@ -29597,7 +29614,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChat.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChat.js
   var LiveChat = class extends YTNode {
     static type = "LiveChat";
     header;
@@ -29621,7 +29638,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerHeader.js
   var LiveChatBannerHeader = class extends YTNode {
     static type = "LiveChatBannerHeader";
     text;
@@ -29637,7 +29654,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBanner.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBanner.js
   var LiveChatBanner = class extends YTNode {
     static type = "LiveChatBanner";
     header;
@@ -29673,7 +29690,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/AddBannerToLiveChatCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/AddBannerToLiveChatCommand.js
   var AddBannerToLiveChatCommand = class extends YTNode {
     static type = "AddBannerToLiveChatCommand";
     banner;
@@ -29683,7 +29700,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/AddChatItemAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/AddChatItemAction.js
   var AddChatItemAction = class extends YTNode {
     static type = "AddChatItemAction";
     item;
@@ -29697,7 +29714,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/AddLiveChatTickerItemAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/AddLiveChatTickerItemAction.js
   var AddLiveChatTickerItemAction = class extends YTNode {
     static type = "AddLiveChatTickerItemAction";
     item;
@@ -29710,7 +29727,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/DimChatItemAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/DimChatItemAction.js
   var DimChatItemAction = class extends YTNode {
     static type = "DimChatItemAction";
     client_assigned_id;
@@ -29720,7 +29737,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/BumperUserEduContentView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/BumperUserEduContentView.js
   var BumperUserEduContentView = class extends YTNode {
     static type = "BumperUserEduContentView";
     text;
@@ -29734,7 +29751,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/CreatorHeartView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/CreatorHeartView.js
   var CreatorHeartView = class extends YTNode {
     static type = "CreatorHeartView";
     creator_thumbnail;
@@ -29764,7 +29781,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatAutoModMessage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatAutoModMessage.js
   var LiveChatAutoModMessage = class extends YTNode {
     static type = "LiveChatAutoModMessage";
     menu_endpoint;
@@ -29784,7 +29801,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerChatSummary.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerChatSummary.js
   var LiveChatBannerChatSummary = class extends YTNode {
     static type = "LiveChatBannerChatSummary";
     id;
@@ -29802,7 +29819,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerPoll.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerPoll.js
   var LiveChatBannerPoll = class extends YTNode {
     static type = "LiveChatBannerPoll";
     poll_question;
@@ -29826,7 +29843,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerRedirect.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatBannerRedirect.js
   var LiveChatBannerRedirect = class extends YTNode {
     static type = "LiveChatBannerRedirect";
     banner_message;
@@ -29842,7 +29859,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatItemBumperView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatItemBumperView.js
   var LiveChatItemBumperView = class extends YTNode {
     static type = "LiveChatItemBumperView";
     content;
@@ -29852,7 +29869,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatMembershipItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatMembershipItem.js
   var LiveChatMembershipItem = class extends YTNode {
     static type = "LiveChatMembershipItem";
     id;
@@ -29886,7 +29903,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatModeChangeMessage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatModeChangeMessage.js
   var LiveChatModeChangeMessage = class extends YTNode {
     static type = "LiveChatModeChangeMessage";
     id;
@@ -29908,7 +29925,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/PdgReplyButtonView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/PdgReplyButtonView.js
   var PdgReplyButtonView = class extends YTNode {
     static type = "PdgReplyButtonView";
     reply_button;
@@ -29922,7 +29939,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatPaidMessage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatPaidMessage.js
   var LiveChatPaidMessage = class extends YTNode {
     static type = "LiveChatPaidMessage";
     id;
@@ -29976,7 +29993,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatPaidSticker.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatPaidSticker.js
   var LiveChatPaidSticker = class extends YTNode {
     static type = "LiveChatPaidSticker";
     id;
@@ -30018,7 +30035,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatPlaceholderItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatPlaceholderItem.js
   var LiveChatPlaceholderItem = class extends YTNode {
     static type = "LiveChatPlaceholderItem";
     id;
@@ -30030,7 +30047,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatProductItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatProductItem.js
   var LiveChatProductItem = class extends YTNode {
     static type = "LiveChatProductItem";
     title;
@@ -30066,7 +30083,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatRestrictedParticipation.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatRestrictedParticipation.js
   var LiveChatRestrictedParticipation = class extends YTNode {
     static type = "LiveChatRestrictedParticipation";
     message;
@@ -30080,7 +30097,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChatAuthorBadge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChatAuthorBadge.js
   var LiveChatAuthorBadge = class extends MetadataBadge {
     static type = "LiveChatAuthorBadge";
     custom_thumbnail;
@@ -30090,7 +30107,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatSponsorshipsHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatSponsorshipsHeader.js
   var LiveChatSponsorshipsHeader = class extends YTNode {
     static type = "LiveChatSponsorshipsHeader";
     author_name;
@@ -30112,7 +30129,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatSponsorshipsGiftPurchaseAnnouncement.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatSponsorshipsGiftPurchaseAnnouncement.js
   var LiveChatSponsorshipsGiftPurchaseAnnouncement = class extends YTNode {
     static type = "LiveChatSponsorshipsGiftPurchaseAnnouncement";
     id;
@@ -30128,7 +30145,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatSponsorshipsGiftRedemptionAnnouncement.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatSponsorshipsGiftRedemptionAnnouncement.js
   var LiveChatSponsorshipsGiftRedemptionAnnouncement = class extends YTNode {
     static type = "LiveChatSponsorshipsGiftRedemptionAnnouncement";
     id;
@@ -30150,7 +30167,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTextMessage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTextMessage.js
   var LiveChatTextMessage = class extends YTNode {
     static type = "LiveChatTextMessage";
     id;
@@ -30184,7 +30201,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTickerPaidMessageItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTickerPaidMessageItem.js
   var LiveChatTickerPaidMessageItem = class extends YTNode {
     static type = "LiveChatTickerPaidMessageItem";
     id;
@@ -30218,7 +30235,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTickerPaidStickerItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTickerPaidStickerItem.js
   var LiveChatTickerPaidStickerItem = class extends YTNode {
     static type = "LiveChatTickerPaidStickerItem";
     id;
@@ -30249,7 +30266,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTickerSponsorItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatTickerSponsorItem.js
   var LiveChatTickerSponsorItem = class extends YTNode {
     static type = "LiveChatTickerSponsorItem";
     id;
@@ -30265,7 +30282,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatViewerEngagementMessage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/LiveChatViewerEngagementMessage.js
   var LiveChatViewerEngagementMessage = class extends YTNode {
     static type = "LiveChatViewerEngagementMessage";
     id;
@@ -30297,7 +30314,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/items/PollHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/items/PollHeader.js
   var PollHeader = class extends YTNode {
     static type = "PollHeader";
     poll_question;
@@ -30315,7 +30332,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/LiveChatActionPanel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/LiveChatActionPanel.js
   var LiveChatActionPanel = class extends YTNode {
     static type = "LiveChatActionPanel";
     id;
@@ -30329,7 +30346,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/MarkChatItemAsDeletedAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/MarkChatItemAsDeletedAction.js
   var MarkChatItemAsDeletedAction = class extends YTNode {
     static type = "MarkChatItemAsDeletedAction";
     deleted_state_message;
@@ -30341,7 +30358,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/MarkChatItemsByAuthorAsDeletedAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/MarkChatItemsByAuthorAsDeletedAction.js
   var MarkChatItemsByAuthorAsDeletedAction = class extends YTNode {
     static type = "MarkChatItemsByAuthorAsDeletedAction";
     deleted_state_message;
@@ -30353,7 +30370,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/RemoveBannerForLiveChatCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/RemoveBannerForLiveChatCommand.js
   var RemoveBannerForLiveChatCommand = class extends YTNode {
     static type = "RemoveBannerForLiveChatCommand";
     target_action_id;
@@ -30363,7 +30380,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/RemoveChatItemAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/RemoveChatItemAction.js
   var RemoveChatItemAction = class extends YTNode {
     static type = "RemoveChatItemAction";
     target_item_id;
@@ -30373,7 +30390,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/RemoveChatItemByAuthorAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/RemoveChatItemByAuthorAction.js
   var RemoveChatItemByAuthorAction = class extends YTNode {
     static type = "RemoveChatItemByAuthorAction";
     external_channel_id;
@@ -30383,7 +30400,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/ReplaceChatItemAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/ReplaceChatItemAction.js
   var ReplaceChatItemAction = class extends YTNode {
     static type = "ReplaceChatItemAction";
     target_item_id;
@@ -30395,7 +30412,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/ReplaceLiveChatAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/ReplaceLiveChatAction.js
   var ReplaceLiveChatAction = class extends YTNode {
     static type = "ReplaceLiveChatAction";
     to_replace;
@@ -30407,7 +30424,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/ReplayChatItemAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/ReplayChatItemAction.js
   var ReplayChatItemAction = class extends YTNode {
     static type = "ReplayChatItemAction";
     actions;
@@ -30422,7 +30439,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/ShowLiveChatActionPanelAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/ShowLiveChatActionPanelAction.js
   var ShowLiveChatActionPanelAction = class extends YTNode {
     static type = "ShowLiveChatActionPanelAction";
     panel_to_show;
@@ -30432,7 +30449,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/ShowLiveChatDialogAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/ShowLiveChatDialogAction.js
   var ShowLiveChatDialogAction = class extends YTNode {
     static type = "ShowLiveChatDialogAction";
     dialog;
@@ -30442,7 +30459,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/ShowLiveChatTooltipCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/ShowLiveChatTooltipCommand.js
   var ShowLiveChatTooltipCommand = class extends YTNode {
     static type = "ShowLiveChatTooltipCommand";
     tooltip;
@@ -30452,7 +30469,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateDateTextAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateDateTextAction.js
   var UpdateDateTextAction = class extends YTNode {
     static type = "UpdateDateTextAction";
     date_text;
@@ -30462,7 +30479,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateDescriptionAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateDescriptionAction.js
   var UpdateDescriptionAction = class extends YTNode {
     static type = "UpdateDescriptionAction";
     description;
@@ -30472,7 +30489,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateLiveChatPollAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateLiveChatPollAction.js
   var UpdateLiveChatPollAction = class extends YTNode {
     static type = "UpdateLiveChatPollAction";
     poll_to_update;
@@ -30482,7 +30499,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateTitleAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateTitleAction.js
   var UpdateTitleAction = class extends YTNode {
     static type = "UpdateTitleAction";
     title;
@@ -30492,7 +30509,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateToggleButtonTextAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateToggleButtonTextAction.js
   var UpdateToggleButtonTextAction = class extends YTNode {
     static type = "UpdateToggleButtonTextAction";
     default_text;
@@ -30506,7 +30523,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoViewCount.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoViewCount.js
   var VideoViewCount = class extends YTNode {
     static type = "VideoViewCount";
     original_view_count;
@@ -30536,7 +30553,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateViewershipAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/livechat/UpdateViewershipAction.js
   var UpdateViewershipAction = class extends YTNode {
     static type = "UpdateViewershipAction";
     view_count_node;
@@ -30582,7 +30599,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChatDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChatDialog.js
   var LiveChatDialog = class extends YTNode {
     static type = "LiveChatDialog";
     confirm_button;
@@ -30594,7 +30611,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChatHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChatHeader.js
   var LiveChatHeader = class extends YTNode {
     static type = "LiveChatHeader";
     overflow_menu;
@@ -30608,7 +30625,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChatItemList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChatItemList.js
   var LiveChatItemList = class extends YTNode {
     static type = "LiveChatItemList";
     max_items_to_display;
@@ -30620,7 +30637,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChatMessageInput.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChatMessageInput.js
   var LiveChatMessageInput = class extends YTNode {
     static type = "LiveChatMessageInput";
     author_name;
@@ -30636,7 +30653,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChatParticipant.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChatParticipant.js
   var LiveChatParticipant = class extends YTNode {
     static type = "LiveChatParticipant";
     name;
@@ -30650,7 +30667,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LiveChatParticipantsList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LiveChatParticipantsList.js
   var LiveChatParticipantsList = class extends YTNode {
     static type = "LiveChatParticipantsList";
     title;
@@ -30662,7 +30679,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LockupMetadataView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LockupMetadataView.js
   var LockupMetadataView = class extends YTNode {
     static type = "LockupMetadataView";
     title;
@@ -30678,7 +30695,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/LockupView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/LockupView.js
   var LockupView = class extends YTNode {
     static type = "LockupView";
     content_image;
@@ -30696,7 +30713,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersListEntity.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MacroMarkersListEntity.js
   var MacroMarkersListEntity = class extends YTNode {
     static type = "MacroMarkersListEntity";
     marker_entity_key;
@@ -30754,7 +30771,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MenuNavigationItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MenuNavigationItem.js
   var MenuNavigationItem = class extends Button {
     static type = "MenuNavigationItem";
     constructor(data) {
@@ -30762,7 +30779,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MenuPopup.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MenuPopup.js
   var MenuPopup = class extends YTNode {
     static type = "MenuPopup";
     items;
@@ -30772,7 +30789,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Notification.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Notification.js
   var Notification = class extends YTNode {
     static type = "Notification";
     thumbnails;
@@ -30798,7 +30815,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MultiPageMenuNotificationSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MultiPageMenuNotificationSection.js
   var MultiPageMenuNotificationSection = class extends YTNode {
     static type = "MultiPageMenuNotificationSection";
     notification_section_title;
@@ -30816,7 +30833,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MusicMenuItemDivider.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MusicMenuItemDivider.js
   var MusicMenuItemDivider = class extends YTNode {
     static type = "MusicMenuItemDivider";
     constructor(_data) {
@@ -30824,7 +30841,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MusicMultiSelectMenuItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MusicMultiSelectMenuItem.js
   var MusicMultiSelectMenuItem = class extends YTNode {
     static type = "MusicMultiSelectMenuItem";
     title;
@@ -30846,7 +30863,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/MusicMultiSelectMenu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/MusicMultiSelectMenu.js
   var MusicMultiSelectMenu = class extends YTNode {
     static type = "MusicMultiSelectMenu";
     title;
@@ -30860,7 +30877,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/menus/SimpleMenuHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/menus/SimpleMenuHeader.js
   var SimpleMenuHeader = class extends YTNode {
     static type = "SimpleMenuHeader";
     title;
@@ -30872,7 +30889,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MerchandiseItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MerchandiseItem.js
   var MerchandiseItem = class extends YTNode {
     static type = "MerchandiseItem";
     title;
@@ -30902,7 +30919,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MetadataRow.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MetadataRow.js
   var MetadataRow = class extends YTNode {
     static type = "MetadataRow";
     title;
@@ -30914,7 +30931,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MetadataRowContainer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MetadataRowContainer.js
   var MetadataRowContainer = class extends YTNode {
     static type = "MetadataRowContainer";
     rows;
@@ -30926,7 +30943,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MetadataRowHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MetadataRowHeader.js
   var MetadataRowHeader = class extends YTNode {
     static type = "MetadataRowHeader";
     content;
@@ -30938,7 +30955,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MetadataScreen.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MetadataScreen.js
   var MetadataScreen = class extends YTNode {
     static type = "MetadataScreen";
     section_list;
@@ -30948,7 +30965,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MicroformatData.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MicroformatData.js
   var MicroformatData = class extends YTNode {
     static type = "MicroformatData";
     url_canonical;
@@ -31002,7 +31019,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Mix.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Mix.js
   var Mix = class extends Playlist {
     static type = "Mix";
     constructor(data) {
@@ -31010,7 +31027,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ModalWithTitleAndButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ModalWithTitleAndButton.js
   var ModalWithTitleAndButton = class extends YTNode {
     static type = "ModalWithTitleAndButton";
     title;
@@ -31024,7 +31041,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Movie.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Movie.js
   var Movie = class extends YTNode {
     static type = "Movie";
     id;
@@ -31064,7 +31081,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MovingThumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MovingThumbnail.js
   var MovingThumbnail = class extends YTNode {
     static type = "MovingThumbnail";
     constructor(data) {
@@ -31073,7 +31090,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicCardShelfHeaderBasic.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicCardShelfHeaderBasic.js
   var MusicCardShelfHeaderBasic = class extends YTNode {
     static type = "MusicCardShelfHeaderBasic";
     title;
@@ -31083,7 +31100,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicInlineBadge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicInlineBadge.js
   var MusicInlineBadge = class extends YTNode {
     static type = "MusicInlineBadge";
     icon_type;
@@ -31102,7 +31119,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicPlayButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicPlayButton.js
   var MusicPlayButton = class extends YTNode {
     static type = "MusicPlayButton";
     endpoint;
@@ -31136,7 +31153,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicItemThumbnailOverlay.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicItemThumbnailOverlay.js
   var MusicItemThumbnailOverlay = class extends YTNode {
     static type = "MusicItemThumbnailOverlay";
     content;
@@ -31150,7 +31167,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicThumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicThumbnail.js
   var MusicThumbnail = class extends YTNode {
     static type = "MusicThumbnail";
     contents;
@@ -31160,7 +31177,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicCardShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicCardShelf.js
   var MusicCardShelf = class extends YTNode {
     static type = "MusicCardShelf";
     thumbnail;
@@ -31194,7 +31211,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicCarouselShelfBasicHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicCarouselShelfBasicHeader.js
   var MusicCarouselShelfBasicHeader = class extends YTNode {
     static type = "MusicCarouselShelfBasicHeader";
     title;
@@ -31220,7 +31237,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicMultiRowListItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicMultiRowListItem.js
   var MusicMultiRowListItem = class extends YTNode {
     static type = "MusicMultiRowListItem";
     thumbnail;
@@ -31252,7 +31269,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicNavigationButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicNavigationButton.js
   var MusicNavigationButton = class extends YTNode {
     static type = "MusicNavigationButton";
     button_text;
@@ -31264,7 +31281,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveListItemFixedColumn.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveListItemFixedColumn.js
   var MusicResponsiveListItemFixedColumn = class extends YTNode {
     static type = "musicResponsiveListItemFlexColumnRenderer";
     title;
@@ -31276,7 +31293,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveListItemFlexColumn.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveListItemFlexColumn.js
   var MusicResponsiveListItemFlexColumn = class extends YTNode {
     static type = "MusicResponsiveListItemFlexColumn";
     title;
@@ -31288,7 +31305,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveListItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveListItem.js
   var MusicResponsiveListItem = class extends YTNode {
     static type = "MusicResponsiveListItem";
     flex_columns;
@@ -31506,7 +31523,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicTwoRowItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicTwoRowItem.js
   var MusicTwoRowItem = class extends YTNode {
     static type = "MusicTwoRowItem";
     title;
@@ -31601,7 +31618,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicCarouselShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicCarouselShelf.js
   var MusicCarouselShelf = class extends YTNode {
     static type = "MusicCarouselShelf";
     header;
@@ -31617,7 +31634,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicDescriptionShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicDescriptionShelf.js
   var MusicDescriptionShelf = class extends YTNode {
     static type = "MusicDescriptionShelf";
     description;
@@ -31637,7 +31654,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicDetailHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicDetailHeader.js
   var MusicDetailHeader = class extends YTNode {
     static type = "MusicDetailHeader";
     title;
@@ -31674,7 +31691,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicDownloadStateBadge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicDownloadStateBadge.js
   var MusicDownloadStateBadge = class extends YTNode {
     static type = "MusicDownloadStateBadge";
     playlist_id;
@@ -31686,7 +31703,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicEditablePlaylistDetailHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicEditablePlaylistDetailHeader.js
   var MusicEditablePlaylistDetailHeader = class extends YTNode {
     static type = "MusicEditablePlaylistDetailHeader";
     header;
@@ -31700,7 +31717,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicElementHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicElementHeader.js
   var MusicElementHeader = class extends YTNode {
     static type = "MusicElementHeader";
     element;
@@ -31710,7 +31727,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicHeader.js
   var MusicHeader = class extends YTNode {
     static type = "MusicHeader";
     header;
@@ -31726,7 +31743,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicImmersiveHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicImmersiveHeader.js
   var MusicImmersiveHeader = class extends YTNode {
     static type = "MusicImmersiveHeader";
     title;
@@ -31753,7 +31770,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicLargeCardItemCarousel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicLargeCardItemCarousel.js
   var ActionButton = class {
     static type = "ActionButton";
     icon_name;
@@ -31795,7 +31812,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicPlaylistEditHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicPlaylistEditHeader.js
   var MusicPlaylistEditHeader = class extends YTNode {
     static type = "MusicPlaylistEditHeader";
     title;
@@ -31817,7 +31834,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicPlaylistShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicPlaylistShelf.js
   var MusicPlaylistShelf = class extends YTNode {
     static type = "MusicPlaylistShelf";
     playlist_id;
@@ -31833,7 +31850,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistPanelVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistPanelVideo.js
   var PlaylistPanelVideo = class extends YTNode {
     static type = "PlaylistPanelVideo";
     title;
@@ -31883,7 +31900,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistPanelVideoWrapper.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistPanelVideoWrapper.js
   var PlaylistPanelVideoWrapper = class extends YTNode {
     static type = "PlaylistPanelVideoWrapper";
     primary;
@@ -31897,7 +31914,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistPanel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistPanel.js
   var PlaylistPanel = class extends YTNode {
     static type = "PlaylistPanel";
     title;
@@ -31923,7 +31940,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicQueue.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicQueue.js
   var MusicQueue = class extends YTNode {
     static type = "MusicQueue";
     content;
@@ -31933,7 +31950,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicResponsiveHeader.js
   var MusicResponsiveHeader = class extends YTNode {
     static type = "MusicResponsiveHeader";
     thumbnail;
@@ -31963,7 +31980,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicShelf.js
   var MusicShelf = class extends YTNode {
     static type = "MusicShelf";
     title;
@@ -31995,7 +32012,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicSideAlignedItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicSideAlignedItem.js
   var MusicSideAlignedItem = class extends YTNode {
     static type = "MusicSideAlignedItem";
     start_items;
@@ -32011,7 +32028,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicSortFilterButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicSortFilterButton.js
   var MusicSortFilterButton = class extends YTNode {
     static type = "MusicSortFilterButton";
     title;
@@ -32027,7 +32044,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicTastebuilderShelfThumbnail.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicTastebuilderShelfThumbnail.js
   var MusicTastebuilderShelfThumbnail = class extends YTNode {
     static type = "MusicTastebuilderShelfThumbnail";
     thumbnail;
@@ -32037,7 +32054,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicTastebuilderShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicTastebuilderShelf.js
   var MusicTasteBuilderShelf = class extends YTNode {
     static type = "MusicTasteBuilderShelf";
     thumbnail;
@@ -32055,7 +32072,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/MusicVisualHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/MusicVisualHeader.js
   var MusicVisualHeader = class extends YTNode {
     static type = "MusicVisualHeader";
     title;
@@ -32071,7 +32088,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/mweb/MobileTopbar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/mweb/MobileTopbar.js
   var MobileTopbar = class extends YTNode {
     static type = "MobileTopbar";
     placeholder_text;
@@ -32086,7 +32103,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/mweb/MultiPageMenuSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/mweb/MultiPageMenuSection.js
   var MultiPageMenuSection = class extends YTNode {
     static type = "MultiPageMenuSection";
     items;
@@ -32096,7 +32113,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/mweb/PivotBar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/mweb/PivotBar.js
   var PivotBar = class extends YTNode {
     static type = "PivotBar";
     items;
@@ -32106,7 +32123,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/mweb/PivotBarItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/mweb/PivotBarItem.js
   var PivotBarItem = class extends YTNode {
     static type = "PivotBarItem";
     pivot_identifier;
@@ -32133,7 +32150,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/mweb/TopbarMenuButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/mweb/TopbarMenuButton.js
   var TopbarMenuButton = class extends YTNode {
     static type = "TopbarMenuButton";
     icon_type;
@@ -32148,7 +32165,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/NotificationAction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/NotificationAction.js
   var NotificationAction = class extends YTNode {
     static type = "NotificationAction";
     response_text;
@@ -32158,7 +32175,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/OpenOnePickAddVideoModalCommand.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/OpenOnePickAddVideoModalCommand.js
   var OpenOnePickAddVideoModalCommand = class extends YTNode {
     static type = "OpenOnePickAddVideoModalCommand";
     list_id;
@@ -32172,7 +32189,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PageHeaderView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PageHeaderView.js
   var PageHeaderView = class extends YTNode {
     static type = "PageHeaderView";
     title;
@@ -32198,7 +32215,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PageHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PageHeader.js
   var PageHeader = class extends YTNode {
     static type = "PageHeader";
     page_title;
@@ -32210,7 +32227,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PageIndicatorView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PageIndicatorView.js
   var PageIndicatorView = class extends YTNode {
     static type = "PageIndicatorView";
     indicator_count;
@@ -32222,7 +32239,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PageIntroduction.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PageIntroduction.js
   var PageIntroduction = class extends YTNode {
     static type = "PageIntroduction";
     header_text;
@@ -32238,7 +32255,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PivotButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PivotButton.js
   var PivotButton = class extends YTNode {
     static type = "PivotButton";
     thumbnail;
@@ -32260,7 +32277,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerAnnotationsExpanded.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerAnnotationsExpanded.js
   var PlayerAnnotationsExpanded = class extends YTNode {
     static type = "PlayerAnnotationsExpanded";
     featured_channel;
@@ -32283,7 +32300,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerCaptchaView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerCaptchaView.js
   var PlayerCaptchaView = class extends YTNode {
     static type = "PlayerCaptchaView";
     captcha_loading_message;
@@ -32311,7 +32328,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerCaptionsTracklist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerCaptionsTracklist.js
   var PlayerCaptionsTracklist = class extends YTNode {
     static type = "PlayerCaptionsTracklist";
     caption_tracks;
@@ -32352,7 +32369,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerOverflow.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerOverflow.js
   var PlayerOverflow = class extends YTNode {
     static type = "PlayerOverflow";
     endpoint;
@@ -32364,7 +32381,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerControlsOverlay.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerControlsOverlay.js
   var PlayerControlsOverlay = class extends YTNode {
     static type = "PlayerControlsOverlay";
     overflow;
@@ -32374,7 +32391,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerErrorMessage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerErrorMessage.js
   var PlayerErrorMessage = class extends YTNode {
     static type = "PlayerErrorMessage";
     subreason;
@@ -32394,7 +32411,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerLegacyDesktopYpcOffer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerLegacyDesktopYpcOffer.js
   var PlayerLegacyDesktopYpcOffer = class extends YTNode {
     static type = "PlayerLegacyDesktopYpcOffer";
     title;
@@ -32410,7 +32427,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/YpcTrailer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/YpcTrailer.js
   var YpcTrailer = class extends YTNode {
     static type = "YpcTrailer";
     video_message;
@@ -32422,7 +32439,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerLegacyDesktopYpcTrailer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerLegacyDesktopYpcTrailer.js
   var PlayerLegacyDesktopYpcTrailer = class extends YTNode {
     static type = "PlayerLegacyDesktopYpcTrailer";
     video_id;
@@ -32448,7 +32465,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerLiveStoryboardSpec.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerLiveStoryboardSpec.js
   var PlayerLiveStoryboardSpec = class extends YTNode {
     static type = "PlayerLiveStoryboardSpec";
     board;
@@ -32466,7 +32483,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerMicroformat.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerMicroformat.js
   var PlayerMicroformat = class extends YTNode {
     static type = "PlayerMicroformat";
     title;
@@ -32518,7 +32535,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerOverlayAutoplay.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerOverlayAutoplay.js
   var PlayerOverlayAutoplay = class extends YTNode {
     static type = "PlayerOverlayAutoplay";
     title;
@@ -32553,7 +32570,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerOverlayVideoDetails.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerOverlayVideoDetails.js
   var PlayerOverlayVideoDetails = class extends YTNode {
     static type = "PlayerOverlayVideoDetails";
     title;
@@ -32565,7 +32582,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/WatchNextEndScreen.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/WatchNextEndScreen.js
   var WatchNextEndScreen = class extends YTNode {
     static type = "WatchNextEndScreen";
     results;
@@ -32577,7 +32594,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlayerOverlay.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlayerOverlay.js
   var PlayerOverlay = class extends YTNode {
     static type = "PlayerOverlay";
     end_screen;
@@ -32603,7 +32620,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistHeader.js
   var PlaylistHeader = class extends YTNode {
     static type = "PlaylistHeader";
     id;
@@ -32645,7 +32662,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistInfoCardContent.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistInfoCardContent.js
   var PlaylistInfoCardContent = class extends YTNode {
     static type = "PlaylistInfoCardContent";
     title;
@@ -32663,7 +32680,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistMetadata.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistMetadata.js
   var PlaylistMetadata = class extends YTNode {
     static type = "PlaylistMetadata";
     title;
@@ -32675,7 +32692,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistSidebar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistSidebar.js
   var PlaylistSidebar = class extends YTNode {
     static type = "PlaylistSidebar";
     items;
@@ -32689,7 +32706,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistSidebarPrimaryInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistSidebarPrimaryInfo.js
   var PlaylistSidebarPrimaryInfo = class extends YTNode {
     static type = "PlaylistSidebarPrimaryInfo";
     stats;
@@ -32709,7 +32726,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistSidebarSecondaryInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistSidebarSecondaryInfo.js
   var PlaylistSidebarSecondaryInfo = class extends YTNode {
     static type = "PlaylistSidebarSecondaryInfo";
     owner;
@@ -32721,7 +32738,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistThumbnailOverlay.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistThumbnailOverlay.js
   var PlaylistThumbnailOverlay = class extends YTNode {
     static type = "PlaylistThumbnailOverlay";
     icon_type;
@@ -32734,7 +32751,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistVideo.js
   var PlaylistVideo = class extends YTNode {
     static type = "PlaylistVideo";
     id;
@@ -32786,7 +32803,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PlaylistVideoList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PlaylistVideoList.js
   var PlaylistVideoList = class extends YTNode {
     static type = "PlaylistVideoList";
     id;
@@ -32802,7 +32819,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Poll.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Poll.js
   var Poll = class extends YTNode {
     static type = "Poll";
     choices;
@@ -32830,7 +32847,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Post.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Post.js
   var Post = class extends BackstagePost {
     static type = "Post";
     constructor(data) {
@@ -32838,7 +32855,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PostMultiImage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PostMultiImage.js
   var PostMultiImage = class extends YTNode {
     static type = "PostMultiImage";
     images;
@@ -32848,7 +32865,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/PremiereTrailerBadge.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/PremiereTrailerBadge.js
   var PremiereTrailerBadge = class extends YTNode {
     static type = "PremiereTrailerBadge";
     label;
@@ -32858,7 +32875,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ProductListHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ProductListHeader.js
   var ProductListHeader = class extends YTNode {
     static type = "ProductListHeader";
     title;
@@ -32870,7 +32887,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ProductListItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ProductListItem.js
   var ProductListItem = class extends YTNode {
     static type = "ProductListItem";
     title;
@@ -32894,7 +32911,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ProfileColumn.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ProfileColumn.js
   var ProfileColumn = class extends YTNode {
     static type = "ProfileColumn";
     items;
@@ -32908,7 +32925,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ProfileColumnStats.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ProfileColumnStats.js
   var ProfileColumnStats = class extends YTNode {
     static type = "ProfileColumnStats";
     items;
@@ -32922,7 +32939,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ProfileColumnStatsEntry.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ProfileColumnStatsEntry.js
   var ProfileColumnStatsEntry = class extends YTNode {
     static type = "ProfileColumnStatsEntry";
     label;
@@ -32934,7 +32951,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ProfileColumnUserInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ProfileColumnUserInfo.js
   var ProfileColumnUserInfo = class extends YTNode {
     static type = "ProfileColumnUserInfo";
     title;
@@ -32946,7 +32963,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Quiz.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Quiz.js
   var Quiz = class extends YTNode {
     static type = "Quiz";
     choices;
@@ -32961,7 +32978,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RecognitionShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RecognitionShelf.js
   var RecognitionShelf = class extends YTNode {
     static type = "RecognitionShelf";
     title;
@@ -32979,7 +32996,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ReelItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ReelItem.js
   var ReelItem = class extends YTNode {
     static type = "ReelItem";
     id;
@@ -33006,7 +33023,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ReelPlayerHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ReelPlayerHeader.js
   var ReelPlayerHeader = class extends YTNode {
     static type = "ReelPlayerHeader";
     reel_title_text;
@@ -33024,7 +33041,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ReelPlayerOverlay.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ReelPlayerOverlay.js
   var ReelPlayerOverlay = class extends YTNode {
     static type = "ReelPlayerOverlay";
     like_button;
@@ -33054,7 +33071,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RelatedChipCloud.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RelatedChipCloud.js
   var RelatedChipCloud = class extends YTNode {
     static type = "RelatedChipCloud";
     content;
@@ -33064,7 +33081,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RichGrid.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RichGrid.js
   var RichGrid = class extends YTNode {
     static type = "RichGrid";
     header;
@@ -33079,7 +33096,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RichItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RichItem.js
   var RichItem = class extends YTNode {
     static type = "RichItem";
     content;
@@ -33089,7 +33106,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RichListHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RichListHeader.js
   var RichListHeader = class extends YTNode {
     static type = "RichListHeader";
     title;
@@ -33109,7 +33126,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RichMetadata.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RichMetadata.js
   var RichMetadata = class extends YTNode {
     static type = "RichMetadata";
     thumbnail;
@@ -33131,7 +33148,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RichMetadataRow.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RichMetadataRow.js
   var RichMetadataRow = class extends YTNode {
     static type = "RichMetadataRow";
     contents;
@@ -33141,7 +33158,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RichSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RichSection.js
   var RichSection = class extends YTNode {
     static type = "RichSection";
     content;
@@ -33157,7 +33174,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/RichShelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/RichShelf.js
   var RichShelf = class extends YTNode {
     static type = "RichShelf";
     title;
@@ -33197,7 +33214,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchFilter.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchFilter.js
   var SearchFilter2 = class extends YTNode {
     static type = "SearchFilter";
     label;
@@ -33221,7 +33238,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchFilterGroup.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchFilterGroup.js
   var SearchFilterGroup = class extends YTNode {
     static type = "SearchFilterGroup";
     title;
@@ -33233,7 +33250,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchFilterOptionsDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchFilterOptionsDialog.js
   var SearchFilterOptionsDialog = class extends YTNode {
     static type = "SearchFilterOptionsDialog";
     title;
@@ -33245,7 +33262,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchHeader.js
   var SearchHeader = class extends YTNode {
     static type = "SearchHeader";
     chip_bar;
@@ -33257,7 +33274,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchSubMenu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchSubMenu.js
   var SearchSubMenu = class extends YTNode {
     static type = "SearchSubMenu";
     title;
@@ -33274,7 +33291,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SearchSuggestionsSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SearchSuggestionsSection.js
   var SearchSuggestionsSection = class extends YTNode {
     static type = "SearchSuggestionsSection";
     contents;
@@ -33284,7 +33301,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/UniversalWatchCard.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/UniversalWatchCard.js
   var UniversalWatchCard = class extends YTNode {
     static type = "UniversalWatchCard";
     header;
@@ -33302,7 +33319,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SecondarySearchContainer.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SecondarySearchContainer.js
   var SecondarySearchContainer = class extends YTNode {
     static type = "SecondarySearchContainer";
     target_id;
@@ -33313,7 +33330,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SegmentedLikeDislikeButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SegmentedLikeDislikeButton.js
   var SegmentedLikeDislikeButton = class extends YTNode {
     static type = "SegmentedLikeDislikeButton";
     like_button;
@@ -33325,7 +33342,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SettingBoolean.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SettingBoolean.js
   var SettingBoolean = class extends YTNode {
     static type = "SettingBoolean";
     title;
@@ -33351,7 +33368,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SettingsCheckbox.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SettingsCheckbox.js
   var SettingsCheckbox = class extends YTNode {
     static type = "SettingsCheckbox";
     title;
@@ -33369,7 +33386,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SettingsSwitch.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SettingsSwitch.js
   var SettingsSwitch = class extends YTNode {
     static type = "SettingsSwitch";
     title;
@@ -33387,7 +33404,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SettingsOptions.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SettingsOptions.js
   var SettingsOptions = class extends YTNode {
     static type = "SettingsOptions";
     title;
@@ -33411,7 +33428,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SettingsSidebar.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SettingsSidebar.js
   var SettingsSidebar = class extends YTNode {
     static type = "SettingsSidebar";
     title;
@@ -33427,7 +33444,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SharedPost.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SharedPost.js
   var SharedPost = class extends YTNode {
     static type = "SharedPost";
     thumbnail;
@@ -33453,7 +33470,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SharePanelHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SharePanelHeader.js
   var SharePanelHeader = class extends YTNode {
     static type = "SharePanelHeader";
     title;
@@ -33463,7 +33480,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SharePanelTitleV15.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SharePanelTitleV15.js
   var SharePanelTitleV15 = class extends YTNode {
     static type = "SharePanelTitleV15";
     title;
@@ -33473,7 +33490,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ShareTarget.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ShareTarget.js
   var ShareTarget = class extends YTNode {
     static type = "ShareTarget";
     endpoint;
@@ -33492,7 +33509,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SheetView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SheetView.js
   var SheetView = class extends YTNode {
     static type = "SheetView";
     content;
@@ -33510,7 +33527,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Shelf.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Shelf.js
   var Shelf = class extends YTNode {
     static type = "Shelf";
     title;
@@ -33542,7 +33559,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ShortsLockupView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ShortsLockupView.js
   var ShortsLockupView = class extends YTNode {
     static type = "ShortsLockupView";
     entity_id;
@@ -33577,7 +33594,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ShowingResultsFor.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ShowingResultsFor.js
   var ShowingResultsFor = class extends YTNode {
     static type = "ShowingResultsFor";
     corrected_query;
@@ -33597,7 +33614,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SimpleCardContent.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SimpleCardContent.js
   var SimpleCardContent = class extends YTNode {
     static type = "SimpleCardContent";
     image;
@@ -33617,7 +33634,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SimpleCardTeaser.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SimpleCardTeaser.js
   var SimpleCardTeaser = class extends YTNode {
     static type = "SimpleCardTeaser";
     message;
@@ -33630,7 +33647,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SimpleTextSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SimpleTextSection.js
   var SimpleTextSection = class extends YTNode {
     static type = "SimpleTextSection";
     lines;
@@ -33642,7 +33659,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SingleActionEmergencySupport.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SingleActionEmergencySupport.js
   var SingleActionEmergencySupport = class extends YTNode {
     static type = "SingleActionEmergencySupport";
     action_text;
@@ -33660,7 +33677,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Tab.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Tab.js
   var Tab = class extends YTNode {
     static type = "Tab";
     title;
@@ -33676,7 +33693,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SingleColumnBrowseResults.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SingleColumnBrowseResults.js
   var SingleColumnBrowseResults = class extends YTNode {
     static type = "SingleColumnBrowseResults";
     tabs;
@@ -33686,7 +33703,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SingleColumnMusicWatchNextResults.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SingleColumnMusicWatchNextResults.js
   var SingleColumnMusicWatchNextResults = class extends YTNode {
     static type = "SingleColumnMusicWatchNextResults";
     contents;
@@ -33696,7 +33713,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SingleHeroImage.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SingleHeroImage.js
   var SingleHeroImage = class extends YTNode {
     static type = "SingleHeroImage";
     thumbnails;
@@ -33708,7 +33725,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SlimOwner.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SlimOwner.js
   var SlimOwner = class extends YTNode {
     static type = "SlimOwner";
     thumbnail;
@@ -33724,7 +33741,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/SlimVideoMetadata.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/SlimVideoMetadata.js
   var SlimVideoMetadata = class extends YTNode {
     static type = "SlimVideoMetadata";
     title;
@@ -33746,7 +33763,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/StartAt.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/StartAt.js
   var StartAt = class extends YTNode {
     static type = "StartAt";
     start_at_option_label;
@@ -33756,7 +33773,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Tabbed.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Tabbed.js
   var Tabbed = class extends YTNode {
     static type = "Tabbed";
     contents;
@@ -33766,7 +33783,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TabbedSearchResults.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TabbedSearchResults.js
   var TabbedSearchResults = class extends YTNode {
     static type = "TabbedSearchResults";
     tabs;
@@ -33776,7 +33793,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TextHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TextHeader.js
   var TextHeader = class extends YTNode {
     static type = "TextHeader";
     title;
@@ -33788,7 +33805,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThirdPartyShareTargetSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThirdPartyShareTargetSection.js
   var ThirdPartyShareTargetSection = class extends YTNode {
     static type = "ThirdPartyShareTargetSection";
     share_targets;
@@ -33798,7 +33815,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailLandscapePortrait.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailLandscapePortrait.js
   var ThumbnailLandscapePortrait = class extends YTNode {
     static type = "ThumbnailLandscapePortrait";
     landscape;
@@ -33810,7 +33827,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayEndorsement.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayEndorsement.js
   var ThumbnailOverlayEndorsement = class extends YTNode {
     static type = "ThumbnailOverlayEndorsement";
     text;
@@ -33820,7 +33837,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayHoverText.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayHoverText.js
   var ThumbnailOverlayHoverText = class extends YTNode {
     static type = "ThumbnailOverlayHoverText";
     text;
@@ -33832,7 +33849,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayInlineUnplayable.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayInlineUnplayable.js
   var ThumbnailOverlayInlineUnplayable = class extends YTNode {
     static type = "ThumbnailOverlayInlineUnplayable";
     text;
@@ -33844,7 +33861,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayLoadingPreview.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayLoadingPreview.js
   var ThumbnailOverlayLoadingPreview = class extends YTNode {
     static type = "ThumbnailOverlayLoadingPreview";
     text;
@@ -33854,7 +33871,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayNowPlaying.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayNowPlaying.js
   var ThumbnailOverlayNowPlaying = class extends YTNode {
     static type = "ThumbnailOverlayNowPlaying";
     text;
@@ -33864,7 +33881,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayPinking.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayPinking.js
   var ThumbnailOverlayPinking = class extends YTNode {
     static type = "ThumbnailOverlayPinking";
     hack;
@@ -33874,7 +33891,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayPlaybackStatus.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayPlaybackStatus.js
   var ThumbnailOverlayPlaybackStatus = class extends YTNode {
     static type = "ThumbnailOverlayPlaybackStatus";
     texts;
@@ -33884,7 +33901,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayResumePlayback.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayResumePlayback.js
   var ThumbnailOverlayResumePlayback = class extends YTNode {
     static type = "ThumbnailOverlayResumePlayback";
     percent_duration_watched;
@@ -33894,7 +33911,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlaySidePanel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlaySidePanel.js
   var ThumbnailOverlaySidePanel = class extends YTNode {
     static type = "ThumbnailOverlaySidePanel";
     text;
@@ -33906,7 +33923,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayTitleView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayTitleView.js
   var ThumbnailOverlayTitleView = class extends YTNode {
     static type = "ThumbnailOverlayTitleView";
     title;
@@ -33918,7 +33935,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayToggleButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ThumbnailOverlayToggleButton.js
   var ThumbnailOverlayToggleButton = class extends YTNode {
     static type = "ThumbnailOverlayToggleButton";
     is_toggled;
@@ -33946,7 +33963,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TitleAndButtonListHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TitleAndButtonListHeader.js
   var TitleAndButtonListHeader = class extends YTNode {
     static type = "TitleAndButtonListHeader";
     title;
@@ -33956,7 +33973,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ToggleMenuServiceItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ToggleMenuServiceItem.js
   var ToggleMenuServiceItem = class extends YTNode {
     static type = "ToggleMenuServiceItem";
     text;
@@ -33976,7 +33993,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/Tooltip.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/Tooltip.js
   var Tooltip = class extends YTNode {
     static type = "Tooltip";
     promo_config;
@@ -34001,7 +34018,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TopicChannelDetails.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TopicChannelDetails.js
   var TopicChannelDetails = class extends YTNode {
     static type = "TopicChannelDetails";
     title;
@@ -34019,7 +34036,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TwoColumnBrowseResults.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TwoColumnBrowseResults.js
   var TwoColumnBrowseResults = class extends YTNode {
     static type = "TwoColumnBrowseResults";
     tabs;
@@ -34031,7 +34048,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TwoColumnSearchResults.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TwoColumnSearchResults.js
   var TwoColumnSearchResults = class extends YTNode {
     static type = "TwoColumnSearchResults";
     header;
@@ -34049,7 +34066,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/TwoColumnWatchNextResults.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/TwoColumnWatchNextResults.js
   var TwoColumnWatchNextResults = class extends YTNode {
     static type = "TwoColumnWatchNextResults";
     results;
@@ -34098,7 +34115,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/UnifiedSharePanel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/UnifiedSharePanel.js
   var UnifiedSharePanel = class extends YTNode {
     static type = "UnifiedSharePanel";
     third_party_network_section;
@@ -34124,7 +34141,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/UpsellDialog.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/UpsellDialog.js
   var UpsellDialog = class extends YTNode {
     static type = "UpsellDialog";
     message_title;
@@ -34142,7 +34159,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VerticalList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VerticalList.js
   var VerticalList = class extends YTNode {
     static type = "VerticalList";
     items;
@@ -34161,7 +34178,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VerticalWatchCardList.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VerticalWatchCardList.js
   var VerticalWatchCardList = class extends YTNode {
     static type = "VerticalWatchCardList";
     items;
@@ -34179,7 +34196,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoInfoCardContent.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoInfoCardContent.js
   var VideoInfoCardContent = class extends YTNode {
     static type = "VideoInfoCardContent";
     title;
@@ -34199,7 +34216,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoMetadataCarouselView.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoMetadataCarouselView.js
   var VideoMetadataCarouselView = class extends YTNode {
     static type = "VideoMetadataCarouselView";
     carousel_titles;
@@ -34211,7 +34228,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/SubscriptionButton.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/SubscriptionButton.js
   var SubscriptionButton = class {
     static type = "SubscriptionButton";
     text;
@@ -34225,7 +34242,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoOwner.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoOwner.js
   var VideoOwner = class extends YTNode {
     static type = "VideoOwner";
     subscription_button;
@@ -34243,7 +34260,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoPrimaryInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoPrimaryInfo.js
   var VideoPrimaryInfo = class extends YTNode {
     static type = "VideoPrimaryInfo";
     title;
@@ -34269,7 +34286,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/VideoSecondaryInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/VideoSecondaryInfo.js
   var VideoSecondaryInfo = class extends YTNode {
     static type = "VideoSecondaryInfo";
     owner;
@@ -34298,7 +34315,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/WatchCardCompactVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/WatchCardCompactVideo.js
   var WatchCardCompactVideo = class extends YTNode {
     static type = "WatchCardCompactVideo";
     title;
@@ -34317,7 +34334,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/WatchCardHeroVideo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/WatchCardHeroVideo.js
   var WatchCardHeroVideo = class extends YTNode {
     static type = "WatchCardHeroVideo";
     endpoint;
@@ -34333,7 +34350,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/WatchCardRichHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/WatchCardRichHeader.js
   var WatchCardRichHeader = class extends YTNode {
     static type = "WatchCardRichHeader";
     title;
@@ -34352,7 +34369,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/WatchCardSectionSequence.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/WatchCardSectionSequence.js
   var WatchCardSectionSequence = class extends YTNode {
     static type = "WatchCardSectionSequence";
     lists;
@@ -34362,7 +34379,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/WatchNextTabbedResults.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/WatchNextTabbedResults.js
   var WatchNextTabbedResults = class extends TwoColumnBrowseResults {
     static type = "WatchNextTabbedResults";
     constructor(data) {
@@ -34370,7 +34387,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ytkids/AnchoredSection.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ytkids/AnchoredSection.js
   var AnchoredSection = class extends YTNode {
     static type = "AnchoredSection";
     title;
@@ -34391,7 +34408,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsBlocklistPickerItem.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsBlocklistPickerItem.js
   var KidsBlocklistPickerItem = class extends YTNode {
     static type = "KidsBlocklistPickerItem";
     #actions;
@@ -34424,7 +34441,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsBlocklistPicker.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsBlocklistPicker.js
   var KidsBlocklistPicker = class extends YTNode {
     static type = "KidsBlocklistPicker";
     title;
@@ -34440,7 +34457,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsCategoryTab.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsCategoryTab.js
   var KidsCategoryTab = class extends YTNode {
     static type = "KidsCategoryTab";
     title;
@@ -34459,7 +34476,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsCategoriesHeader.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsCategoriesHeader.js
   var KidsCategoriesHeader = class extends YTNode {
     static type = "kidsCategoriesHeader";
     category_tabs;
@@ -34471,7 +34488,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsHomeScreen.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/ytkids/KidsHomeScreen.js
   var KidsHomeScreen = class extends YTNode {
     static type = "kidsHomeScreen";
     anchors;
@@ -34481,7 +34498,7 @@ ${rawJsonLines.slice(1).map((line) => indent + line).join("\n")}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/generator.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/generator.js
   var IGNORED_KEYS = /* @__PURE__ */ new Set([
     "trackingParams",
     "accessibility",
@@ -35222,7 +35239,7 @@ ${" ".repeat((indentation + 1) * 2)}}`;
     };
   }
 
-  // node_modules/youtubei.js/dist/src/parser/continuations.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/continuations.js
   var ItemSectionContinuation = class extends YTNode {
     static type = "itemSectionContinuation";
     contents;
@@ -35387,7 +35404,7 @@ ${" ".repeat((indentation + 1) * 2)}}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/protos/generated/misc/common.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/misc/common.js
   function createBaseKeyValuePair() {
     return { key: void 0, value: void 0 };
   }
@@ -35465,7 +35482,7 @@ ${" ".repeat((indentation + 1) * 2)}}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/Format.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/Format.js
   var Format = class {
     #this_response_nsig_cache;
     itag;
@@ -35645,7 +35662,7 @@ ${" ".repeat((indentation + 1) * 2)}}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/VideoDetails.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/VideoDetails.js
   var VideoDetails = class {
     id;
     channel_id;
@@ -35691,7 +35708,7 @@ ${" ".repeat((indentation + 1) * 2)}}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/parser.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/parser.js
   var TAG2 = "Parser";
   var IGNORED_LIST = /* @__PURE__ */ new Set([
     "AdSlot",
@@ -36279,7 +36296,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   }
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/AccountInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/AccountInfo.js
   var AccountInfo = class {
     #page;
     contents;
@@ -36297,7 +36314,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/mixins/Feed.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/mixins/Feed.js
   var Feed = class _Feed {
     #page;
     #actions;
@@ -36450,7 +36467,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/mixins/FilterableFeed.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/mixins/FilterableFeed.js
   var FilterableFeed = class _FilterableFeed extends Feed {
     #filter_nodes;
     constructor(actions, data, already_parsed = false) {
@@ -36569,7 +36586,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/mixins/MediaInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/mixins/MediaInfo.js
   var MediaInfo = class {
     #page;
     #actions;
@@ -36740,7 +36757,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/mixins/TabbedFeed.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/mixins/TabbedFeed.js
   var TabbedFeed = class _TabbedFeed extends Feed {
     #actions;
     #tabs;
@@ -36778,7 +36795,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/Channel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/Channel.js
   var Channel2 = class _Channel extends TabbedFeed {
     header;
     metadata;
@@ -37138,7 +37155,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/Comments.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/Comments.js
   var Comments = class _Comments {
     #page;
     #actions;
@@ -37219,7 +37236,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/Guide.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/Guide.js
   var Guide = class {
     #page;
     contents;
@@ -37233,7 +37250,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/History.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/History.js
   var History = class _History extends Feed {
     sections;
     feed_actions;
@@ -37301,7 +37318,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/HomeFeed.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/HomeFeed.js
   var HomeFeed = class _HomeFeed extends FilterableFeed {
     contents;
     header;
@@ -37330,7 +37347,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/HashtagFeed.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/HashtagFeed.js
   var HashtagFeed = class _HashtagFeed extends FilterableFeed {
     header;
     contents;
@@ -37356,7 +37373,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/ItemMenu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/ItemMenu.js
   var ItemMenu = class {
     #page;
     #actions;
@@ -37399,7 +37416,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/Playlist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/Playlist.js
   var Playlist2 = class _Playlist extends Feed {
     info;
     menu;
@@ -37467,7 +37484,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/Library.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/Library.js
   var Library = class extends Feed {
     header;
     sections;
@@ -37520,7 +37537,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/SmoothedQueue.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/SmoothedQueue.js
   function flattenQueue(queue) {
     const nodes = [];
     for (const group of queue) {
@@ -37642,7 +37659,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/LiveChat.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/LiveChat.js
   var LiveChat2 = class extends EventEmitterLike {
     #actions;
     #video_id;
@@ -37842,7 +37859,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/NotificationsMenu.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/NotificationsMenu.js
   var NotificationsMenu = class _NotificationsMenu {
     #page;
     #actions;
@@ -37868,7 +37885,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/Search.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/Search.js
   var Search = class _Search extends Feed {
     header;
     results;
@@ -37949,7 +37966,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/Settings.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/Settings.js
   var Settings = class _Settings {
     #page;
     #actions;
@@ -38042,7 +38059,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/VideoInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/VideoInfo.js
   var VideoInfo = class _VideoInfo extends MediaInfo {
     primary_info;
     secondary_info;
@@ -38386,7 +38403,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/youtube/TranscriptInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/youtube/TranscriptInfo.js
   var TranscriptInfo = class _TranscriptInfo {
     #page;
     #actions;
@@ -38430,7 +38447,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/Album.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/Album.js
   var Album = class {
     #page;
     header;
@@ -38453,7 +38470,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/Artist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/Artist.js
   var Artist = class {
     #page;
     #actions;
@@ -38484,7 +38501,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/Explore.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/Explore.js
   var Explore = class {
     #page;
     top_buttons;
@@ -38505,7 +38522,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/HomeFeed.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/HomeFeed.js
   var HomeFeed2 = class _HomeFeed {
     #page;
     #actions;
@@ -38570,7 +38587,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/Library.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/Library.js
   var Library2 = class _Library {
     #page;
     #actions;
@@ -38694,7 +38711,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/Playlist.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/Playlist.js
   var Playlist3 = class _Playlist {
     #page;
     #actions;
@@ -38811,7 +38828,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/Recap.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/Recap.js
   var Recap = class {
     #page;
     #actions;
@@ -38844,7 +38861,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/Search.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/Search.js
   var Search2 = class _Search {
     #page;
     #actions;
@@ -38974,7 +38991,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytmusic/TrackInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytmusic/TrackInfo.js
   var TrackInfo = class extends MediaInfo {
     tabs;
     current_video_endpoint;
@@ -39077,7 +39094,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
   };
   var TrackInfo_default = TrackInfo;
 
-  // node_modules/youtubei.js/dist/src/parser/ytkids/Channel.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytkids/Channel.js
   var Channel3 = class _Channel extends Feed {
     header;
     contents;
@@ -39106,7 +39123,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytkids/HomeFeed.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytkids/HomeFeed.js
   var HomeFeed3 = class _HomeFeed extends Feed {
     header;
     contents;
@@ -39138,7 +39155,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytkids/Search.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytkids/Search.js
   var Search3 = class extends Feed {
     estimated_results;
     contents;
@@ -39152,7 +39169,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytkids/VideoInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytkids/VideoInfo.js
   var VideoInfo2 = class extends MediaInfo {
     slim_video_metadata;
     watch_next_feed;
@@ -39173,7 +39190,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/ytshorts/ShortFormVideoInfo.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/ytshorts/ShortFormVideoInfo.js
   var ShortFormVideoInfo = class extends MediaInfo {
     #watch_next_continuation;
     watch_next_feed;
@@ -39209,7 +39226,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/parser/classes/misc/Author.js
+  // assets/js/node_modules/youtubei.js/dist/src/parser/classes/misc/Author.js
   var Author = class {
     id;
     name;
@@ -39247,7 +39264,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     }
   };
 
-  // node_modules/youtubei.js/dist/src/utils/user-agents.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/user-agents.js
   var user_agents_default = {
     "desktop": [
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0",
@@ -39307,7 +39324,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
     ]
   };
 
-  // node_modules/youtubei.js/dist/src/utils/Utils.js
+  // assets/js/node_modules/youtubei.js/dist/src/utils/Utils.js
   var shim;
   var Platform = class {
     static load(platform) {
@@ -39478,7 +39495,7 @@ ${generateTypescriptClass(classname, context.key_info)}`);
 return process("${n || ""}", "${sp || ""}", "${s || ""}");`;
   }
 
-  // node_modules/youtubei.js/dist/src/platform/polyfills/web-crypto.js
+  // assets/js/node_modules/youtubei.js/dist/src/platform/polyfills/web-crypto.js
   async function sha1Hash(str) {
     const byteToHex = [
       "00",
@@ -39748,12 +39765,12 @@ return process("${n || ""}", "${sp || ""}", "${s || ""}");`;
     return hex(await crypto.subtle.digest("SHA-1", new TextEncoder().encode(str)));
   }
 
-  // node_modules/youtubei.js/dist/src/platform/jsruntime/default.js
+  // assets/js/node_modules/youtubei.js/dist/src/platform/jsruntime/default.js
   function evaluate(_data, _env) {
     throw new Error("To decipher URLs, you must provide your own JavaScript evaluator. See https://ytjs.dev/guide/getting-started.html#providing-a-custom-javascript-interpreter for more details.");
   }
 
-  // node_modules/youtubei.js/dist/src/core/Actions.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/Actions.js
   var Actions = class {
     session;
     constructor(session) {
@@ -39858,7 +39875,7 @@ return process("${n || ""}", "${sp || ""}", "${s || ""}");`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/OAuth2.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/OAuth2.js
   var TAG3 = "OAuth2";
   var OAuth2 = class {
     #session;
@@ -40077,7 +40094,7 @@ return process("${n || ""}", "${sp || ""}", "${s || ""}");`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/Player.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/Player.js
   var TAG4 = "Player";
   var Player = class _Player {
     player_id;
@@ -40277,7 +40294,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/Session.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/Session.js
   var ClientType = {
     WEB: "WEB",
     MWEB: "MWEB",
@@ -40634,7 +40651,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/clients/Kids.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/clients/Kids.js
   var Kids = class {
     #session;
     constructor(session) {
@@ -40721,7 +40738,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/clients/Music.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/clients/Music.js
   var Music = class {
     #session;
     #actions;
@@ -40933,7 +40950,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/capability_info.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/capability_info.js
   function createBaseCapabilityInfo() {
     return { profile: void 0, supportedCapabilities: [], disabledCapabilities: [], snapshot: void 0 };
   }
@@ -41051,7 +41068,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/client_info.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/client_info.js
   function createBaseClientInfo() {
     return {
       hl: void 0,
@@ -43305,7 +43322,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     return num;
   }
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/attestation_response_data.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/attestation_response_data.js
   function createBaseAttestationResponseData() {
     return {
       challenge: void 0,
@@ -43450,7 +43467,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     return num;
   }
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/request_info.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/request_info.js
   function createBaseRequestInfo() {
     return {
       thirdPartyDigest: void 0,
@@ -43784,7 +43801,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/third_party_info.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/third_party_info.js
   function createBaseThirdPartyInfo() {
     return {
       developerKey: void 0,
@@ -43929,7 +43946,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/user_info.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/user_info.js
   function createBaseUserInfo() {
     return {
       onBehalfOfUser: void 0,
@@ -44146,7 +44163,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/innertube_context.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/innertube_context.js
   function createBaseInnerTubeContext() {
     return {
       client: void 0,
@@ -44493,7 +44510,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/metadata_update_request.js
+  // assets/js/node_modules/youtubei.js/dist/protos/generated/youtube/api/pfiinnertube/metadata_update_request.js
   function createBaseMetadataUpdateRequest() {
     return {
       context: void 0,
@@ -45157,7 +45174,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     return num;
   }
 
-  // node_modules/youtubei.js/dist/src/core/clients/Studio.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/clients/Studio.js
   var Studio = class {
     #session;
     constructor(session) {
@@ -45351,7 +45368,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/managers/AccountManager.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/managers/AccountManager.js
   var AccountManager = class {
     #actions;
     constructor(actions) {
@@ -45385,7 +45402,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/managers/PlaylistManager.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/managers/PlaylistManager.js
   var PlaylistManager = class {
     #actions;
     constructor(actions) {
@@ -45620,7 +45637,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/core/managers/InteractionManager.js
+  // assets/js/node_modules/youtubei.js/dist/src/core/managers/InteractionManager.js
   var InteractionManager = class {
     #actions;
     constructor(actions) {
@@ -45781,7 +45798,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/Innertube.js
+  // assets/js/node_modules/youtubei.js/dist/src/Innertube.js
   var Innertube = class _Innertube {
     #session;
     constructor(session) {
@@ -46242,7 +46259,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
 
-  // node_modules/youtubei.js/dist/src/platform/web.js
+  // assets/js/node_modules/youtubei.js/dist/src/platform/web.js
   var CACHE_TAG = "Cache";
   var Cache = class {
     #persistent_directory;
@@ -46342,7 +46359,194 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     CustomEvent: globalThis.CustomEvent
   });
 
-  // bridge.js
+  // assets/js/temp_entry.js
+  globalThis.EventTarget = EventTarget2;
+  globalThis.CustomEvent = import_custom_event2.default;
+  globalThis.Buffer = import_buffer2.Buffer;
+  globalThis.btoa = function(str) {
+    return import_buffer2.Buffer.from(str, "binary").toString("base64");
+  };
+  globalThis.atob = function(b64Encoded) {
+    return import_buffer2.Buffer.from(b64Encoded, "base64").toString("binary");
+  };
+  globalThis.document = {};
+  globalThis.console = {
+    log: function() {
+    },
+    warn: function() {
+    },
+    error: function() {
+    },
+    info: function() {
+    },
+    debug: function() {
+    }
+  };
+  globalThis.crypto = {
+    getRandomValues: function(array) {
+      for (let i2 = 0; i2 < array.length; i2++) {
+        array[i2] = Math.floor(Math.random() * 256);
+      }
+      return array;
+    },
+    randomUUID: function() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === "x" ? r : r & 3 | 8;
+        return v.toString(16);
+      });
+    }
+  };
+  var timers2 = /* @__PURE__ */ new Map();
+  globalThis.setTimeout = (cb, ms) => {
+    const id = Math.floor(Math.random() * 1e6);
+    timers2.set(id, cb);
+    globalThis.nativeSetTimeout(id, ms || 0);
+    return id;
+  };
+  globalThis.fireTimeout = (id) => {
+    const cb = timers2.get(id);
+    if (cb) {
+      timers2.delete(id);
+      cb();
+    }
+  };
+  globalThis.clearTimeout = (id) => {
+    timers2.delete(id);
+    globalThis.nativeClearTimeout(id);
+  };
+  var intervals2 = /* @__PURE__ */ new Map();
+  globalThis.setInterval = (cb, ms) => {
+    const id = Math.floor(Math.random() * 1e6);
+    intervals2.set(id, cb);
+    globalThis.nativeSetInterval(id, ms || 0);
+    return id;
+  };
+  globalThis.fireInterval = (id) => {
+    const cb = intervals2.get(id);
+    if (cb) {
+      cb();
+    }
+  };
+  globalThis.clearInterval = (id) => {
+    intervals2.delete(id);
+    globalThis.nativeClearInterval(id);
+  };
+  var Headers3 = class _Headers {
+    constructor(init) {
+      this.map = /* @__PURE__ */ new Map();
+      if (init) {
+        if (init instanceof _Headers) {
+          init.forEach((v, k) => this.map.set(k, v));
+        } else if (typeof init.forEach === "function") {
+          init.forEach((v, k) => this.map.set(k, v));
+        } else if (Array.isArray(init)) {
+          for (let [k, v] of init) {
+            this.map.set(k.toLowerCase(), v);
+          }
+        } else {
+          for (let [k, v] of Object.entries(init)) {
+            this.map.set(k.toLowerCase(), v);
+          }
+        }
+      }
+    }
+    get(name) {
+      return this.map.get(name.toLowerCase());
+    }
+    set(name, value) {
+      this.map.set(name.toLowerCase(), value);
+    }
+    forEach(cb) {
+      for (let [k, v] of this.map.entries()) {
+        cb(v, k);
+      }
+    }
+  };
+  var Response2 = class {
+    constructor(body, init) {
+      this.bodyText = body;
+      this.status = init.status || 200;
+      this.statusText = init.statusText || "OK";
+      this.headers = new Headers3(init.headers);
+      this.url = init.url || "";
+    }
+    async text() {
+      return this.bodyText;
+    }
+    async json() {
+      return JSON.parse(this.bodyText);
+    }
+    async arrayBuffer() {
+      const buf = new ArrayBuffer(this.bodyText.length);
+      const view = new Uint8Array(buf);
+      for (let i2 = 0; i2 < this.bodyText.length; i2++) {
+        view[i2] = this.bodyText.charCodeAt(i2);
+      }
+      return buf;
+    }
+    get ok() {
+      return this.status >= 200 && this.status < 300;
+    }
+  };
+  globalThis.Headers = Headers3;
+  globalThis.Response = Response2;
+  globalThis.Request = class Request3 {
+    constructor(input, init = {}) {
+      if (input && input instanceof globalThis.Request) {
+        this.url = input.url;
+        this.method = init.method || input.method;
+        this.headers = new Headers3(init.headers || input.headers);
+        this.body = init.body || input.body;
+      } else {
+        this.url = input ? input.toString() : "";
+        this.method = init.method || "GET";
+        this.headers = new Headers3(init.headers);
+        this.body = init.body;
+      }
+    }
+  };
+  globalThis.fetch = async (input, options = {}) => {
+    let req;
+    if (input && input instanceof globalThis.Request) {
+      req = new globalThis.Request(input, options);
+    } else if (input && typeof input === "object" && input.url) {
+      req = new globalThis.Request(input.url, { ...input, ...options });
+    } else {
+      req = new globalThis.Request(input, options);
+    }
+    return new Promise((resolve, reject) => {
+      const callbackId = Math.random().toString(36).substring(7);
+      globalThis[`fetch_resolve_${callbackId}`] = (status, statusText, headersStr, bodyBase64, url) => {
+        const headers = JSON.parse(headersStr);
+        const binaryString = globalThis.atob(bodyBase64);
+        const res = new Response2(binaryString, { status, statusText, headers, url });
+        delete globalThis[`fetch_resolve_${callbackId}`];
+        delete globalThis[`fetch_reject_${callbackId}`];
+        resolve(res);
+      };
+      globalThis[`fetch_reject_${callbackId}`] = (errorStr) => {
+        delete globalThis[`fetch_resolve_${callbackId}`];
+        delete globalThis[`fetch_reject_${callbackId}`];
+        reject(new Error(errorStr));
+      };
+      let body = req.body;
+      if (body instanceof Uint8Array || body instanceof ArrayBuffer) {
+        body = new TextDecoder().decode(body);
+      }
+      const headersObj = {};
+      req.headers.forEach((v, k) => {
+        headersObj[k] = v;
+      });
+      const reqStr = JSON.stringify({
+        url: req.url,
+        method: req.method,
+        headers: headersObj,
+        body: body ? body.toString() : null
+      });
+      console.log("FETCH URL: " + req.url);
+      globalThis.nativeFetch(reqStr, callbackId);
+    });
+  };
   var yt = null;
   globalThis.initYouTube = async () => {
     if (yt) return true;
