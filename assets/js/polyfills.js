@@ -101,22 +101,17 @@ class Headers {
 }
 
 class Response {
-    constructor(body, init) {
-        this.bodyText = body;
+    constructor(bodyBuffer, init) {
+        this.bodyBuffer = bodyBuffer;
         this.status = init.status || 200;
         this.statusText = init.statusText || 'OK';
         this.headers = new Headers(init.headers);
         this.url = init.url || '';
     }
-    async text() { return this.bodyText; }
-    async json() { return JSON.parse(this.bodyText); }
+    async text() { return this.bodyBuffer.toString('utf8'); }
+    async json() { return JSON.parse(this.bodyBuffer.toString('utf8')); }
     async arrayBuffer() {
-        const buf = new ArrayBuffer(this.bodyText.length);
-        const view = new Uint8Array(buf);
-        for (let i = 0; i < this.bodyText.length; i++) {
-            view[i] = this.bodyText.charCodeAt(i);
-        }
-        return buf;
+        return this.bodyBuffer.buffer.slice(this.bodyBuffer.byteOffset, this.bodyBuffer.byteOffset + this.bodyBuffer.byteLength);
     }
     get ok() {
         return this.status >= 200 && this.status < 300;
@@ -158,8 +153,8 @@ globalThis.fetch = async (input, options = {}) => {
         
         globalThis[`fetch_resolve_${callbackId}`] = (status, statusText, headersStr, bodyBase64, url) => {
             const headers = JSON.parse(headersStr);
-            const binaryString = globalThis.atob(bodyBase64);
-            const res = new Response(binaryString, { status, statusText, headers, url });
+            const bodyBuffer = Buffer.from(bodyBase64, 'base64');
+            const res = new Response(bodyBuffer, { status, statusText, headers, url });
             delete globalThis[`fetch_resolve_${callbackId}`];
             delete globalThis[`fetch_reject_${callbackId}`];
             resolve(res);

@@ -6964,26 +6964,21 @@ var ytmBridge = (() => {
     }
   };
   var Response = class {
-    constructor(body, init) {
-      this.bodyText = body;
+    constructor(bodyBuffer, init) {
+      this.bodyBuffer = bodyBuffer;
       this.status = init.status || 200;
       this.statusText = init.statusText || "OK";
       this.headers = new Headers2(init.headers);
       this.url = init.url || "";
     }
     async text() {
-      return this.bodyText;
+      return this.bodyBuffer.toString("utf8");
     }
     async json() {
-      return JSON.parse(this.bodyText);
+      return JSON.parse(this.bodyBuffer.toString("utf8"));
     }
     async arrayBuffer() {
-      const buf = new ArrayBuffer(this.bodyText.length);
-      const view = new Uint8Array(buf);
-      for (let i2 = 0; i2 < this.bodyText.length; i2++) {
-        view[i2] = this.bodyText.charCodeAt(i2);
-      }
-      return buf;
+      return this.bodyBuffer.buffer.slice(this.bodyBuffer.byteOffset, this.bodyBuffer.byteOffset + this.bodyBuffer.byteLength);
     }
     get ok() {
       return this.status >= 200 && this.status < 300;
@@ -7019,8 +7014,8 @@ var ytmBridge = (() => {
       const callbackId = Math.random().toString(36).substring(7);
       globalThis[`fetch_resolve_${callbackId}`] = (status, statusText, headersStr, bodyBase64, url) => {
         const headers = JSON.parse(headersStr);
-        const binaryString = globalThis.atob(bodyBase64);
-        const res = new Response(binaryString, { status, statusText, headers, url });
+        const bodyBuffer = import_buffer.Buffer.from(bodyBase64, "base64");
+        const res = new Response(bodyBuffer, { status, statusText, headers, url });
         delete globalThis[`fetch_resolve_${callbackId}`];
         delete globalThis[`fetch_reject_${callbackId}`];
         resolve(res);
@@ -46463,26 +46458,21 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
   };
   var Response2 = class {
-    constructor(body, init) {
-      this.bodyText = body;
+    constructor(bodyBuffer, init) {
+      this.bodyBuffer = bodyBuffer;
       this.status = init.status || 200;
       this.statusText = init.statusText || "OK";
       this.headers = new Headers3(init.headers);
       this.url = init.url || "";
     }
     async text() {
-      return this.bodyText;
+      return this.bodyBuffer.toString("utf8");
     }
     async json() {
-      return JSON.parse(this.bodyText);
+      return JSON.parse(this.bodyBuffer.toString("utf8"));
     }
     async arrayBuffer() {
-      const buf = new ArrayBuffer(this.bodyText.length);
-      const view = new Uint8Array(buf);
-      for (let i2 = 0; i2 < this.bodyText.length; i2++) {
-        view[i2] = this.bodyText.charCodeAt(i2);
-      }
-      return buf;
+      return this.bodyBuffer.buffer.slice(this.bodyBuffer.byteOffset, this.bodyBuffer.byteOffset + this.bodyBuffer.byteLength);
     }
     get ok() {
       return this.status >= 200 && this.status < 300;
@@ -46518,8 +46508,8 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
       const callbackId = Math.random().toString(36).substring(7);
       globalThis[`fetch_resolve_${callbackId}`] = (status, statusText, headersStr, bodyBase64, url) => {
         const headers = JSON.parse(headersStr);
-        const binaryString = globalThis.atob(bodyBase64);
-        const res = new Response2(binaryString, { status, statusText, headers, url });
+        const bodyBuffer = import_buffer2.Buffer.from(bodyBase64, "base64");
+        const res = new Response2(bodyBuffer, { status, statusText, headers, url });
         delete globalThis[`fetch_resolve_${callbackId}`];
         delete globalThis[`fetch_reject_${callbackId}`];
         resolve(res);
@@ -46557,7 +46547,8 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     try {
       yt = await Innertube.create({
         cache: new UniversalCache(false),
-        generate_session_locally: true
+        generate_session_locally: true,
+        clientType: "IOS"
       });
       return true;
     } catch (e) {

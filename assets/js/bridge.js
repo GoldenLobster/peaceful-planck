@@ -13,7 +13,8 @@ globalThis.initYouTube = async () => {
     try {
         yt = await Innertube.create({
             cache: new UniversalCache(false),
-            generate_session_locally: true
+            generate_session_locally: true,
+            clientType: 'IOS'
         });
         return true;
     } catch(e) {

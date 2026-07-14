@@ -20,6 +20,5 @@ import UIKit
     
     JSContextManager.shared.setupContext(registrar: assetRegistrar)
     ChannelManager.shared.setup(messenger: assetRegistrar.messenger())
-    AudioManager.shared.setupChannels(messenger: assetRegistrar.messenger())
   }
 }
