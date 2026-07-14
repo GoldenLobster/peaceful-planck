@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
+import 'proxy_audio_source.dart';
 
 class AudioBridge {
   static final AudioPlayer _player = AudioPlayer();
@@ -42,12 +42,9 @@ class AudioBridge {
     String? artworkUrl,
   }) async {
     try {
-      final audioSource = AudioSource.uri(
-        Uri.parse(url),
-        headers: {
-            'User-Agent': 'com.google.ios.youtube/19.29.1 (iPhone14,3; U; CPU iOS 15_6 like Mac OS X)',
-        },
-        tag: MediaItem(
+      final audioSource = ProxyAudioSource(
+        url,
+        mediaItem: MediaItem(
           id: url,
           album: artist,
           title: title,

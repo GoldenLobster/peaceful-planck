@@ -98,7 +98,7 @@ class PlayerNotifier extends Notifier<PlayerState> {
   }
 
   Future<void> play(Song song) async {
-    state = state.copyWith(currentSong: song);
+    state = state.copyWith(currentSong: song, clearError: true);
     
     // Fetch real stream URL from youtubei.js
     final url = await YouTubeBridge.getStream(song.id);
