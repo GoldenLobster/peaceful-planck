@@ -18,6 +18,7 @@ class JSContextManager {
             }
         }
         
+        context?.evaluateScript("var global = globalThis; var window = globalThis;")
         injectPolyfills()
         loadBundle(registrar: registrar)
     }
