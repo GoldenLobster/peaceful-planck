@@ -4,6 +4,7 @@ import '../../data/models/song.dart';
 import '../../data/models/playback_state.dart';
 import '../../services/native_bridge/audio_bridge.dart';
 import '../../services/native_bridge/youtube_bridge.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 class PlayerState {
   final Song? currentSong;
   final PlaybackState playbackState;
@@ -100,9 +101,22 @@ class PlayerNotifier extends Notifier<PlayerState> {
   Future<void> play(Song song) async {
     state = state.copyWith(currentSong: song, clearError: true);
     
-    // Fetch real stream URL from youtubei.js
-    final url = await YouTubeBridge.getStream(song.id);
+    // Fetch real stream URL from youtube_explode_dart instead of youtubei.js
+    String? url;
+    try {
+      final yt = YoutubeExplode();
+      final manifest = await yt.videos.streamsClient.getManifest(song.id);
+      final streamInfo = manifest.audioOnly.withHighestBitrate();
+      url = streamInfo.url.toString();
+      yt.close();
+    } catch (e) {
+      state = state.copyWith(errorMessage: "YT_Explode Error: $e");
+      print("Failed to get stream URL using yt_explode: $e");
+      return;
+    }
+
     if (url == null || url.isEmpty || url.startsWith("ERROR:")) {
+      state = state.copyWith(errorMessage: "No stream URL found");
       print("Failed to get stream URL for ${song.id}: $url");
       return;
     }

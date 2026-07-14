@@ -154,7 +154,7 @@ class JSContextManager {
         }
         
         do {
-            let script = try String(contentsOfFile: path)
+            let script = try String(contentsOfFile: path, encoding: .utf8)
             context?.evaluateScript(script)
             print("JS bundle loaded.")
         } catch {

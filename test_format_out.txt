@@ -1,0 +1,11 @@
+ERROR ReferenceError: yt is not defined
+    at globalThis.testGetBasicInfoURL (evalmachine.<anonymous>:3:5)
+    at evalmachine.<anonymous>:1:12
+    at Script.runInContext (node:vm:149:12)
+    at Object.runInContext (node:vm:301:6)
+    at /home/andrew/Documents/antigravity/peaceful-planck/test_format.js:42:30
+    at Object.<anonymous> (/home/andrew/Documents/antigravity/peaceful-planck/test_format.js:47:3)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Module._load (node:internal/modules/cjs/loader:1263:12)

@@ -24,10 +24,10 @@ globalThis.initYouTube = async () => {
 
 globalThis.getStream = async (songId) => {
     if (!yt) await globalThis.initYouTube();
-    const info = await yt.music.getInfo(songId);
+    const info = await yt.getBasicInfo(songId, 'TV_EMBEDDED');
     
     const format = info.chooseFormat({ type: 'audio', format: 'mp4', quality: 'best' });
-    return format.decipher(yt.session.player);
+    return format.url || (format.decipher ? format.decipher(yt.session.player) : null);
 };
 
 function mapItem(item, overrideType) {
@@ -57,7 +57,7 @@ function mapItem(item, overrideType) {
     
     if (authorName === 'Unknown' && Array.isArray(item.flex_columns) && item.flex_columns.length > 1) {
         let colText = item.flex_columns[1]?.title?.text || '';
-        if (colText) authorName = colText.split(' • ')[0];
+        if (colText) authorName = colText.split('•')[0].trim();
     }
     
     let thumbnails = [];
