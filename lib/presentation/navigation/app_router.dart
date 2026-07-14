@@ -4,6 +4,7 @@ import '../screens/root_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/search_screen.dart';
 import '../screens/library_screen.dart';
+import '../screens/logs_screen.dart';
 import '../screens/album_screen.dart';
 import '../screens/artist_screen.dart';
 import '../screens/playlist_screen.dart';
@@ -15,6 +16,7 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(de
 final GlobalKey<NavigatorState> _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final GlobalKey<NavigatorState> _searchNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'search');
 final GlobalKey<NavigatorState> _libraryNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'library');
+final GlobalKey<NavigatorState> _logsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'logs');
 
 final appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -61,6 +63,15 @@ final appRouter = GoRouter(
             GoRoute(
               path: '/library',
               builder: (context, state) => const LibraryScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: _logsNavigatorKey,
+          routes: [
+            GoRoute(
+              path: '/logs',
+              builder: (context, state) => const LogsScreen(),
             ),
           ],
         ),

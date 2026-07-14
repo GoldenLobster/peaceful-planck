@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'proxy_audio_source.dart';
+import '../app_logger.dart';
 
 class AudioBridge {
   static final AudioPlayer _player = AudioPlayer();
@@ -39,27 +41,41 @@ class AudioBridge {
   static Future<void> play({
     required String url,
     required String title,
-    required String artist,
+    String? artist,
     String? artworkUrl,
+    bool useProxy = true,
   }) async {
     try {
-      final audioSource = ProxyAudioSource(
-        url,
-        mediaItem: MediaItem(
-          id: url,
-          album: artist,
-          title: title,
-          artist: artist,
-          artUri: artworkUrl != null ? Uri.parse(artworkUrl) : null,
-        ),
-        onError: (errorMsg) {
-          _eventController.add({'type': 'error', 'message': errorMsg});
-        },
+      AppLogger.log("AudioBridge.play: useProxy=$useProxy, url=$url");
+      final MediaItem mediaItem = MediaItem(
+        id: url,
+        album: artist,
+        title: title,
+        artUri: artworkUrl != null ? Uri.parse(artworkUrl) : null,
       );
+
+      AudioSource audioSource;
+      if (useProxy) {
+        audioSource = ProxyAudioSource(
+          url,
+          mediaItem: mediaItem,
+          onError: (errorMsg) {
+            AppLogger.log("ProxyAudioSource ERROR callback: $errorMsg");
+            _eventController.add({'type': 'error', 'message': errorMsg});
+          },
+        );
+      } else {
+        AppLogger.log("Bypassing Proxy, using standard AudioSource.uri");
+        audioSource = AudioSource.uri(Uri.parse(url), tag: mediaItem);
+      }
+      
+      AppLogger.log("Setting audio source...");
       await _player.setAudioSource(audioSource);
+      AppLogger.log("Audio source set, starting playback...");
       await _player.play();
+      AppLogger.log("Playback started.");
     } catch (e) {
-      print("Error playing audio: $e");
+      AppLogger.log("AudioBridge.play Exception: $e");
       _eventController.add({'type': 'error', 'message': e.toString()});
     }
   }

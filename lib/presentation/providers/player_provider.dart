@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/song.dart';
 import '../../data/models/playback_state.dart';
 import '../../services/native_bridge/audio_bridge.dart';
+import '../../services/app_logger.dart';
 import '../../services/native_bridge/youtube_bridge.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 class PlayerState {
@@ -38,6 +39,17 @@ class PlayerState {
   }
 }
 
+class UseProxyNotifier extends Notifier<bool> {
+  @override
+  bool build() => true;
+  void toggle() => state = !state;
+  void setProxy(bool val) => state = val;
+}
+
+final useProxyProvider = NotifierProvider<UseProxyNotifier, bool>(() {
+  return UseProxyNotifier();
+});
+
 class PlayerNotifier extends Notifier<PlayerState> {
   StreamSubscription? _audioSub;
 
@@ -56,6 +68,7 @@ class PlayerNotifier extends Notifier<PlayerState> {
         final type = event['type'];
         if (type == 'state') {
           final val = event['value'] as String;
+          AppLogger.log("AVPlayer state changed: $val");
           PlaybackStatus status;
           switch (val) {
             case 'playing': status = PlaybackStatus.playing; break;
@@ -92,6 +105,7 @@ class PlayerNotifier extends Notifier<PlayerState> {
           if (val == 'previous') playPrevious();
         } else if (type == 'error') {
           final msg = event['message'] as String;
+          AppLogger.log("AVPlayer ERROR: $msg");
           state = state.copyWith(errorMessage: msg);
         }
       }
@@ -101,31 +115,39 @@ class PlayerNotifier extends Notifier<PlayerState> {
   Future<void> play(Song song) async {
     state = state.copyWith(currentSong: song, clearError: true);
     
+    AppLogger.log("--- REQUESTING PLAYBACK ---");
+    AppLogger.log("Song: ${song.title} (${song.id})");
+
     // Fetch real stream URL from youtube_explode_dart instead of youtubei.js
     String? url;
     try {
+      AppLogger.log("youtube_explode_dart: fetching manifest for ${song.id}...");
       final yt = YoutubeExplode();
       final manifest = await yt.videos.streamsClient.getManifest(song.id);
       final streamInfo = manifest.audioOnly.withHighestBitrate();
       url = streamInfo.url.toString();
+      AppLogger.log("youtube_explode_dart: Extracted URL: $url");
       yt.close();
     } catch (e) {
+      AppLogger.log("YT_Explode Error: $e");
       state = state.copyWith(errorMessage: "YT_Explode Error: $e");
-      print("Failed to get stream URL using yt_explode: $e");
       return;
     }
 
-    if (url == null || url.isEmpty || url.startsWith("ERROR:")) {
+    if (url.isEmpty || url.startsWith("ERROR:")) {
+      AppLogger.log("Failed to get stream URL for ${song.id}");
       state = state.copyWith(errorMessage: "No stream URL found");
-      print("Failed to get stream URL for ${song.id}: $url");
       return;
     }
     
+    final useProxy = ref.read(useProxyProvider);
+    AppLogger.log("Initializing AudioBridge.play (useProxy: $useProxy)");
     AudioBridge.play(
       url: url,
       title: song.title,
       artist: song.artistName,
       artworkUrl: song.thumbnailUrl,
+      useProxy: useProxy,
     );
   }
 
