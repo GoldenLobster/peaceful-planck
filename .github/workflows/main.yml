@@ -20,10 +20,12 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
         
+      - name: Build Flutter Assets and Generate Podfile
+        run: flutter build ios --release --no-codesign || true
+        
       - name: Build iOS App (No Codesign)
         run: |
           cd ios
-          pod install
           xcodebuild build -workspace Runner.xcworkspace -scheme Runner -configuration Release -sdk iphoneos SYMROOT=$(PWD)/build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
           
       - name: Create Unsigned IPA
