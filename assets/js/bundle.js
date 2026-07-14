@@ -46558,8 +46558,6 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
   globalThis.getStream = async (songId) => {
     if (!yt) await globalThis.initYouTube();
     const info2 = await yt.music.getInfo(songId);
-    let hls = info2.streaming_data?.hlsManifestUrl || info2.streaming_data?.hls_manifest_url || info2.page?.[2]?.playerResponse?.streamingData?.hlsManifestUrl;
-    if (hls) return hls;
     const format2 = info2.chooseFormat({ type: "audio", format: "mp4", quality: "best" });
     return format2.decipher(yt.session.player);
   };

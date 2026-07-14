@@ -214,9 +214,6 @@ globalThis.getStream = async (songId) => {
     if (!yt) await globalThis.initYouTube();
     const info = await yt.music.getInfo(songId);
     
-    let hls = info.streaming_data?.hlsManifestUrl || info.streaming_data?.hls_manifest_url || info.page?.[2]?.playerResponse?.streamingData?.hlsManifestUrl;
-    if (hls) return hls;
-
     const format = info.chooseFormat({ type: 'audio', format: 'mp4', quality: 'best' });
     return format.decipher(yt.session.player);
 };
