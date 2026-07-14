@@ -21,7 +21,7 @@ class Album {
     return Album(
       id: json['id'] ?? '',
       title: json['title'] ?? 'Unknown Album',
-      artistName: json['author'] ?? 'Unknown Artist',
+      artistName: Song.parseAuthor(json['author']),
       thumbnailUrl: Song.fromJson(json).thumbnailUrl, 
       year: json['year'],
       tracks: (json['tracks'] as List?)?.map((t) => Song.fromJson(t)).toList(),

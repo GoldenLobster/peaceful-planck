@@ -21,7 +21,7 @@ class Playlist {
     return Playlist(
       id: json['id'] ?? '',
       title: json['title'] ?? '',
-      author: json['author']?['name'] ?? json['author'],
+      author: Song.parseAuthor(json['author']),
       thumbnailUrl: Song.fromJson(json).thumbnailUrl,
       trackCount: json['item_count'],
       tracks: (json['items'] as List?)?.map((t) => Song.fromJson(t)).toList(),

@@ -23,7 +23,7 @@ class Song {
     return Song(
       id: json['id'] ?? '',
       title: json['title'] ?? 'Unknown Title',
-      artistName: _parseAuthor(json['author'] ?? json['artists']),
+      artistName: parseAuthor(json['author'] ?? json['artists']),
       artistId: _parseAuthorId(json['author'] ?? json['artists']),
       albumName: json['album']?['name'],
       albumId: json['album']?['id'],
@@ -32,7 +32,7 @@ class Song {
     );
   }
 
-  static String _parseAuthor(dynamic authorData) {
+  static String parseAuthor(dynamic authorData) {
     if (authorData is String) return authorData;
     if (authorData is List && authorData.isNotEmpty) {
       return authorData.first['name'] ?? 'Unknown Artist';

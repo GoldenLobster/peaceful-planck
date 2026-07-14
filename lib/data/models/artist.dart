@@ -21,7 +21,7 @@ class Artist {
   factory Artist.fromJson(Map<String, dynamic> json) {
      return Artist(
         id: json['id'] ?? '',
-        name: json['name'] ?? 'Unknown Artist',
+        name: json['name'] ?? json['title'] ?? 'Unknown Artist',
         thumbnailUrl: Song.fromJson(json).thumbnailUrl,
         description: json['description'],
      );
