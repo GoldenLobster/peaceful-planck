@@ -15,6 +15,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _isLoading = true;
   HomeFeed? _homeFeed;
+  String? _errorStr;
 
   @override
   void initState() {
@@ -25,6 +26,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Future<void> _fetchHome() async {
     final res = await YouTubeBridge.getHome();
     if (res != null) {
+      if (res.startsWith("ERROR:")) {
+          setState(() {
+             _errorStr = res.replaceFirst("ERROR:", "");
+             _isLoading = false;
+          });
+          return;
+      }
       final decoded = jsonDecode(res) as List<dynamic>;
       setState(() {
         _homeFeed = HomeFeed.fromJson(decoded);
@@ -33,6 +41,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     } else {
       setState(() {
         _isLoading = false;
+        _errorStr = "Failed to fetch. YouTubeBridge returned null.";
       });
     }
   }
@@ -47,11 +56,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: _isLoading 
         ? const Center(child: CircularProgressIndicator())
-        : (_homeFeed == null || _homeFeed!.sections.isEmpty)
-          ? const Center(child: Text("No recommendations found.\nMake sure you are online.", textAlign: TextAlign.center))
-          : ListView.builder(
-              itemCount: _homeFeed!.sections.length,
-              itemBuilder: (context, index) {
+        : _errorStr != null 
+          ? Center(child: Padding(padding: const EdgeInsets.all(16.0), child: Text("Error:\n$_errorStr", style: const TextStyle(color: Colors.red), textAlign: TextAlign.center)))
+          : (_homeFeed == null || _homeFeed!.sections.isEmpty)
+            ? const Center(child: Text("No recommendations found.\nMake sure you are online.", textAlign: TextAlign.center))
+            : ListView.builder(
+                itemCount: _homeFeed!.sections.length,
+                itemBuilder: (context, index) {
                 final section = _homeFeed!.sections[index];
                 if (section.contents.songs.isEmpty && section.contents.albums.isEmpty && section.contents.playlists.isEmpty) {
                   return const SizedBox.shrink();

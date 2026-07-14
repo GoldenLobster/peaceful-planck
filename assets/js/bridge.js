@@ -117,14 +117,41 @@ globalThis.fetch = async (url, options = {}) => {
     });
 };
 
+const timers = new Map();
 globalThis.setTimeout = (cb, ms) => {
-    const id = Math.floor(Math.random() * 100000);
-    globalThis.nativeSetTimeout(id, cb.toString(), ms);
+    const id = Math.floor(Math.random() * 1000000);
+    timers.set(id, cb);
+    globalThis.nativeSetTimeout(id, ms || 0);
     return id;
 };
-
+globalThis.fireTimeout = (id) => {
+    const cb = timers.get(id);
+    if (cb) {
+        timers.delete(id);
+        cb();
+    }
+};
 globalThis.clearTimeout = (id) => {
+    timers.delete(id);
     globalThis.nativeClearTimeout(id);
+};
+
+const intervals = new Map();
+globalThis.setInterval = (cb, ms) => {
+    const id = Math.floor(Math.random() * 1000000);
+    intervals.set(id, cb);
+    globalThis.nativeSetInterval(id, ms || 0);
+    return id;
+};
+globalThis.fireInterval = (id) => {
+    const cb = intervals.get(id);
+    if (cb) {
+        cb();
+    }
+};
+globalThis.clearInterval = (id) => {
+    intervals.delete(id);
+    globalThis.nativeClearInterval(id);
 };
 
 let yt = null;

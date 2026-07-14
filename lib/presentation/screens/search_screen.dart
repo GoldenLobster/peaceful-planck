@@ -32,13 +32,20 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     try {
       final jsonStr = await YouTubeBridge.search(query);
       if (jsonStr != null) {
+        if (jsonStr.startsWith("ERROR:")) {
+            setState(() {
+                _error = jsonStr.replaceFirst("ERROR:", "");
+                _isLoading = false;
+            });
+            return;
+        }
         final decoded = jsonDecode(jsonStr);
         setState(() {
           _results = SearchResults.fromJson(decoded as List<dynamic>);
         });
       } else {
         setState(() {
-          _error = 'Failed to fetch results';
+          _error = 'Failed to fetch results (null from bridge)';
         });
       }
     } catch (e) {

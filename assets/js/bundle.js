@@ -42593,13 +42593,40 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
       globalThis.nativeFetch(reqStr, callbackId);
     });
   };
+  var timers = /* @__PURE__ */ new Map();
   globalThis.setTimeout = (cb, ms) => {
-    const id = Math.floor(Math.random() * 1e5);
-    globalThis.nativeSetTimeout(id, cb.toString(), ms);
+    const id = Math.floor(Math.random() * 1e6);
+    timers.set(id, cb);
+    globalThis.nativeSetTimeout(id, ms || 0);
     return id;
   };
+  globalThis.fireTimeout = (id) => {
+    const cb = timers.get(id);
+    if (cb) {
+      timers.delete(id);
+      cb();
+    }
+  };
   globalThis.clearTimeout = (id) => {
+    timers.delete(id);
     globalThis.nativeClearTimeout(id);
+  };
+  var intervals = /* @__PURE__ */ new Map();
+  globalThis.setInterval = (cb, ms) => {
+    const id = Math.floor(Math.random() * 1e6);
+    intervals.set(id, cb);
+    globalThis.nativeSetInterval(id, ms || 0);
+    return id;
+  };
+  globalThis.fireInterval = (id) => {
+    const cb = intervals.get(id);
+    if (cb) {
+      cb();
+    }
+  };
+  globalThis.clearInterval = (id) => {
+    intervals.delete(id);
+    globalThis.nativeClearInterval(id);
   };
   var yt = null;
   globalThis.initYouTube = async () => {

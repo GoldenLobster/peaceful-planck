@@ -77,10 +77,10 @@ class JSContextManager {
             task.resume()
         }
         
-        let nativeSetTimeout: @convention(block) (Int, String, Int) -> Void = { id, code, ms in
+        let nativeSetTimeout: @convention(block) (Int, Int) -> Void = { id, ms in
             DispatchQueue.main.async {
                 let timer = Timer.scheduledTimer(withTimeInterval: Double(ms) / 1000.0, repeats: false) { _ in
-                    JSContextManager.shared.context?.evaluateScript(code)
+                    JSContextManager.shared.context?.evaluateScript("globalThis.fireTimeout(\(id))")
                     JSContextManager.shared.timers.removeValue(forKey: id)
                 }
                 JSContextManager.shared.timers[id] = timer
@@ -93,10 +93,28 @@ class JSContextManager {
                 JSContextManager.shared.timers.removeValue(forKey: id)
             }
         }
+
+        let nativeSetInterval: @convention(block) (Int, Int) -> Void = { id, ms in
+            DispatchQueue.main.async {
+                let timer = Timer.scheduledTimer(withTimeInterval: Double(ms) / 1000.0, repeats: true) { _ in
+                    JSContextManager.shared.context?.evaluateScript("globalThis.fireInterval(\(id))")
+                }
+                JSContextManager.shared.timers[id] = timer
+            }
+        }
+        
+        let nativeClearInterval: @convention(block) (Int) -> Void = { id in
+            DispatchQueue.main.async {
+                JSContextManager.shared.timers[id]?.invalidate()
+                JSContextManager.shared.timers.removeValue(forKey: id)
+            }
+        }
         
         context.setObject(nativeFetch, forKeyedSubscript: "nativeFetch" as NSString)
         context.setObject(nativeSetTimeout, forKeyedSubscript: "nativeSetTimeout" as NSString)
         context.setObject(nativeClearTimeout, forKeyedSubscript: "nativeClearTimeout" as NSString)
+        context.setObject(nativeSetInterval, forKeyedSubscript: "nativeSetInterval" as NSString)
+        context.setObject(nativeClearInterval, forKeyedSubscript: "nativeClearInterval" as NSString)
     }
     
     private func resolveFetch(callbackId: String, status: Int, statusText: String, headers: String, bodyBase64: String) {
@@ -160,7 +178,7 @@ class JSContextManager {
                     self.context?.setObject(nil, forKeyedSubscript: "resolve_\(callbackId)" as NSString)
                     self.context?.setObject(nil, forKeyedSubscript: "reject_\(callbackId)" as NSString)
                     print("Async JS Error: \(error)")
-                    completion(nil)
+                    completion("ERROR:" + error)
                 }
             }
             
