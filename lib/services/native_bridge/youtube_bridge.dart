@@ -43,12 +43,42 @@ class YouTubeBridge {
     }
   }
 
+  static Future<String?> getAlbum(String id) async {
+    try {
+      final String? result = await _channel.invokeMethod('getAlbum', {'id': id});
+      return result;
+    } on PlatformException catch (e) {
+      print("Failed to get album: '${e.message}'.");
+      return null;
+    }
+  }
+
   static Future<String?> getStream(String id) async {
     try {
       final String? result = await _channel.invokeMethod('getStream', {'id': id});
       return result;
     } on PlatformException catch (e) {
       print("Failed to get stream: '${e.message}'.");
+      return null;
+    }
+  }
+
+  static Future<String?> getHome() async {
+    try {
+      final String? result = await _channel.invokeMethod('getHome');
+      return result;
+    } on PlatformException catch (e) {
+      print("Failed to get home: '${e.message}'.");
+      return null;
+    }
+  }
+
+  static Future<String?> getLibrary() async {
+    try {
+      final String? result = await _channel.invokeMethod('getLibrary');
+      return result;
+    } on PlatformException catch (e) {
+      print("Failed to get library: '${e.message}'.");
       return null;
     }
   }

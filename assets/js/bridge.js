@@ -144,9 +144,27 @@ globalThis.getArtist = async (artistId) => {
     return JSON.stringify(artist.sections);
 };
 
+globalThis.getAlbum = async (albumId) => {
+    if (!yt) await globalThis.initYouTube();
+    const album = await yt.music.getAlbum(albumId);
+    return JSON.stringify(album.contents);
+};
+
 globalThis.getStream = async (videoId) => {
     if (!yt) await globalThis.initYouTube();
     const info = await yt.getBasicInfo(videoId);
     const format = info.chooseFormat({ type: 'audio', quality: 'best' });
     return format?.url || null;
+};
+
+globalThis.getHome = async () => {
+    if (!yt) await globalThis.initYouTube();
+    const home = await yt.music.getHome();
+    return JSON.stringify(home.sections);
+};
+
+globalThis.getLibrary = async () => {
+    if (!yt) await globalThis.initYouTube();
+    const library = await yt.music.getLibrary();
+    return JSON.stringify(library.contents);
 };

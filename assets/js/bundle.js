@@ -42609,11 +42609,26 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     const artist = await yt.music.getArtist(artistId);
     return JSON.stringify(artist.sections);
   };
+  globalThis.getAlbum = async (albumId) => {
+    if (!yt) await globalThis.initYouTube();
+    const album = await yt.music.getAlbum(albumId);
+    return JSON.stringify(album.contents);
+  };
   globalThis.getStream = async (videoId) => {
     if (!yt) await globalThis.initYouTube();
     const info2 = await yt.getBasicInfo(videoId);
     const format2 = info2.chooseFormat({ type: "audio", quality: "best" });
     return format2?.url || null;
+  };
+  globalThis.getHome = async () => {
+    if (!yt) await globalThis.initYouTube();
+    const home = await yt.music.getHome();
+    return JSON.stringify(home.sections);
+  };
+  globalThis.getLibrary = async () => {
+    if (!yt) await globalThis.initYouTube();
+    const library = await yt.music.getLibrary();
+    return JSON.stringify(library.contents);
   };
 })();
 /*! Bundled license information:

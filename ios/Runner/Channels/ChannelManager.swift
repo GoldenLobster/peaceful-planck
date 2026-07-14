@@ -57,6 +57,16 @@ class ChannelManager {
                 result(res)
             }
             
+        case "getAlbum":
+            guard let args = call.arguments as? [String: Any],
+                  let id = args["id"] as? String else {
+                result(FlutterError(code: "INVALID_ARGS", message: "Missing id", details: nil))
+                return
+            }
+            JSContextManager.shared.evaluateAsync(script: "globalThis.getAlbum('\(id)')") { res in
+                result(res)
+            }
+            
         case "getStream":
             guard let args = call.arguments as? [String: Any],
                   let id = args["id"] as? String else {
@@ -64,6 +74,16 @@ class ChannelManager {
                 return
             }
             JSContextManager.shared.evaluateAsync(script: "globalThis.getStream('\(id)')") { res in
+                result(res)
+            }
+            
+        case "getHome":
+            JSContextManager.shared.evaluateAsync(script: "globalThis.getHome()") { res in
+                result(res)
+            }
+            
+        case "getLibrary":
+            JSContextManager.shared.evaluateAsync(script: "globalThis.getLibrary()") { res in
                 result(res)
             }
             
