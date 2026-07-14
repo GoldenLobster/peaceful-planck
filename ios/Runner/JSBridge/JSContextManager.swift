@@ -40,6 +40,9 @@ class JSContextManager {
             
             if let headers = dict["headers"] as? [String: String] {
                 for (key, value) in headers {
+                    let lowerKey = key.lowercased()
+                    if lowerKey == "content-length" { continue }
+                    if lowerKey == "accept-encoding" { continue }
                     request.setValue(value, forHTTPHeaderField: key)
                 }
             }
@@ -73,7 +76,13 @@ class JSContextManager {
                 
                 let bodyBase64 = data?.base64EncodedString() ?? ""
                 
-                JSContextManager.shared.resolveFetch(callbackId: callbackId, status: status, statusText: statusText, headers: headersStr, bodyBase64: bodyBase64)
+                if status >= 400 {
+                    let errBody = String(data: data ?? Data(), encoding: .utf8) ?? ""
+                    print("FETCH ERROR 400 URL: \(urlString)")
+                    print("FETCH ERROR 400 BODY: \(errBody)")
+                }
+                
+                JSContextManager.shared.resolveFetch(callbackId: callbackId, status: status, statusText: statusText, headers: headersStr, bodyBase64: bodyBase64, url: urlString)
             }
             task.resume()
         }
@@ -118,10 +127,10 @@ class JSContextManager {
         context.setObject(nativeClearInterval, forKeyedSubscript: "nativeClearInterval" as NSString)
     }
     
-    private func resolveFetch(callbackId: String, status: Int, statusText: String, headers: String, bodyBase64: String) {
+    private func resolveFetch(callbackId: String, status: Int, statusText: String, headers: String, bodyBase64: String, url: String) {
         DispatchQueue.main.async {
             if let callback = self.context?.objectForKeyedSubscript("fetch_resolve_\(callbackId)") {
-                callback.call(withArguments: [status, statusText, headers, bodyBase64])
+                callback.call(withArguments: [status, statusText, headers, bodyBase64, url])
             }
         }
     }

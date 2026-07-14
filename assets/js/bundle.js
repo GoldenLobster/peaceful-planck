@@ -6952,6 +6952,7 @@
       this.status = init.status || 200;
       this.statusText = init.statusText || "OK";
       this.headers = new Headers2(init.headers);
+      this.url = init.url || "";
     }
     async text() {
       return this.bodyText;
@@ -6992,15 +6993,17 @@
     let req;
     if (input && input instanceof globalThis.Request) {
       req = new globalThis.Request(input, options);
+    } else if (input && typeof input === "object" && input.url) {
+      req = new globalThis.Request(input.url, { ...input, ...options });
     } else {
       req = new globalThis.Request(input, options);
     }
     return new Promise((resolve, reject) => {
       const callbackId = Math.random().toString(36).substring(7);
-      globalThis[`fetch_resolve_${callbackId}`] = (status, statusText, headersStr, bodyBase64) => {
+      globalThis[`fetch_resolve_${callbackId}`] = (status, statusText, headersStr, bodyBase64, url) => {
         const headers = JSON.parse(headersStr);
         const binaryString = globalThis.atob(bodyBase64);
-        const res = new Response(binaryString, { status, statusText, headers });
+        const res = new Response(binaryString, { status, statusText, headers, url });
         delete globalThis[`fetch_resolve_${callbackId}`];
         delete globalThis[`fetch_reject_${callbackId}`];
         resolve(res);
@@ -7024,6 +7027,7 @@
         headers: headersObj,
         body: body ? body.toString() : null
       });
+      console.log("FETCH URL: " + req.url);
       globalThis.nativeFetch(reqStr, callbackId);
     });
   };
