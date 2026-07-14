@@ -120,18 +120,17 @@ class JSContextManager {
     
     private func resolveFetch(callbackId: String, status: Int, statusText: String, headers: String, bodyBase64: String) {
         DispatchQueue.main.async {
-            let escapedHeaders = headers.replacingOccurrences(of: "\\", with: "\\\\")
-                                        .replacingOccurrences(of: "\"", with: "\\\"")
-            
-            let script = "globalThis['fetch_resolve_\(callbackId)'](\(status), '\(statusText)', '\(escapedHeaders)', '\(bodyBase64)');"
-            self.context?.evaluateScript(script)
+            if let callback = self.context?.objectForKeyedSubscript("fetch_resolve_\(callbackId)") {
+                callback.call(withArguments: [status, statusText, headers, bodyBase64])
+            }
         }
     }
     
     private func rejectFetch(callbackId: String, error: String) {
         DispatchQueue.main.async {
-            let script = "globalThis['fetch_reject_\(callbackId)']('\(error)');"
-            self.context?.evaluateScript(script)
+            if let callback = self.context?.objectForKeyedSubscript("fetch_reject_\(callbackId)") {
+                callback.call(withArguments: [error])
+            }
         }
     }
     
@@ -152,19 +151,18 @@ class JSContextManager {
     }
     
     func evaluateAsync(script: String, completion: @escaping (String?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            // Need a way to await JS Promises. We can use a callback injection.
-            let callbackId = UUID().uuidString.replacingOccurrences(of: "-", with: "")
-            let wrappedScript = """
-            (async () => {
-                try {
-                    let res = await \(script);
-                    globalThis['resolve_\(callbackId)'](res ? res.toString() : '');
-                } catch(e) {
-                    globalThis['reject_\(callbackId)'](e.toString());
-                }
-            })();
-            """
+        // Need a way to await JS Promises. We can use a callback injection.
+        let callbackId = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        let wrappedScript = """
+        (async () => {
+            try {
+                let res = await \(script);
+                globalThis['resolve_\(callbackId)'](res ? res.toString() : '');
+            } catch(e) {
+                globalThis['reject_\(callbackId)'](e.toString());
+            }
+        })();
+        """
             
             let resolveBlock: @convention(block) (String) -> Void = { result in
                 DispatchQueue.main.async {
@@ -183,11 +181,10 @@ class JSContextManager {
                 }
             }
             
-            DispatchQueue.main.async {
-                self.context?.setObject(resolveBlock, forKeyedSubscript: "resolve_\(callbackId)" as NSString)
-                self.context?.setObject(rejectBlock, forKeyedSubscript: "reject_\(callbackId)" as NSString)
-                self.context?.evaluateScript(wrappedScript)
-            }
+        DispatchQueue.main.async {
+            self.context?.setObject(resolveBlock, forKeyedSubscript: "resolve_\(callbackId)" as NSString)
+            self.context?.setObject(rejectBlock, forKeyedSubscript: "reject_\(callbackId)" as NSString)
+            self.context?.evaluateScript(wrappedScript)
         }
     }
 }

@@ -24,24 +24,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> _fetchHome() async {
-    final res = await YouTubeBridge.getHome();
-    if (res != null) {
-      if (res.startsWith("ERROR:")) {
-          setState(() {
-             _errorStr = res.replaceFirst("ERROR:", "");
-             _isLoading = false;
-          });
-          return;
+    try {
+      final res = await YouTubeBridge.getHome();
+      if (res != null) {
+        if (res.startsWith("ERROR:")) {
+            setState(() {
+               _errorStr = res.replaceFirst("ERROR:", "");
+               _isLoading = false;
+            });
+            return;
+        }
+        final decoded = jsonDecode(res) as List<dynamic>;
+        setState(() {
+          _homeFeed = HomeFeed.fromJson(decoded);
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+          _errorStr = "Failed to fetch. YouTubeBridge returned null.";
+        });
       }
-      final decoded = jsonDecode(res) as List<dynamic>;
-      setState(() {
-        _homeFeed = HomeFeed.fromJson(decoded);
-        _isLoading = false;
-      });
-    } else {
+    } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorStr = "Failed to fetch. YouTubeBridge returned null.";
+        _errorStr = "Error parsing home feed: $e";
       });
     }
   }

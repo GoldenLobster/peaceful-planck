@@ -24,14 +24,21 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   }
 
   Future<void> _fetchLibrary() async {
-    final res = await YouTubeBridge.getLibrary();
-    if (res != null) {
-      final decoded = jsonDecode(res) as List<dynamic>;
-      setState(() {
-        _library = SearchResults.fromJson(decoded);
-        _isLoading = false;
-      });
-    } else {
+    try {
+      final res = await YouTubeBridge.getLibrary();
+      if (res != null) {
+        final decoded = jsonDecode(res) as List<dynamic>;
+        setState(() {
+          _library = SearchResults.fromJson(decoded);
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Library error: $e');
       setState(() {
         _isLoading = false;
       });
