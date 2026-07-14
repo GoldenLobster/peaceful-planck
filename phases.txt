@@ -1,0 +1,256 @@
+phase 0 - architecture and planning
+
+You are a senior mobile architect.
+
+I am building an iOS app called ytmUltimate.
+
+Goal:
+Create a native YouTube Music clone with:
+- No advertisements
+- Full YouTube Music-like functionality
+- Background audio playback
+- Lock screen controls
+- Playlists
+- Search
+- Library
+- Recommendations
+- Queue management
+- Album/artist pages
+- Offline caching
+
+Technical constraints:
+- Flutter/Dart should be used for as much of the app as possible.
+- The app should be fully native on iOS.
+- JavaScriptCore will run youtubei.js.
+- Swift should only be used where Flutter cannot access required iOS APIs.
+- AVFoundation should handle audio playback.
+
+Design the complete architecture:
+- Flutter layer responsibilities
+- Swift native layer responsibilities
+- JavaScriptCore runtime responsibilities
+- Communication interfaces
+- Data flow
+- State management approach
+- Folder structure
+- Long-term scalability concerns
+
+Do not write code yet.
+Produce a professional engineering design document.
+
+phase 1 - flutter project foundation
+
+Create the initial Flutter project structure for ytmUltimate.
+
+Requirements:
+- Clean architecture
+- Scalable for a large music streaming application
+- Separate UI, domain, and data layers
+- State management suitable for a music player
+- Dependency injection
+- Repository pattern
+
+Design:
+- Folder structure
+- Core services
+- Models
+- Providers/controllers
+- Navigation system
+- Theme system
+- Error handling
+
+Only focus on Flutter/Dart.
+Do not implement YouTube integration yet.
+
+phase 2 - native ios bridge foundation
+
+Implement the Flutter-to-iOS communication architecture for ytmUltimate.
+
+The app needs native iOS features:
+- JavaScriptCore execution
+- AVAudioSession management
+- Background playback
+- Lock screen controls
+- Remote commands
+
+Design a Swift bridge using:
+- Flutter MethodChannels or EventChannels
+- Clean API boundaries
+- Async communication
+
+Create:
+- Swift classes
+- Dart wrapper classes
+- Communication protocol
+
+Keep Swift minimal. Flutter should remain the main application layer.
+
+phase 3 - JavaScriptCore runtime
+
+Build the JavaScriptCore runtime environment for ytmUltimate.
+
+Goal:
+Run youtubei.js inside JavaScriptCore on iOS.
+
+Requirements:
+- Load bundled JavaScript files
+- Create JSContext
+- Expose native functions
+- Handle JS errors
+- Async communication
+
+Implement missing runtime APIs:
+- fetch
+- Response
+- Headers
+- EventTarget
+- CustomEvent
+- TextEncoder
+- TextDecoder
+- URL
+- ReadableStream if required
+
+Use Swift only for native functionality.
+
+Explain each polyfill and why it is needed.
+
+phase 4 - fetch implementation
+
+Implement a fetch API compatible with youtubei.js inside JavaScriptCore.
+
+Requirements:
+- Use iOS URLSession internally
+- Return spec-compatible Response objects
+- Support:
+  - status codes
+  - headers
+  - JSON responses
+  - text responses
+  - ArrayBuffer
+  - ReadableStream where possible
+
+The implementation must satisfy youtubei.js requirements.
+
+Design the Swift-JavaScript boundary.
+
+phase 5 - integrating youtubei.js
+
+Integrate youtubei.js into the JavaScriptCore environment.
+
+Requirements:
+- Bundle youtubei.js
+- Initialize Innertube
+- Authenticate/initialize YouTube client
+- Search videos
+- Search songs
+- Fetch metadata
+- Fetch playlists
+- Fetch artists
+- Fetch albums
+- Retrieve streaming information
+
+Expose a Dart-friendly API:
+
+Examples:
+search(query)
+getSong(id)
+getPlaylist(id)
+getArtist(id)
+getStream(id)
+
+Do not build UI yet.
+Focus only on the backend layer.
+
+phase 6 - youtube music data models
+
+Design the Dart data layer for a YouTube Music clone.
+
+Create models for:
+
+- Song
+- Album
+- Artist
+- Playlist
+- User library
+- Search results
+- Queue items
+- Playback state
+- Recommendations
+
+Requirements:
+- Immutable models
+- JSON serialization
+- Easy conversion from youtubei.js responses
+
+Create repository interfaces separating:
+UI -> Repository -> youtubei.js backend
+
+phase 7 - audio playback engine
+
+Implement the audio playback system for ytmUltimate.
+
+Requirements:
+- Flutter controls playback
+- Swift AVFoundation performs playback
+
+Features:
+- Play
+- Pause
+- Seek
+- Skip
+- Previous
+- Queue
+- Shuffle
+- Repeat
+- Playback progress updates
+
+Support:
+- Background playback
+- Lock screen controls
+- Bluetooth controls
+- Headphones controls
+
+Create the Dart API around the native player.
+
+phase 8 - background playback
+
+Implement production-quality iOS background audio support.
+
+Requirements:
+- AVAudioSession configuration
+- Background modes
+- Now Playing information
+- MPRemoteCommandCenter
+- Lock screen artwork
+- Notifications
+- Bluetooth controls
+
+The Flutter UI should receive:
+- current song
+- elapsed time
+- playback state
+- buffer state
+
+Explain required iOS configuration.
+
+phase 9 - music player ui
+
+Build the Flutter music player interface.
+
+Features:
+- Mini player
+- Full player
+- Queue drawer
+- Album artwork
+- Progress bar
+- Lyrics button
+- Like button
+- Shuffle/repeat controls
+
+Design similar to YouTube Music but do not copy branding.
+
+Requirements:
+- Smooth animations
+- Responsive layouts
+- Efficient rebuilds
+- Works with the existing playback service.
