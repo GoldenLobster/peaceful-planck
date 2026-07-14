@@ -9,12 +9,11 @@ import UIKit
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
     
-    let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
     let assetRegistrar = self.registrar(forPlugin: "AssetRegistrar")!
     
     JSContextManager.shared.setupContext(registrar: assetRegistrar)
-    ChannelManager.shared.setup(messenger: controller.binaryMessenger)
-    AudioManager.shared.setupChannels(messenger: controller.binaryMessenger)
+    ChannelManager.shared.setup(messenger: assetRegistrar.messenger())
+    AudioManager.shared.setupChannels(messenger: assetRegistrar.messenger())
     
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
