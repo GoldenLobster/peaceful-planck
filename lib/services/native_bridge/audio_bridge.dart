@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'proxy_audio_source.dart';
 
 class AudioBridge {
