@@ -52,6 +52,9 @@ class AudioBridge {
           artist: artist,
           artUri: artworkUrl != null ? Uri.parse(artworkUrl) : null,
         ),
+        onError: (errorMsg) {
+          _eventController.add({'type': 'error', 'message': errorMsg});
+        },
       );
       await _player.setAudioSource(audioSource);
       await _player.play();

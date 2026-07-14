@@ -27,6 +27,5 @@ vm.runInContext("var globalThis = this; var window = this; var global = this;", 
 vm.runInContext(bundle, context);
 
 (async () => {
-    await context.initYouTube();
-    console.log(context.yt.session.context.client.userAgent);
+    await vm.runInContext("globalThis.initYouTube().then(() => { console.log(globalThis.yt.session.context.client.userAgent); })", context);
 })();

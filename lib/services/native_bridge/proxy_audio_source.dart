@@ -6,26 +6,29 @@ import 'package:just_audio_background/just_audio_background.dart';
 class ProxyAudioSource extends StreamAudioSource {
   final String url;
   final MediaItem? mediaItem;
+  final Function(String) onError;
 
-  ProxyAudioSource(this.url, {this.mediaItem}) : super(tag: mediaItem);
+  ProxyAudioSource(this.url, {this.mediaItem, required this.onError}) : super(tag: mediaItem);
 
   @override
   Future<StreamAudioResponse> request([int? start, int? end]) async {
     final headers = {
-      'User-Agent': 'com.google.ios.youtube/19.29.1 (iPhone14,3; U; CPU iOS 15_6 like Mac OS X)',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36; SMART-TV; Tizen 4.0',
       'Accept': '*/*',
     };
     if (start != null || end != null) {
       headers['Range'] = 'bytes=${start ?? 0}-${end ?? ''}';
     }
 
-    final request = http.Request('GET', Uri.parse(url));
-    request.headers.addAll(headers);
+    try {
+      final request = http.Request('GET', Uri.parse(url));
+      request.headers.addAll(headers);
 
-    final streamedResponse = await request.send();
-    if (streamedResponse.statusCode >= 400) {
-      throw Exception('HTTP error ${streamedResponse.statusCode}');
-    }
+      final streamedResponse = await request.send();
+      if (streamedResponse.statusCode >= 400) {
+        onError('HTTP error ${streamedResponse.statusCode}');
+        throw Exception('HTTP error ${streamedResponse.statusCode}');
+      }
 
     final contentType = streamedResponse.headers['content-type'] ?? 'audio/mp4';
     final contentLengthStr = streamedResponse.headers['content-length'];
@@ -47,12 +50,16 @@ class ProxyAudioSource extends StreamAudioSource {
       sourceLength = int.tryParse(contentLengthStr);
     }
 
-    return StreamAudioResponse(
-      sourceLength: sourceLength,
-      contentLength: contentLengthStr != null ? int.tryParse(contentLengthStr) : null,
-      offset: offset,
-      stream: streamedResponse.stream,
-      contentType: contentType,
-    );
+      return StreamAudioResponse(
+        sourceLength: sourceLength,
+        contentLength: contentLengthStr != null ? int.tryParse(contentLengthStr) : null,
+        offset: offset,
+        stream: streamedResponse.stream,
+        contentType: contentType,
+      );
+    } catch (e) {
+      onError('Proxy Error: $e');
+      throw e;
+    }
   }
 }

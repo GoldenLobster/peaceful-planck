@@ -14,7 +14,7 @@ globalThis.initYouTube = async () => {
         yt = await Innertube.create({
             cache: new UniversalCache(false),
             generate_session_locally: true,
-            clientType: 'IOS'
+            clientType: 'TV_EMBEDDED'
         });
         return true;
     } catch(e) {

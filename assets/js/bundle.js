@@ -46548,7 +46548,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
       yt = await Innertube.create({
         cache: new UniversalCache(false),
         generate_session_locally: true,
-        clientType: "IOS"
+        clientType: "TV_EMBEDDED"
       });
       return true;
     } catch (e) {
