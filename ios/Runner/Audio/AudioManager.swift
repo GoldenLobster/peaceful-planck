@@ -85,8 +85,10 @@ class AudioManager: NSObject {
             kvoPlaybackLikelyToKeepUpToken?.invalidate()
         }
         
-        let options = ["AVURLAssetHTTPHeaderFieldsKey": ["User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"]]
-        let asset = AVURLAsset(url: url, options: options)
+        let headers: [String: String] = [
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        ]
+        let asset = AVURLAsset(url: url, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
         playerItem = AVPlayerItem(asset: asset)
         
         kvoStatusToken = playerItem?.observe(\.status, options: [.new]) { [weak self] item, _ in

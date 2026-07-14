@@ -46567,6 +46567,8 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
   globalThis.getStream = async (songId) => {
     if (!yt) await globalThis.initYouTube();
     const info2 = await yt.music.getInfo(songId);
+    let hls = info2.streaming_data?.hlsManifestUrl || info2.streaming_data?.hls_manifest_url || info2.page?.[2]?.playerResponse?.streamingData?.hlsManifestUrl;
+    if (hls) return hls;
     const format2 = info2.chooseFormat({ type: "audio", format: "mp4", quality: "best" });
     return format2.decipher(yt.session.player);
   };
@@ -46581,7 +46583,7 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     }
     let id = item.id || item.endpoint?.payload?.videoId || item.endpoint?.payload?.browseId || "";
     let title = typeof item.title === "string" ? item.title : item.title?.text || item.name || "";
-    let authorRaw = item.authors || item.author || item.artists || item.subtitle || "Unknown";
+    let authorRaw = (item.authors?.length ? item.authors : null) || (item.author?.length ? item.author : item.author && !Array.isArray(item.author) ? item.author : null) || (item.artists?.length ? item.artists : null) || item.subtitle || "Unknown";
     let authorName = "Unknown";
     if (typeof authorRaw === "string") authorName = authorRaw;
     else if (Array.isArray(authorRaw)) {
@@ -46589,6 +46591,10 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
     } else if (authorRaw?.name) authorName = authorRaw.name;
     else if (authorRaw?.text) authorName = authorRaw.text;
     else if (authorRaw?.runs) authorName = authorRaw.runs[0]?.text || "Unknown";
+    if (authorName === "Unknown" && Array.isArray(item.flex_columns) && item.flex_columns.length > 1) {
+      let colText = item.flex_columns[1]?.title?.text || "";
+      if (colText) authorName = colText.split(" \u2022 ")[0];
+    }
     let thumbnails = [];
     if (Array.isArray(item.thumbnails)) thumbnails = item.thumbnails;
     else if (Array.isArray(item.thumbnail)) thumbnails = item.thumbnail;

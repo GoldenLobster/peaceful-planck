@@ -24,6 +24,10 @@ globalThis.initYouTube = async () => {
 globalThis.getStream = async (songId) => {
     if (!yt) await globalThis.initYouTube();
     const info = await yt.music.getInfo(songId);
+    
+    let hls = info.streaming_data?.hlsManifestUrl || info.streaming_data?.hls_manifest_url || info.page?.[2]?.playerResponse?.streamingData?.hlsManifestUrl;
+    if (hls) return hls;
+
     const format = info.chooseFormat({ type: 'audio', format: 'mp4', quality: 'best' });
     return format.decipher(yt.session.player);
 };
@@ -40,7 +44,10 @@ function mapItem(item, overrideType) {
     
     let id = item.id || item.endpoint?.payload?.videoId || item.endpoint?.payload?.browseId || '';
     let title = typeof item.title === 'string' ? item.title : (item.title?.text || item.name || '');
-    let authorRaw = item.authors || item.author || item.artists || item.subtitle || 'Unknown';
+    let authorRaw = (item.authors?.length ? item.authors : null) || 
+                    (item.author?.length ? item.author : (item.author && !Array.isArray(item.author) ? item.author : null)) || 
+                    (item.artists?.length ? item.artists : null) || 
+                    item.subtitle || 'Unknown';
     let authorName = 'Unknown';
     if (typeof authorRaw === 'string') authorName = authorRaw;
     else if (Array.isArray(authorRaw)) {
@@ -49,7 +56,11 @@ function mapItem(item, overrideType) {
     else if (authorRaw?.name) authorName = authorRaw.name;
     else if (authorRaw?.text) authorName = authorRaw.text;
     else if (authorRaw?.runs) authorName = authorRaw.runs[0]?.text || 'Unknown';
-
+    
+    if (authorName === 'Unknown' && Array.isArray(item.flex_columns) && item.flex_columns.length > 1) {
+        let colText = item.flex_columns[1]?.title?.text || '';
+        if (colText) authorName = colText.split(' • ')[0];
+    }
     
     let thumbnails = [];
     if (Array.isArray(item.thumbnails)) thumbnails = item.thumbnails;
