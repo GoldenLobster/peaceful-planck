@@ -42485,6 +42485,32 @@ ${getNsigProcessorFn(eval_args.n, eval_args.sp, eval_args.sig)}`;
   globalThis.atob = function(b64Encoded) {
     return import_buffer.Buffer.from(b64Encoded, "base64").toString("binary");
   };
+  globalThis.console = {
+    log: function() {
+    },
+    warn: function() {
+    },
+    error: function() {
+    },
+    info: function() {
+    },
+    debug: function() {
+    }
+  };
+  globalThis.crypto = {
+    getRandomValues: function(array) {
+      for (let i2 = 0; i2 < array.length; i2++) {
+        array[i2] = Math.floor(Math.random() * 256);
+      }
+      return array;
+    },
+    randomUUID: function() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === "x" ? r : r & 3 | 8;
+        return v.toString(16);
+      });
+    }
+  };
   var Headers2 = class {
     constructor(init) {
       this.map = /* @__PURE__ */ new Map();
