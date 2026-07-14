@@ -38,6 +38,12 @@ class JSContextManager {
             var request = URLRequest(url: url)
             request.httpMethod = dict["method"] as? String ?? "GET"
             
+            if let bodyStr = dict["body"] as? String, !bodyStr.isEmpty {
+                let bodyData = bodyStr.data(using: .utf8)
+                request.httpBody = bodyData
+                request.setValue("\(bodyData?.count ?? 0)", forHTTPHeaderField: "Content-Length")
+            }
+            
             if let headers = dict["headers"] as? [String: String] {
                 for (key, value) in headers {
                     let lowerKey = key.lowercased()
@@ -46,10 +52,6 @@ class JSContextManager {
                     if lowerKey == "host" { continue }
                     request.setValue(value, forHTTPHeaderField: key)
                 }
-            }
-            
-            if let bodyStr = dict["body"] as? String, !bodyStr.isEmpty {
-                request.httpBody = bodyStr.data(using: .utf8)
             }
             
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -169,7 +171,9 @@ class JSContextManager {
                 let res = await \(script);
                 globalThis['resolve_\(callbackId)'](res ? res.toString() : '');
             } catch(e) {
-                globalThis['reject_\(callbackId)'](e.toString());
+                let errStr = e.toString();
+                if (e.info) { errStr += "\\n" + JSON.stringify(e.info, null, 2); }
+                globalThis['reject_\(callbackId)'](errStr);
             }
         })();
         """
