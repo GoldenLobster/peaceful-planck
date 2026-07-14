@@ -7,18 +7,19 @@ import UIKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    
-    let assetRegistrar = self.registrar(forPlugin: "AssetRegistrar")!
-    
-    JSContextManager.shared.setupContext(registrar: assetRegistrar)
-    ChannelManager.shared.setup(messenger: assetRegistrar.messenger())
-    AudioManager.shared.setupChannels(messenger: assetRegistrar.messenger())
-    
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+    
+    guard let assetRegistrar = engineBridge.pluginRegistry.registrar(forPlugin: "AssetRegistrar") else {
+      print("Failed to obtain AssetRegistrar")
+      return
+    }
+    
+    JSContextManager.shared.setupContext(registrar: assetRegistrar)
+    ChannelManager.shared.setup(messenger: assetRegistrar.messenger())
+    AudioManager.shared.setupChannels(messenger: assetRegistrar.messenger())
   }
 }
