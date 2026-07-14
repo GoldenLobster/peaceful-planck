@@ -98,6 +98,19 @@ class PlayerScreen extends ConsumerWidget {
                   ),
                 ),
                 
+                if (playerState.errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(color: Colors.red.withOpacity(0.8), borderRadius: BorderRadius.circular(8)),
+                      child: Text(
+                        playerState.errorMessage!,
+                        style: const TextStyle(color: Colors.white, fontSize: 12),
+                        maxLines: 4,
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: 24),
                 
                 Padding(

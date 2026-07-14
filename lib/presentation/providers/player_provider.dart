@@ -9,12 +9,14 @@ class PlayerState {
   final PlaybackState playbackState;
   final List<Song> queue;
   final int currentIndex;
+  final String? errorMessage;
 
   PlayerState({
     this.currentSong,
     this.playbackState = const PlaybackState(status: PlaybackStatus.stopped),
     this.queue = const [],
     this.currentIndex = -1,
+    this.errorMessage,
   });
 
   PlayerState copyWith({
@@ -22,12 +24,15 @@ class PlayerState {
     PlaybackState? playbackState,
     List<Song>? queue,
     int? currentIndex,
+    String? errorMessage,
+    bool clearError = false,
   }) {
     return PlayerState(
       currentSong: currentSong ?? this.currentSong,
       playbackState: playbackState ?? this.playbackState,
       queue: queue ?? this.queue,
       currentIndex: currentIndex ?? this.currentIndex,
+      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }
 }
@@ -84,6 +89,9 @@ class PlayerNotifier extends Notifier<PlayerState> {
           final val = event['value'] as String;
           if (val == 'next') playNext();
           if (val == 'previous') playPrevious();
+        } else if (type == 'error') {
+          final msg = event['message'] as String;
+          state = state.copyWith(errorMessage: msg);
         }
       }
     });

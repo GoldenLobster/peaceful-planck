@@ -28,6 +28,11 @@ class AudioBridge {
     _player.bufferedPositionStream.listen((pos) {
       _eventController.add({'type': 'buffer', 'buffered': pos.inMilliseconds / 1000.0});
     });
+
+    _player.playbackEventStream.listen((event) {}, onError: (Object e, StackTrace stackTrace) {
+      print('A stream error occurred: $e');
+      _eventController.add({'type': 'error', 'message': 'Stream Error: $e'});
+    });
   }
 
   static Future<void> play({
@@ -39,6 +44,9 @@ class AudioBridge {
     try {
       final audioSource = AudioSource.uri(
         Uri.parse(url),
+        headers: {
+            'User-Agent': 'com.google.ios.youtube/19.29.1 (iPhone14,3; U; CPU iOS 15_6 like Mac OS X)',
+        },
         tag: MediaItem(
           id: url,
           album: artist,
@@ -50,7 +58,8 @@ class AudioBridge {
       await _player.setAudioSource(audioSource);
       await _player.play();
     } catch (e) {
-      print("Error playing audio: \$e");
+      print("Error playing audio: $e");
+      _eventController.add({'type': 'error', 'message': e.toString()});
     }
   }
 
