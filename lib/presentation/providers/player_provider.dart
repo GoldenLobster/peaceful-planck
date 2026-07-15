@@ -125,13 +125,14 @@ class PlayerNotifier extends Notifier<PlayerState> {
       final yt = YoutubeExplode();
       final manifest = await yt.videos.streamsClient.getManifest(song.id);
       
-      // AVPlayer on iOS natively supports MP4 (AAC) but does not support WebM (Opus).
-      // We must explicitly filter for MP4 streams to ensure playback compatibility.
-      final audioStreams = manifest.audioOnly.where((s) => s.container == StreamContainer.mp4);
-      if (audioStreams.isEmpty) {
-        throw Exception("No MP4 audio stream found for ${song.id}");
+      // AVPlayer on iOS is extremely strict. It often instantly fails to play raw DASH fragmented audio (itag 140).
+      // A rock-solid workaround for iOS is to use the "muxed" progressive streams (which contain both video and audio).
+      // AVPlayer parses progressive MP4 flawlessly, extracts the audio track natively, and plays perfectly.
+      final progressiveStreams = manifest.muxed.where((s) => s.container == StreamContainer.mp4);
+      if (progressiveStreams.isEmpty) {
+        throw Exception("No progressive MP4 stream found for ${song.id}");
       }
-      final streamInfo = audioStreams.withHighestBitrate();
+      final streamInfo = progressiveStreams.withHighestBitrate();
       
       url = streamInfo.url.toString();
       AppLogger.log("youtube_explode_dart: Extracted MP4 URL: $url");
