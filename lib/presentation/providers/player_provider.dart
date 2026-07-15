@@ -115,10 +115,13 @@ class PlayerNotifier extends Notifier<PlayerState> {
           }
         } else if (type == 'buffer') {
           final buf = event['buffered'] as double;
-          state = state.copyWith(playbackState: PlaybackState(
-            status: state.playbackState.status,
-            position: state.playbackState.position,
+          state = state.copyWith(playbackState: state.playbackState.copyWith(
             buffered: Duration(milliseconds: (buf * 1000).toInt()),
+          ));
+        } else if (type == 'duration') {
+          final dur = event['duration'] as double;
+          state = state.copyWith(playbackState: state.playbackState.copyWith(
+            duration: Duration(milliseconds: (dur * 1000).toInt()),
           ));
         } else if (type == 'command') {
           final val = event['value'] as String;
@@ -137,7 +140,10 @@ class PlayerNotifier extends Notifier<PlayerState> {
     state = state.copyWith(
       currentSong: song, 
       clearError: true,
-      playbackState: state.playbackState.copyWith(status: PlaybackStatus.buffering),
+      playbackState: state.playbackState.copyWith(
+        status: PlaybackStatus.buffering, 
+        duration: Duration(seconds: song.durationSeconds)
+      ),
     );
     
     AppLogger.log("--- REQUESTING PLAYBACK ---");

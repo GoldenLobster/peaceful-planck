@@ -190,7 +190,8 @@ class _ProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pos = playerState.playbackState.position.inSeconds.toDouble();
-    final dur = playerState.currentSong?.durationSeconds.toDouble() ?? 100.0;
+    double dur = playerState.playbackState.duration.inSeconds.toDouble();
+    if (dur <= 0) dur = playerState.currentSong?.durationSeconds.toDouble() ?? 100.0;
     
     return Column(
       children: [

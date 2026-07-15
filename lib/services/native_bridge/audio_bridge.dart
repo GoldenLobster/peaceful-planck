@@ -32,6 +32,12 @@ class AudioBridge {
       _eventController.add({'type': 'buffer', 'buffered': pos.inMilliseconds / 1000.0});
     });
 
+    _player.durationStream.listen((duration) {
+      if (duration != null) {
+        _eventController.add({'type': 'duration', 'duration': duration.inMilliseconds / 1000.0});
+      }
+    });
+
     _player.playbackEventStream.listen((event) {}, onError: (Object e, StackTrace stackTrace) {
       print('A stream error occurred: $e');
       _eventController.add({'type': 'error', 'message': 'Stream Error: $e'});
