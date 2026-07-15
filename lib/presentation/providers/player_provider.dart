@@ -134,7 +134,11 @@ class PlayerNotifier extends Notifier<PlayerState> {
   }
 
   Future<void> play(Song song) async {
-    state = state.copyWith(currentSong: song, clearError: true);
+    state = state.copyWith(
+      currentSong: song, 
+      clearError: true,
+      playbackState: state.playbackState.copyWith(status: PlaybackStatus.buffering),
+    );
     
     AppLogger.log("--- REQUESTING PLAYBACK ---");
     AppLogger.log("Song: ${song.title} (${song.id})");
@@ -158,30 +162,34 @@ class PlayerNotifier extends Notifier<PlayerState> {
       url = streamInfo.url.toString();
       AppLogger.log("youtube_explode_dart: Extracted MP4 URL: $url");
       
-      // Fetch SponsorBlock segments in the background
+      // Fetch SponsorBlock segments in the background without blocking playback
       _currentSkipSegments = [];
-      try {
-        AppLogger.log("Fetching SponsorBlock segments...");
-        final sbUrl = 'https://sponsor.ajay.app/api/skipSegments?videoID=${song.id}&categories=["music_off","intro","outro","sponsor","interaction"]';
-        final sbResponse = await http.get(Uri.parse(sbUrl));
-        if (sbResponse.statusCode == 200) {
-          final data = jsonDecode(sbResponse.body) as List;
-          for (final item in data) {
-            final segment = item['segment'];
-            if (segment != null && segment is List && segment.length == 2) {
-              _currentSkipSegments.add(SponsorBlockSegment(
-                (segment[0] as num).toDouble(),
-                (segment[1] as num).toDouble(),
-              ));
+      Future(() async {
+        try {
+          AppLogger.log("Fetching SponsorBlock segments...");
+          final sbUrl = 'https://sponsor.ajay.app/api/skipSegments?videoID=${song.id}&categories=["music_off","intro","outro","sponsor","interaction"]';
+          final sbResponse = await http.get(Uri.parse(sbUrl));
+          if (sbResponse.statusCode == 200) {
+            final data = jsonDecode(sbResponse.body) as List;
+            for (final item in data) {
+              final segment = item['segment'];
+              if (segment != null && segment is List && segment.length == 2) {
+                _currentSkipSegments.add(SponsorBlockSegment(
+                  (segment[0] as num).toDouble(),
+                  (segment[1] as num).toDouble(),
+                ));
+              }
             }
+            if (_currentSkipSegments.isNotEmpty) {
+              AppLogger.log("Found ${_currentSkipSegments.length} SponsorBlock segments to skip.");
+            }
+          } else {
+            AppLogger.log("SponsorBlock API returned ${sbResponse.statusCode}");
           }
-          if (_currentSkipSegments.isNotEmpty) {
-            AppLogger.log("Found ${_currentSkipSegments.length} SponsorBlock segments to skip.");
-          }
+        } catch (e) {
+          AppLogger.log("SponsorBlock fetch error: $e");
         }
-      } catch (e) {
-        AppLogger.log("SponsorBlock fetch error: $e");
-      }
+      });
 
     } catch (e) {
       AppLogger.log("YT_Explode Error: $e");
