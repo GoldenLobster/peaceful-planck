@@ -6,6 +6,16 @@ import '../../services/native_bridge/audio_bridge.dart';
 import '../../services/app_logger.dart';
 import '../../services/native_bridge/youtube_bridge.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class SponsorBlockSegment {
+  final double start;
+  final double end;
+  SponsorBlockSegment(this.start, this.end);
+}
+
+final _ytClient = YoutubeExplode();
 class PlayerState {
   final Song? currentSong;
   final PlaybackState playbackState;
@@ -52,6 +62,7 @@ final useProxyProvider = NotifierProvider<UseProxyNotifier, bool>(() {
 
 class PlayerNotifier extends Notifier<PlayerState> {
   StreamSubscription? _audioSub;
+  List<SponsorBlockSegment> _currentSkipSegments = [];
 
   @override
   PlayerState build() {
@@ -87,11 +98,21 @@ class PlayerNotifier extends Notifier<PlayerState> {
           ));
         } else if (type == 'position') {
           final pos = event['position'] as double;
+          final currentPosDur = Duration(milliseconds: (pos * 1000).toInt());
           state = state.copyWith(playbackState: PlaybackState(
             status: state.playbackState.status,
-            position: Duration(milliseconds: (pos * 1000).toInt()),
+            position: currentPosDur,
             buffered: state.playbackState.buffered,
           ));
+          
+          // SponsorBlock logic: check if we just entered a skipped segment
+          for (final segment in _currentSkipSegments) {
+            if (pos >= segment.start && pos < segment.end - 1.0) {
+              AppLogger.log("SponsorBlock: Skipping from ${pos.toStringAsFixed(1)} to ${segment.end.toStringAsFixed(1)}");
+              seek(Duration(milliseconds: (segment.end * 1000).toInt()));
+              break;
+            }
+          }
         } else if (type == 'buffer') {
           final buf = event['buffered'] as double;
           state = state.copyWith(playbackState: PlaybackState(
@@ -122,8 +143,8 @@ class PlayerNotifier extends Notifier<PlayerState> {
     String? url;
     try {
       AppLogger.log("youtube_explode_dart: fetching manifest for ${song.id}...");
-      final yt = YoutubeExplode();
-      final manifest = await yt.videos.streamsClient.getManifest(song.id);
+      // Using global _ytClient instead of creating a new instance every time speeds up loading drastically.
+      final manifest = await _ytClient.videos.streamsClient.getManifest(song.id);
       
       // AVPlayer on iOS is extremely strict. It often instantly fails to play raw DASH fragmented audio (itag 140).
       // A rock-solid workaround for iOS is to use the "muxed" progressive streams (which contain both video and audio).
@@ -136,7 +157,32 @@ class PlayerNotifier extends Notifier<PlayerState> {
       
       url = streamInfo.url.toString();
       AppLogger.log("youtube_explode_dart: Extracted MP4 URL: $url");
-      yt.close();
+      
+      // Fetch SponsorBlock segments in the background
+      _currentSkipSegments = [];
+      try {
+        AppLogger.log("Fetching SponsorBlock segments...");
+        final sbUrl = 'https://sponsor.ajay.app/api/skipSegments?videoID=${song.id}&categories=["music_off","intro","outro","sponsor","interaction"]';
+        final sbResponse = await http.get(Uri.parse(sbUrl));
+        if (sbResponse.statusCode == 200) {
+          final data = jsonDecode(sbResponse.body) as List;
+          for (final item in data) {
+            final segment = item['segment'];
+            if (segment != null && segment is List && segment.length == 2) {
+              _currentSkipSegments.add(SponsorBlockSegment(
+                (segment[0] as num).toDouble(),
+                (segment[1] as num).toDouble(),
+              ));
+            }
+          }
+          if (_currentSkipSegments.isNotEmpty) {
+            AppLogger.log("Found ${_currentSkipSegments.length} SponsorBlock segments to skip.");
+          }
+        }
+      } catch (e) {
+        AppLogger.log("SponsorBlock fetch error: $e");
+      }
+
     } catch (e) {
       AppLogger.log("YT_Explode Error: $e");
       state = state.copyWith(errorMessage: "YT_Explode Error: $e");
