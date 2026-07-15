@@ -20,4 +20,20 @@ class PlaybackState {
     this.volume = 1.0,
     this.errorReason,
   });
+
+  PlaybackState copyWith({
+    PlaybackStatus? status,
+    Duration? position,
+    Duration? buffered,
+    double? volume,
+    String? errorReason,
+  }) {
+    return PlaybackState(
+      status: status ?? this.status,
+      position: position ?? this.position,
+      buffered: buffered ?? this.buffered,
+      volume: volume ?? this.volume,
+      errorReason: errorReason ?? this.errorReason,
+    );
+  }
 }

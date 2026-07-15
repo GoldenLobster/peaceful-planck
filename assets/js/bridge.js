@@ -91,8 +91,8 @@ globalThis.search = async (query) => {
         
         const shelfTitle = shelf.header?.title?.text || shelf.title?.text || '';
         let type = 'Unknown';
+        if (shelfTitle.toLowerCase().includes('video')) continue; // Skip music videos, prefer official audio tracks!
         if (shelfTitle.toLowerCase().includes('song')) type = 'Song';
-        else if (shelfTitle.toLowerCase().includes('video')) type = 'Song';
         else if (shelfTitle.toLowerCase().includes('album')) type = 'Album';
         else if (shelfTitle.toLowerCase().includes('artist')) type = 'Artist';
         else if (shelfTitle.toLowerCase().includes('playlist')) type = 'Playlist';
