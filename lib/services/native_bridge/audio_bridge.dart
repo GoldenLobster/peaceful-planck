@@ -43,10 +43,10 @@ class AudioBridge {
     required String title,
     String? artist,
     String? artworkUrl,
-    bool useProxy = true,
+    bool useProxy = false, // Force false by default as proxy seems buggy for AVPlayer
   }) async {
     try {
-      AppLogger.log("AudioBridge.play: useProxy=$useProxy, url=$url");
+      AppLogger.log("AudioBridge.play: url=$url");
       final MediaItem mediaItem = MediaItem(
         id: url,
         album: artist,
@@ -54,20 +54,20 @@ class AudioBridge {
         artUri: artworkUrl != null ? Uri.parse(artworkUrl) : null,
       );
 
-      AudioSource audioSource;
-      if (useProxy) {
-        audioSource = ProxyAudioSource(
-          url,
-          mediaItem: mediaItem,
-          onError: (errorMsg) {
-            AppLogger.log("ProxyAudioSource ERROR callback: $errorMsg");
-            _eventController.add({'type': 'error', 'message': errorMsg});
-          },
-        );
-      } else {
-        AppLogger.log("Bypassing Proxy, using standard AudioSource.uri");
-        audioSource = AudioSource.uri(Uri.parse(url), tag: mediaItem);
-      }
+      // We completely bypass the ProxyAudioSource because AVPlayer natively handles HTTP range requests much better.
+      // However, YouTube blocks AVPlayer's default "AppleCoreMedia" User-Agent.
+      // We must explicitly pass a standard browser or Android User-Agent in the headers.
+      final headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': '*/*',
+      };
+
+      AppLogger.log("Using standard AudioSource.uri with custom headers");
+      final audioSource = AudioSource.uri(
+        Uri.parse(url), 
+        tag: mediaItem,
+        headers: headers,
+      );
       
       AppLogger.log("Setting audio source...");
       await _player.setAudioSource(audioSource);
