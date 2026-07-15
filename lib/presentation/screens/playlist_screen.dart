@@ -17,6 +17,8 @@ class PlaylistScreen extends ConsumerStatefulWidget {
 class _PlaylistScreenState extends ConsumerState<PlaylistScreen> {
   bool _isLoading = true;
   List<Song> _tracks = [];
+  
+  static final Map<String, List<Song>> _playlistCache = {};
 
   @override
   void initState() {
@@ -25,6 +27,14 @@ class _PlaylistScreenState extends ConsumerState<PlaylistScreen> {
   }
 
   Future<void> _fetchTracks() async {
+    if (_playlistCache.containsKey(widget.playlist.id)) {
+      setState(() {
+        _tracks = _playlistCache[widget.playlist.id]!;
+        _isLoading = false;
+      });
+      return;
+    }
+
     final res = await YouTubeBridge.getPlaylist(widget.playlist.id);
     if (res != null) {
       final decoded = jsonDecode(res) as List<dynamic>;
@@ -32,6 +42,7 @@ class _PlaylistScreenState extends ConsumerState<PlaylistScreen> {
       setState(() {
         _tracks = tracks;
         _isLoading = false;
+        _playlistCache[widget.playlist.id] = tracks;
       });
     } else {
       setState(() {

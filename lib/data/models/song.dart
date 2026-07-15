@@ -55,7 +55,19 @@ class Song {
 
   static String? _parseThumbnail(dynamic thumbnails) {
     if (thumbnails is List && thumbnails.isNotEmpty) {
-      return thumbnails.last['url'];
+      try {
+        var largest = thumbnails.first;
+        for (var t in thumbnails) {
+          final tWidth = (t['width'] is num) ? (t['width'] as num).toInt() : 0;
+          final lWidth = (largest['width'] is num) ? (largest['width'] as num).toInt() : 0;
+          if (tWidth > lWidth) {
+            largest = t;
+          }
+        }
+        return largest['url'];
+      } catch (e) {
+        return thumbnails.last['url'];
+      }
     }
     return null;
   }
