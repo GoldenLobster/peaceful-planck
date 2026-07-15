@@ -56,10 +56,11 @@ class AudioBridge {
 
       // We completely bypass the ProxyAudioSource because AVPlayer natively handles HTTP range requests much better.
       // However, YouTube blocks AVPlayer's default "AppleCoreMedia" User-Agent.
-      // We must explicitly pass a standard browser or Android User-Agent in the headers.
+      // We must explicitly pass a standard browser or Android User-Agent.
+      // CRITICAL: On iOS, `just_audio` only applies the User-Agent header natively IF it is the ONLY header in the dictionary.
+      // DO NOT add any other headers (like 'Accept') here, or AVPlayer will ignore the User-Agent and fail with (-1) unknown error.
       final headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': '*/*',
       };
 
       AppLogger.log("Using standard AudioSource.uri with custom headers");
