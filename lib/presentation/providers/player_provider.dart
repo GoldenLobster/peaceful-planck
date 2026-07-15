@@ -124,9 +124,17 @@ class PlayerNotifier extends Notifier<PlayerState> {
       AppLogger.log("youtube_explode_dart: fetching manifest for ${song.id}...");
       final yt = YoutubeExplode();
       final manifest = await yt.videos.streamsClient.getManifest(song.id);
-      final streamInfo = manifest.audioOnly.withHighestBitrate();
+      
+      // AVPlayer on iOS natively supports MP4 (AAC) but does not support WebM (Opus).
+      // We must explicitly filter for MP4 streams to ensure playback compatibility.
+      final audioStreams = manifest.audioOnly.where((s) => s.container == StreamContainer.mp4);
+      if (audioStreams.isEmpty) {
+        throw Exception("No MP4 audio stream found for ${song.id}");
+      }
+      final streamInfo = audioStreams.withHighestBitrate();
+      
       url = streamInfo.url.toString();
-      AppLogger.log("youtube_explode_dart: Extracted URL: $url");
+      AppLogger.log("youtube_explode_dart: Extracted MP4 URL: $url");
       yt.close();
     } catch (e) {
       AppLogger.log("YT_Explode Error: $e");
