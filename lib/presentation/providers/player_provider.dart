@@ -168,6 +168,19 @@ class PlayerNotifier extends Notifier<PlayerState> {
       url = streamInfo.url.toString();
       AppLogger.log("youtube_explode_dart: Extracted MP4 URL: $url");
       
+      // Update duration directly from YouTube URL for pinpoint accuracy
+      final durMatch = RegExp(r'[\?&]dur=([\d\.]+)').firstMatch(url);
+      if (durMatch != null) {
+        final durSecs = double.tryParse(durMatch.group(1)!)?.toInt() ?? 0;
+        if (durSecs > 0) {
+          state = state.copyWith(
+            playbackState: state.playbackState.copyWith(
+              duration: Duration(seconds: durSecs),
+            )
+          );
+        }
+      }
+      
       // Fetch SponsorBlock segments in the background without blocking playback
       _currentSkipSegments = [];
       Future(() async {
